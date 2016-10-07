@@ -23,7 +23,7 @@ class ItemOrderForm extends React.Component {
   render() {
     return (
       <div className={styles.itemOrderForm}>
-        <h2>Payment Info</h2>
+        <h2>Order</h2>
         <Input
           label="Model Number"
           onChange={(modelNumber) => {
