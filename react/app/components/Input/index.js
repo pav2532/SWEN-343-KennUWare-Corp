@@ -30,7 +30,7 @@ class Input extends React.Component {
     return (
       <div className={styles.input}>
         <div>{this.props.label}</div>
-        <input type="text" value={this.state.value} onChange={this.onChange} />
+        <input className={styles.textBox} type="text" value={this.state.value} onChange={this.onChange} />
       </div>
     );
   }
