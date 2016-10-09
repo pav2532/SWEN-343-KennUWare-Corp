@@ -8,6 +8,15 @@ const selectSalesAssociatePageDomain = () => (state) => state.get('salesAssociat
 /**
  * Other specific selectors
  */
+const selectShoppingCart = () => createSelector(
+  selectSalesAssociatePageDomain(),
+  (state) => state.get('shoppingCart').toJS(),
+);
+
+const selectPaymentInfo = () => createSelector(
+  selectSalesAssociatePageDomain(),
+  (state) => state.get('paymentInfo').toJS(),
+);
 
 
 /**
@@ -22,4 +31,7 @@ const selectSalesAssociatePage = () => createSelector(
 export default selectSalesAssociatePage;
 export {
   selectSalesAssociatePageDomain,
+
+  selectShoppingCart,
+  selectPaymentInfo,
 };

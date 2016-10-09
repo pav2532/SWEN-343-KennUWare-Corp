@@ -30,7 +30,6 @@ class PaymentForm extends React.Component {
       name: '',
       ccNumber: '',
       expiration: '',
-      securityCode: '',
     };
   }
 
@@ -42,28 +41,21 @@ class PaymentForm extends React.Component {
           label="Name On Card"
           onChange={(name) => {
             this.setState({ name });
-            this.props.getPaymentInfo({ name });
+            this.props.setName(name);
           }}
         />
         <Input
           label="Credit Card Number"
           onChange={(ccNumber) => {
             this.setState({ ccNumber });
-            this.props.getPaymentInfo({ ccNumber });
+            this.props.setCCNumber(ccNumber);
           }}
         />
         <Input
           label="Expiration"
           onChange={(expiration) => {
             this.setState({ expiration });
-            this.props.getPaymentInfo({ expiration });
-          }}
-        />
-        <Input
-          label="Security Code"
-          onChange={(securityCode) => {
-            this.setState({ securityCode });
-            this.props.getPaymentInfo({ securityCode });
+            this.props.setExpiration(expiration);
           }}
         />
       </div>
@@ -72,7 +64,9 @@ class PaymentForm extends React.Component {
 }
 
 PaymentForm.propTypes = {
-  getPaymentInfo: React.PropTypes.func,
+  setName: React.PropTypes.func,
+  setCCNumber: React.PropTypes.func,
+  setExpiration: React.PropTypes.func,
 };
 
 export default PaymentForm;

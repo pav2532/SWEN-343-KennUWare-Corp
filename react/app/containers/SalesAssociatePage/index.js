@@ -14,6 +14,12 @@ import styles from './styles.css';
 import {
   addToCart,
   removeFromCart,
+
+  setPaymentInfoName,
+  setPaymentInfoCCNumber,
+  setPaymentInfoExpiration,
+
+  checkout,
 } from './actions.js';
 
 import { Button } from 'react-bootstrap';
@@ -38,15 +44,20 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     console.log(this.props);
     return (
       <div className={styles.salesAssociatePage}>
-        <h1>Sales Associate</h1>
-        <PaymentForm getPaymentInfo={(obj) => console.log('object: ', obj)} />
-        <input value={this.state.itemName} onChange={(evt) => this.setState({ itemName: evt.target.value })} />
-        q:<input value={this.state.itemQuantity} onChange={(evt) => this.setState({ itemQuantity: evt.target.value })} />
-        up:<input value={this.state.itemUnitPrice} onChange={(evt) => this.setState({ itemUnitPrice: evt.target.value })} />
-        <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice }, this.state.itemQuantity)}>
-          Add item
-        </Button>
-        <ShoppingCart items={this.props.shoppingCart} />
+        <div style={{ width: '50%', float: 'left', height: '600px' }}>
+          <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+          <ShoppingCart items={this.props.shoppingCart} />
+        </div>
+        <PaymentForm
+          setName={this.props.setPaymentInfoName}
+          setCCNumber={this.props.setPaymentInfoCCNumber}
+          setExpiration={this.props.setPaymentInfoExpiration}
+        />
+        <div>
+          <Button bsStyle="success" bsSize="lg" onClick={this.props.onCheckout}>
+            Checkout
+          </Button>
+        </div>
       </div>
     );
   }
@@ -55,6 +66,12 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
 SalesAssociatePage.propTypes = {
   shoppingCart: React.PropTypes.array,
   onAddItemToCart: React.PropTypes.func,
+
+  setPaymentInfoName: React.PropTypes.func,
+  setPaymentInfoCCNumber: React.PropTypes.func,
+  setPaymentInfoExpiration: React.PropTypes.func,
+
+  onCheckout: React.PropTypes.func,
 };
 
 const mapStateToProps = selectSalesAssociatePage({
@@ -66,6 +83,12 @@ const mapStateToProps = selectSalesAssociatePage({
 function mapDispatchToProps(dispatch) {
   return {
     onAddItemToCart: (item, quantity) => dispatch(addToCart(item, quantity)),
+
+    setPaymentInfoName: (value) => dispatch(setPaymentInfoName(value)),
+    setPaymentInfoCCNumber: (value) => dispatch(setPaymentInfoCCNumber(value)),
+    setPaymentInfoExpiration: (value) => dispatch(setPaymentInfoExpiration(value)),
+
+    onCheckout: () => dispatch(checkout()),
 
     dispatch,
   };
