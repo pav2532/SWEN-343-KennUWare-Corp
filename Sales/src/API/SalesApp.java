@@ -44,7 +44,13 @@ public class SalesApp {
 			return "{\"commission\":\"" + commission + "\"}";
 		});
 		
-		
+		get("/login", (req, res) -> {
+			String username;
+			String empType;
+			res.type("text/json");
+			return "{\"username\":\"" + username + "\", \"employee type\":\""
+			+ empType + "\"}";
+		});
 	}
 
 }
