@@ -1,4 +1,6 @@
-package Sales;
+package Sales.Employees;
+
+import Sales.Employees.Employee;
 
 /**
  * Created by benjamin on 10/7/16.

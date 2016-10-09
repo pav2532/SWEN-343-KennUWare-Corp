@@ -1,4 +1,7 @@
-package Sales;
+package Sales.Employees;
+
+import Sales.Employees.Employee;
+import Sales.ShoppingCart;
 
 /**
  * Created by benjamin on 10/7/16.
@@ -24,6 +27,8 @@ public class SalesRep implements Employee {
     //Checks out the current shopping cart
     public void checkout(){
         commission = commission + (commissionRate * currentOrder.getValue());
+
+
     }
 
     public String getid(){

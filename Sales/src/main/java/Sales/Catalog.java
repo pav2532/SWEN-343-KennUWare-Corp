@@ -1,5 +1,7 @@
 package Sales;
 
+import Sales.Wearables.Wearable;
+
 import java.util.HashMap;
 
 /**
