@@ -1,8 +1,9 @@
-package Services;
-
 /**
  * Created by John King on 07-Oct-16.
  */
+
+package Services;
+
 public class ReturnTicketServices {
     //Amount of money refunded to customers
     public double returnLosses(){return 0;}
