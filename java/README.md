@@ -1,1 +1,0 @@
-This is the java side of the project.
