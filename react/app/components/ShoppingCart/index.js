@@ -11,16 +11,49 @@ import ShoppingCartItem from 'components/ShoppingCartItem';
 import styles from './styles.css';
 
 class ShoppingCart extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  calculateSubtotal() {
+    let total = 0.0;
+    for (let i = 0; i < this.props.items.length; i += 1) {
+      const lineItem = this.props.items[i];
+      total += lineItem.quantity * lineItem.item.unitPrice;
+    }
+
+    return total;
+  }
+
   render() {
-    const content = this.props.items.map((item) => {
-      console.log(item);
+    let content = this.props.items.map((lineItem) => {
+      const { name, unitPrice } = lineItem.item;
       return (
-        <ShoppingCartItem key={item.name} {...item} />
+        <ShoppingCartItem
+          key={name}
+          name={name}
+          unitPrice={unitPrice}
+          quantity={lineItem.quantity}
+        />
       );
     });
+    if (this.props.items.length === 0) {
+      content = (<div>There are no items in the cart.</div>);
+    }
+    const subtotal = this.calculateSubtotal();
     return (
       <div className={styles.shoppingCart}>
-        {content}
+        <div className={styles.title}>
+          <h2>Shopping Cart</h2>
+        </div>
+        <div className={styles.priceLabel}>
+          Price
+        </div>
+        <div className={styles.quantityLabel}>
+          Quantity
+        </div>
+        <div className={styles.itemList}>
+          {content}
+        </div>
+        <div className={styles.subtotalLabel}>
+          Subtotal: ${subtotal}
+        </div>
       </div>
     );
   }

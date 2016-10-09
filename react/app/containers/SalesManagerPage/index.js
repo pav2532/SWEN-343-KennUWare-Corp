@@ -15,6 +15,7 @@ import { selectEmployee } from 'containers/App/selectors';
 import AccountInfo from 'components/AccountInfo';
 import SideNav from 'components/SideNav';
 import TotalRevenue from 'components/TotalRevenue';
+import ShoppingCart from 'components/ShoppingCart';
 
 import {
   goToDashboard,
@@ -30,6 +31,14 @@ import { Button } from 'react-bootstrap';
 import styles from './styles.css';
 
 export class SalesManagerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      itemName: '',
+    };
+  }
+
   render() {
     console.log(this.props.authenticated);
     console.log(this.props.employee);
@@ -44,9 +53,11 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       content = (
         <div>
           <h2>Order Editor</h2>
-          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: 'thing' }, 2)}>
+          <input value={this.state.itemName} onChange={(evt) => this.setState({ itemName: evt.target.value })} />
+          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: this.state.itemName, unitPrice: 50.0 }, 2)}>
             Add item
           </Button>
+          <ShoppingCart items={this.props.sales.shoppingCart} />
         </div>
       );
     } else if (this.props.sales.content === 'userManagement') {
@@ -56,8 +67,6 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         </div>
       );
     }
-
-    console.log('Shopping Cart: ', this.props.sales.shoppingCart);
 
     const navRoutes = [
       { label: 'Dashboard', onClick: this.props.onGoToDashboard },

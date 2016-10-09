@@ -39,10 +39,9 @@ export function addToCart(item, quantity) {
   };
 }
 
-export function removeFromCart(item, quantity) {
+export function removeFromCart(item) {
   return {
     type: REMOVE_FROM_CART,
     item,
-    quantity,
   };
 }
