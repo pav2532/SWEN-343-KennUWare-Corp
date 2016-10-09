@@ -23,7 +23,7 @@ public class SalesRep implements Employee {
 
     //Checks out the current shopping cart
     public void checkout(){
-
+        commission = commission + (commissionRate * currentOrder.getValue());
     }
 
     public String getid(){

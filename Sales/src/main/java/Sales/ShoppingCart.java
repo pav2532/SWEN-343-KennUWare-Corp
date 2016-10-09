@@ -9,36 +9,47 @@ public class ShoppingCart {
 
     private String customerName;
     private String creditCardNumber;
-    private int value = 0;
-    private HashMap<Integer, Wearable> currentItems;
+    private Double value = 0.0;
+    private HashMap<Integer, Integer> currentItems;
+    private Catalog currentCatalog = new Catalog();
 
     public ShoppingCart(){
-        this.currentItems = new HashMap<Integer, Wearable>();
+        this.currentItems = new HashMap<Integer, Integer>();
     }
 
-    public void addProducts(int uid, Wearable product, int amount){
-        if(!currentItems.containsKey(uid)){
+    public void addProducts(Wearable product, int amount){
+
+        if(!currentItems.containsKey(product.getuid())){
+
             if(amount < 0){
-                currentItems.put(uid, product);
-                currentItems.get(uid).addProduct(0);
+
+                currentItems.put(product.getuid(), 0);
+
             }else{
-                currentItems.put(uid, product);
-                currentItems.get(uid).addProduct(amount);
+
+                currentItems.put(product.getuid(), amount);
                 value = value + product.calculatePrice();
+
             }
         }else{
-            if((currentItems.get(uid).getQuantity() + amount) < 0){
-                value = value - currentItems.get(uid).getQuantity()*product.calculatePrice();
-                currentItems.get(uid).setProduct(0);
+
+            if((currentItems.get(product.getuid()) + amount) < 0){
+
+                value = value - currentItems.get(product.getuid())*product.calculatePrice();
+                currentItems.put(product.getuid(), 0);
+
+            }else {
+
+                currentItems.put(product.getuid(), currentItems.get(product.getuid()) + amount );
+                value = value + product.calculatePrice() * amount;
             }
-            currentItems.get(uid).addProduct(amount);
-            value = value + product.calculatePrice()*amount;
+
         }
     }
 
     public void emptyCart(){
         currentItems.clear();
-        value = 0;
+        value = 0.0;
     }
 
     public void setCustomerName(String customerName){
@@ -49,13 +60,40 @@ public class ShoppingCart {
         return customerName;
     }
 
-    public void setCreditCardNumber(String creditCardNumber){
-        //implement luhn algorithm
-        this.creditCardNumber = creditCardNumber;
+    public String setCreditCardNumber(String creditCardNumber){
+        if(creditCardNumber.length() != 16 ){
+            return "Invalid Length";
+        }
+
+        int sum = 0;
+        boolean alternate = false;
+
+        for (int i = creditCardNumber.length() - 1; i >= 0; i--){
+            int n = Integer.parseInt(creditCardNumber.substring(i, i + 1));
+            if (alternate){
+                n = n*2;
+                if (n > 9)
+                {
+                    n = (n % 10) + 1;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
+        }
+        if(sum % 10 == 0) {
+            this.creditCardNumber = creditCardNumber;
+            return "Credit Card Number is Valid";
+        }else{
+            return "Invalid Credit Card Number";
+        }
     }
 
     public String getCreditCardNumber(){
         return creditCardNumber;
+    }
+
+    public Double getValue(){
+        return value;
     }
 
 }

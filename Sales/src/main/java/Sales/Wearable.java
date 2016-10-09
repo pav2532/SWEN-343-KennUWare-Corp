@@ -9,4 +9,5 @@ public interface Wearable {
     void setProduct(int amount);
     int calculatePrice();
     int getQuantity();
+    int getuid();
 }
