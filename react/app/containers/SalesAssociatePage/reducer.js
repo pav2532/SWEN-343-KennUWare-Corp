@@ -22,7 +22,6 @@ const initialState = fromJS({
 });
 
 function salesAssociatePageReducer(state = initialState, action) {
-  console.log("Actioned! ", action);
   switch (action.type) {
     case ADD_TO_CART:
       return state

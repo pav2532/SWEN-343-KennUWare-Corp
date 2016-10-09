@@ -10,3 +10,5 @@
  */
 
 export const LOGIN_SUCCESS = 'boilerplate/App/LOGIN_SUCCESS';
+
+export const SIGN_OUT = 'boilerplate/App/SIGN_OUT';

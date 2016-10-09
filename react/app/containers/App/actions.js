@@ -17,6 +17,7 @@
 
 import {
   LOGIN_SUCCESS,
+  SIGN_OUT,
 } from './constants';
 
 /**
@@ -28,5 +29,11 @@ export function loginSuccess(data) {
   return {
     type: LOGIN_SUCCESS,
     data,
+  };
+}
+
+export function signOut() {
+  return {
+    type: SIGN_OUT,
   };
 }

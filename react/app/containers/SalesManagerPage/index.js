@@ -26,6 +26,10 @@ import {
   removeFromCart,
 } from './actions.js';
 
+import {
+  signOut,
+} from 'containers/App/actions';
+
 import { Button } from 'react-bootstrap';
 
 import styles from './styles.css';
@@ -87,6 +91,8 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           className={styles.accountInfo}
           name={this.props.employee.username}
           employeeType={this.props.employee.type}
+
+          onSignOut={this.props.onSignOut}
         />
         <div className={styles.content}>
           {content}
@@ -107,6 +113,8 @@ SalesManagerPage.propTypes = {
   onGoToUserManagement: React.PropTypes.func,
 
   onAddItemToCart: React.PropTypes.func,
+
+  onSignOut: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -121,6 +129,8 @@ function mapDispatchToProps(dispatch) {
     onGoToUserManagement: () => dispatch(goToUserManagement()),
 
     onAddItemToCart: (item, quantity) => dispatch(addToCart(item, quantity)),
+
+    onSignOut: () => dispatch(signOut()),
 
     dispatch,
   };

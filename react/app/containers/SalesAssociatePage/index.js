@@ -6,10 +6,16 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import selectSalesAssociatePage from './selectors';
 import { selectEmployee } from 'containers/App/selectors';
 import styles from './styles.css';
 
+
+import {
+  signOut,
+} from 'containers/App/actions';
 
 import {
   addToCart,
@@ -24,6 +30,7 @@ import {
 
 import { Button } from 'react-bootstrap';
 
+import AccountInfo from 'components/AccountInfo';
 import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 import ShoppingCart from 'components/ShoppingCart';
@@ -44,9 +51,17 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     console.log(this.props);
     return (
       <div className={styles.salesAssociatePage}>
+        <div className={styles.accountInfo}>
+          <AccountInfo
+            name={this.props.employee.username}
+            employeeType={this.props.employee.type}
+
+            onSignOut={this.props.onSignOut}
+          />
+        </div>
         <div style={{ width: '50%', float: 'left', height: '600px' }}>
           <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
-          <ShoppingCart items={this.props.shoppingCart} />
+          <ShoppingCart items={this.props.sales.shoppingCart} />
         </div>
         <PaymentForm
           setName={this.props.setPaymentInfoName}
@@ -64,7 +79,8 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
 }
 
 SalesAssociatePage.propTypes = {
-  shoppingCart: React.PropTypes.array,
+  employee: React.PropTypes.object,
+  sales: React.PropTypes.array,
   onAddItemToCart: React.PropTypes.func,
 
   setPaymentInfoName: React.PropTypes.func,
@@ -72,12 +88,13 @@ SalesAssociatePage.propTypes = {
   setPaymentInfoExpiration: React.PropTypes.func,
 
   onCheckout: React.PropTypes.func,
+
+  onSignOut: React.PropTypes.func,
 };
 
-const mapStateToProps = selectSalesAssociatePage({
+const mapStateToProps = createStructuredSelector({
   sales: selectSalesAssociatePage(),
   employee: selectEmployee(),
-
 });
 
 function mapDispatchToProps(dispatch) {
@@ -89,6 +106,8 @@ function mapDispatchToProps(dispatch) {
     setPaymentInfoExpiration: (value) => dispatch(setPaymentInfoExpiration(value)),
 
     onCheckout: () => dispatch(checkout()),
+
+    onSignOut: () => dispatch(signOut()),
 
     dispatch,
   };
