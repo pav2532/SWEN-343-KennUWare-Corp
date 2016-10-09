@@ -8,6 +8,9 @@ import {
   GOTO_DASHBOARD,
   GOTO_ORDER_EDITOR,
   GOTO_USER_MGMT,
+
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
 } from './constants';
 
 export function goToDashboard() {
@@ -25,5 +28,21 @@ export function goToOrderEditor() {
 export function goToUserManagement() {
   return {
     type: GOTO_USER_MGMT,
+  };
+}
+
+export function addToCart(item, quantity) {
+  return {
+    type: ADD_TO_CART,
+    item,
+    quantity,
+  };
+}
+
+export function removeFromCart(item, quantity) {
+  return {
+    type: REMOVE_FROM_CART,
+    item,
+    quantity,
   };
 }

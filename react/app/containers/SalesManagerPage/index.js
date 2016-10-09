@@ -20,7 +20,12 @@ import {
   goToDashboard,
   goToOrderEditor,
   goToUserManagement,
+
+  addToCart,
+  removeFromCart,
 } from './actions.js';
+
+import { Button } from 'react-bootstrap';
 
 import styles from './styles.css';
 
@@ -39,6 +44,9 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       content = (
         <div>
           <h2>Order Editor</h2>
+          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: 'thing' }, 2)}>
+            Add item
+          </Button>
         </div>
       );
     } else if (this.props.sales.content === 'userManagement') {
@@ -48,6 +56,8 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         </div>
       );
     }
+
+    console.log('Shopping Cart: ', this.props.sales.shoppingCart);
 
     const navRoutes = [
       { label: 'Dashboard', onClick: this.props.onGoToDashboard },
@@ -75,10 +85,13 @@ SalesManagerPage.propTypes = {
   authenticated: React.PropTypes.bool,
   employee: React.PropTypes.object,
   sales: React.PropTypes.object,
+  shoppingCart: React.PropTypes.array,
 
   onGoToDashboard: React.PropTypes.func,
   onGoToOrderEditor: React.PropTypes.func,
   onGoToUserManagement: React.PropTypes.func,
+
+  onAddItemToCart: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -91,6 +104,8 @@ function mapDispatchToProps(dispatch) {
     onGoToDashboard: () => dispatch(goToDashboard()),
     onGoToOrderEditor: () => dispatch(goToOrderEditor()),
     onGoToUserManagement: () => dispatch(goToUserManagement()),
+
+    onAddItemToCart: (item, quantity) => dispatch(addToCart(item, quantity)),
 
     dispatch,
   };

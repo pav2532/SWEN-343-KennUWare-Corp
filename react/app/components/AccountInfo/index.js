@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import Button from 'components/Button';
+import { Button } from 'react-bootstrap';
 
 // import styles from './styles.css';
 
@@ -16,7 +16,9 @@ function AccountInfo(props) {
       <div>{props.name}</div>
       <div>{props.employeeType}</div>
       <div>
-        <Button>Sign out</Button>
+        <Button bsStyle="warning" bsSize="small">
+          Sign out
+        </Button>
       </div>
     </div>
   );
