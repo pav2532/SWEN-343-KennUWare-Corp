@@ -1,5 +1,7 @@
 package Sales.Wearables;
 
+import java.util.HashMap;
+
 /**
  * Created by benjamin on 10/9/16.
  */
@@ -7,14 +9,26 @@ public class Active {
 
     private int uid;
     private int quantity;
+    private HashMap<String, Double> components = new HashMap<String, Double>();
 
     public Active(){
         this.uid = 123;
         this.quantity = 0;
+        components.put("Standard Band", 20.00);
+        components.put("Circuit Board", 50.00);
+        components.put("Touch Screen", 30.00);
+        components.put("Standard Case", 10.00);
     }
 
     public Double calculatePrice(){
-        return 1.0;
+
+        Double value = 0.0;
+
+        for(String k : components.keySet()){
+            value += components.get(k);
+        }
+
+        return value;
     }
 
     public void addProduct(int amount){

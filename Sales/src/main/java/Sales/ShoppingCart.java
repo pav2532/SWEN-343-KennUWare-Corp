@@ -52,6 +52,8 @@ public class ShoppingCart {
     public void emptyCart(){
         currentItems.clear();
         value = 0.0;
+        customerName = "None";
+        creditCardNumber = "None";
     }
 
     public void setCustomerName(String customerName){
