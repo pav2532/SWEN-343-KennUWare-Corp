@@ -22,36 +22,43 @@ class ShoppingCart extends React.Component { // eslint-disable-line react/prefer
   }
 
   render() {
+    let top = 0;
     let content = this.props.items.map((lineItem) => {
       const { name, unitPrice } = lineItem.item;
+      const currentTop = top;
+      top += 20;
       return (
         <ShoppingCartItem
           key={name}
           name={name}
           unitPrice={unitPrice}
           quantity={lineItem.quantity}
+          style={{ top: currentTop }}
         />
       );
     });
+    const subtotalTop = top + 80 + 20;
     if (this.props.items.length === 0) {
       content = (<div>There are no items in the cart.</div>);
     }
     const subtotal = this.calculateSubtotal();
     return (
       <div className={styles.shoppingCart}>
-        <div className={styles.title}>
-          <h2>Shopping Cart</h2>
-        </div>
-        <div className={styles.priceLabel}>
-          Price
-        </div>
-        <div className={styles.quantityLabel}>
-          Quantity
+        <div className={styles.labels}>
+          <div className={styles.title}>
+            <h2>Shopping Cart</h2>
+          </div>
+          <div className={styles.priceLabel}>
+            Price
+          </div>
+          <div className={styles.quantityLabel}>
+            Quantity
+          </div>
         </div>
         <div className={styles.itemList}>
           {content}
         </div>
-        <div className={styles.subtotalLabel}>
+        <div className={styles.subtotalLabel} style={{ top: `${subtotalTop}px` }}>
           Subtotal: ${subtotal}
         </div>
       </div>

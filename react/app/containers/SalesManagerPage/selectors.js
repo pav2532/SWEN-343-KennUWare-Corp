@@ -8,16 +8,6 @@ const selectSalesDomain = () => (state) => state.get('salesManagerPage');
 /**
  * Other specific selectors
  */
-const selectAuthenticated = () => createSelector(
-  selectSalesDomain(),
-  (state) => state.get('authenticated')
-);
-
-const selectEmployee = () => createSelector(
-  selectSalesDomain(),
-  (state) => state.get('employee')
-);
-
 
 /**
  * Default selector used by Sales
@@ -30,6 +20,4 @@ const selectSales = () => createSelector(
 export default selectSales;
 export {
   selectSalesDomain,
-  selectAuthenticated,
-  selectEmployee,
 };

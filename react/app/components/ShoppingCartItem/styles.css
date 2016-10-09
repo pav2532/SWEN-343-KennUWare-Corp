@@ -1,15 +1,22 @@
 .shoppingCartItem { /* stylelint-disable */
-
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20px;
+  border-bottom: 1px solid black;
 }
 
 .itemName {
-
+  position: absolute;
+  left: 5px;
 }
 
 .unitPrice {
-
+  position: absolute;
+  left: 50%;
 }
 
 .quantity {
-  
+  position: absolute;
+  left: 75%;
 }

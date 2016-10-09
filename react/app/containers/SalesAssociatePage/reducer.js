@@ -6,15 +6,18 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  ADD_TO_CART,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  shoppingCart: [],
+});
 
 function salesAssociatePageReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case ADD_TO_CART:
+      return state
+        .updateIn(['shoppingCart'], (arr) => arr.push({ item: action.item, quantity: action.quantity }));
     default:
       return state;
   }

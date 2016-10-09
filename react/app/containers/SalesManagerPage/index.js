@@ -36,6 +36,8 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
     this.state = {
       itemName: '',
+      itemQuantity: 0,
+      itemUnitPrice: 0.0,
     };
   }
 
@@ -54,10 +56,14 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         <div>
           <h2>Order Editor</h2>
           <input value={this.state.itemName} onChange={(evt) => this.setState({ itemName: evt.target.value })} />
-          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: this.state.itemName, unitPrice: 50.0 }, 2)}>
+          <input value={this.state.itemQuantity} onChange={(evt) => this.setState({ itemQuantity: evt.target.value })} />
+          <input value={this.state.itemUnitPrice} onChange={(evt) => this.setState({ itemUnitPrice: evt.target.value })} />
+          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice }, this.state.itemQuantity)}>
             Add item
           </Button>
-          <ShoppingCart items={this.props.sales.shoppingCart} />
+          <div style={{ width: '50%' }}>
+            <ShoppingCart items={this.props.sales.shoppingCart} />
+          </div>
         </div>
       );
     } else if (this.props.sales.content === 'userManagement') {
