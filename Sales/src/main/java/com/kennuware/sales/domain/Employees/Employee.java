@@ -58,6 +58,10 @@ public class Employee {
         this.regionId = regionId;
     }
 
+    public Integer getId() {
+        return eid;
+    }
+
     public boolean authenticate(String password) {
         return this.password.equals(password);
     }
