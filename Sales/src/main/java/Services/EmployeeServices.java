@@ -16,7 +16,7 @@ public class EmployeeServices {
     public static Employee login(String username, String password){
         if(username.equals("Timmy") & password.equals("password")) {
             System.out.println("Employee logged in!");
-            return new SalesRep(username, "1", 6.8, .5, 1000.0);
+            return new SalesRep(username, "1", 6.8, .5, 1000.0, new OrderHistory());
         }
         else{ // fail case
             return null;
