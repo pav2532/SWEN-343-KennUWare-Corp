@@ -39,7 +39,7 @@ export function* login() {
   );
 
   if (!auth.err) {
-    yield put(loginSuccess(JSON.parse(auth.data)));
+    yield put(loginSuccess(auth.data));
   } else {
     yield put(loginError(auth.err));
   }
@@ -48,9 +48,9 @@ export function* login() {
 export function* completeLogin() {
   const employee = yield select(selectEmployee());
 
-  if (employee.type === 'RegionalManager' || employee.type === 'GeneralManager') {
+  if (employee.type === 'REGIONALMANAGER' || employee.type === 'GENERALMANAGER') {
     yield put(push('sales/manage'));
-  } else if (employee.type === 'Associate') {
+  } else if (employee.type === 'ASSOCIATE') {
     yield put(push('sales/associate'));
   } else {
     console.log("Employee type error: ", employee);
