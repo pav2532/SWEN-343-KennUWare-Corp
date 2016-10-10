@@ -6,6 +6,8 @@ package Services;
 
 import Sales.Employees.*;
 import Sales.*;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import static spark.Spark.get;
@@ -13,10 +15,11 @@ import static spark.Spark.get;
 public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
-    public static Employee login(String username, String password){
+    public static String login(String username, String password){
+        Gson gson = new Gson();
         if(username.equals("Timmy") & password.equals("password")) {
             System.out.println("Employee logged in!");
-            return new SalesRep(username, "1", 6.8, .5, 1000.0, new OrderHistory());
+            return gson.toJson(new SalesRep(username, "1", 6.8, .5, 1000.0, new OrderHistory()));
         }
         else{ // fail case
             return null;
