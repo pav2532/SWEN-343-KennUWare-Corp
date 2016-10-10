@@ -17,16 +17,16 @@ public class EmployeeServices {
         // TODO: get employee from database with matching username
         // call employee.authenticate(password) and return the employee data if it is valid
         Gson gson = new Gson();
-        if((username.equals("Timmy") & password.equals("password"))) {
-            return gson.toJson(new SalesRep(username));
-        } else if((username.equals("Bobby") & password.equals("rainbows"))) {
-            return gson.toJson(new RegionalManager(username));
-        } else if((username.equals("Felicia") & password.equals("Something"))) {
-            return gson.toJson(new GeneralManager(username));
-        }
-        else{ // fail case
+//        if((username.equals("Timmy") & password.equals("password"))) {
+//            return gson.toJson(new SalesRep(username));
+//        } else if((username.equals("Bobby") & password.equals("rainbows"))) {
+//            return gson.toJson(new RegionalManager(username));
+//        } else if((username.equals("Felicia") & password.equals("Something"))) {
+//            return gson.toJson(new GeneralManager(username));
+//        }
+//        else{ // fail case
             return null;
-        }
+        // }
     }
 
     //Called when a list of employees is needed
