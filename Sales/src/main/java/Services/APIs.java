@@ -18,6 +18,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password);});
+            res.body(EmployeeServices.login(username, password));
+            return res;});
     }
 }
