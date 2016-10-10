@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 9, 2016 9:28:11 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Sales.Wearables.Comfort" table="COMFORT">
+        <id name="uid" type="int" access="field">
+            <column name="UID" />
+            <generator class="assigned" />
+        </id>
+        <property name="quantity" type="int" access="field">
+            <column name="QUANTITY" />
+        </property>
+        <map name="components" table="COMFORT" lazy="true" access="field">
+            <key>
+                <column name="UID" />
+            </key>
+            <map-key type="java.lang.String"></map-key>
+            <element type="java.lang.String">
+                <column name="COMPONENTS" />
+            </element>
+        </map>
+    </class>
+</hibernate-mapping>
