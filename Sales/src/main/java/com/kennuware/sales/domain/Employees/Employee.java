@@ -15,14 +15,20 @@ public class Employee {
 
     private String name;
     private String type;
+    private String password;
 
-    public Employee(String name, String type) {
+    public Employee(String name, String type, String password) {
         this.name = name;
         this.type = type;
+        this.password = password;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public boolean authenticate(String password) {
+        return this.password.equals(password);
     }
 
 }

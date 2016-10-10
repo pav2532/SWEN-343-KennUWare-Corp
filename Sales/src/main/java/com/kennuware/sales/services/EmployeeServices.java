@@ -13,6 +13,9 @@ public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
     public static String login(String username, String password){
+
+        // TODO: get employee from database with matching username
+        // call employee.authenticate(password) and return the employee data if it is valid
         Gson gson = new Gson();
         if((username.equals("Timmy") & password.equals("password"))) {
             return gson.toJson(new SalesRep(username));

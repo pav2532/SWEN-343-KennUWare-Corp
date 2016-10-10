@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Region {
 
-    private HashMap<Integer, SalesRep> salesRepresantatives = new HashMap<Integer, SalesRep>();
+    private HashMap<String, SalesRep> salesRepresantatives = new HashMap<String, SalesRep>();
     private RegionalManager currentManager;
 
     public Region(RegionalManager currentManager){
@@ -18,7 +18,7 @@ public class Region {
     }
 
     public void addSalesRep(SalesRep newSalesRep){
-        salesRepresantatives.put(newSalesRep.getId(), newSalesRep);
+        salesRepresantatives.put(newSalesRep.getid(), newSalesRep);
     }
 
     public void removeSalesRep(String repID){

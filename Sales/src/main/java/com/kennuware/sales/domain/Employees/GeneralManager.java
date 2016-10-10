@@ -6,7 +6,7 @@ import com.kennuware.sales.domain.ShoppingCart;
 
 import java.util.ArrayList;
 
-public class GeneralManager extends Employee {
+public class GeneralManager {
 
     private String name;
     private String id;
@@ -15,7 +15,6 @@ public class GeneralManager extends Employee {
     private OrderHistory history = new OrderHistory();
 
     public GeneralManager(String name){
-        super(name, "GeneralManager");
         this.name = name;
         // this.id = id;
 

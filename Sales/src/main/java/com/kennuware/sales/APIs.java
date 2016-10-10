@@ -22,7 +22,7 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Employee employee = new Employee("Ryan", "Associate");
+        Employee employee = new Employee("Ryan", "Associate", "test");
 
         session.save(employee);
         session.getTransaction().commit();

@@ -6,19 +6,19 @@ import com.kennuware.sales.domain.ShoppingCart;
 
 import java.util.ArrayList;
 
-public class SalesRep extends Employee {
+public class SalesRep {
 
     private String name;
-    private Integer id;
+    private String id;
     private String type;
     private ShoppingCart currentOrder;
     private OrderHistory history = new OrderHistory();
 
     public SalesRep(String name) {
-        super(name, "Associate");
         this.name = name;
 
-        this.id = id;
+        // TODO: this should be loaded from database. Should never manually set id
+        this.id = "1";
         this.currentOrder = new ShoppingCart();
 
         this.type = "Associate";
@@ -29,9 +29,9 @@ public class SalesRep extends Employee {
         // history.addOrder(new Order(currentOrder.getCustomerName(), id, currentOrder.getValue(), currentOrder.getCreditCardNumber()));
         currentOrder.emptyCart();
     }
-//    public String getid(){
-//        return id;
-//    }
+    public String getid(){
+        return id;
+    }
 
     public String getName(){
         return name;

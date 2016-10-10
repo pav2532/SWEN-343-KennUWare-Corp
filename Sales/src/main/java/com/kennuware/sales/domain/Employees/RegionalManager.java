@@ -1,16 +1,15 @@
 package com.kennuware.sales.domain.Employees;
 
 
-public class RegionalManager extends Employee {
+public class RegionalManager {
 
     private String name;
     private String id;
     private String type;
 
     public RegionalManager(String name){
-        super(name, "RegionManager");
         this.name = name;
-        this.id = id;
+        // this.id = id;
         this.type = "RegionalManager";
     }
 
