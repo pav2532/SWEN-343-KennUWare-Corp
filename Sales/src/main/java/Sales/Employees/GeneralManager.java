@@ -5,19 +5,14 @@ import Sales.Order;
 import Sales.OrderHistory;
 import Sales.ShoppingCart;
 
-/**
- * Created by benjamin on 10/7/16.
- */
+import java.util.ArrayList;
 
 public class GeneralManager implements Employee {
 
     private String name;
     private String id;
     private ShoppingCart currentOrder;
-    private Double commission;
-    private Double commissionRate;
-    private Double salary;
-    private OrderHistory history;
+    private OrderHistory history = new OrderHistory();
 
     public GeneralManager(String name, String id){
         this.name = name;
@@ -27,7 +22,6 @@ public class GeneralManager implements Employee {
 
     //Checks out the current shopping cart
     public void checkout(Double bulkDiscount){
-        commission = commission + (commissionRate * currentOrder.getValue());
         history.addOrder(new Order(currentOrder.getCustomerName(), id, currentOrder.getValue() * bulkDiscount, currentOrder.getCreditCardNumber()));
         currentOrder.emptyCart();
     }
@@ -40,8 +34,8 @@ public class GeneralManager implements Employee {
         return name;
     }
 
-    public Double calcSalary(){
-        return salary + commission;
+    public ArrayList<Order> getHistory(){
+        return history.getHistory();
     }
 
 }
