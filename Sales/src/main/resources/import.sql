@@ -1,3 +1,6 @@
+insert into Item (name, unitPrice) values ("Fitness", "10.0");
+insert into ItemOrders (orderId, itemId, quantity) values ("1", "1", "10");
+
 # Region ids are auto-generated
 insert into region (name) values ("Northeast");
 insert into region (name) values ("Southeast");
@@ -19,3 +22,4 @@ insert into storeEmployee (storeID, employeeID) values (1, 6);
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 123, "1234567890987654", "10/22");
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 456, "8484848484848484", "12/31");
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Kind of Ben", 1098, "9999999999999999", "1/25");
+
