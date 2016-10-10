@@ -23,6 +23,9 @@ public class Employee {
         this.password = password;
     }
 
+    public Employee() {
+    }
+
     public Integer getId() {
         return id;
     }

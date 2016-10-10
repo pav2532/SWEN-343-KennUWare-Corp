@@ -1,6 +1,6 @@
 package com.kennuware.sales.domain.Employees;
 
-import com.kennuware.sales.domain.Order;
+import com.kennuware.sales.domain.SalesOrder;
 import com.kennuware.sales.domain.OrderHistory;
 import com.kennuware.sales.domain.ShoppingCart;
 
@@ -24,7 +24,7 @@ public class GeneralManager {
 
     //Checks out the current shopping cart
     public void checkout(Double bulkDiscount){
-        history.addOrder(new Order(currentOrder.getCustomerName(), id, currentOrder.getValue() * bulkDiscount, currentOrder.getCreditCardNumber()));
+        //history.addOrder(new Order(currentOrder.getCustomerName(), id, currentOrder.getValue() * bulkDiscount, currentOrder.getCreditCardNumber()));
         currentOrder.emptyCart();
     }
 
@@ -36,7 +36,7 @@ public class GeneralManager {
         return name;
     }
 
-    public ArrayList<Order> getHistory(){
+    public ArrayList<SalesOrder> getHistory(){
         return history.getHistory();
     }
 

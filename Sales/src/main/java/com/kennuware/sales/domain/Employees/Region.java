@@ -1,6 +1,6 @@
 package com.kennuware.sales.domain.Employees;
 
-import com.kennuware.sales.domain.Order;
+import com.kennuware.sales.domain.SalesOrder;
 
 import java.util.HashMap;
 
@@ -30,8 +30,8 @@ public class Region {
         Double revenue = 0.0;
 
         for(SalesRep s : salesRepresantatives.values()){
-            for(Order o : s.getHistory()){
-                revenue += o.getValue();
+            for(SalesOrder o : s.getHistory()){
+                //revenue += o.getValue();
             }
         }
 

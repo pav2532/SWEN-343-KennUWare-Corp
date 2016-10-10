@@ -1,6 +1,6 @@
 package com.kennuware.sales.domain.Employees;
 
-import com.kennuware.sales.domain.Order;
+import com.kennuware.sales.domain.SalesOrder;
 import com.kennuware.sales.domain.OrderHistory;
 import com.kennuware.sales.domain.ShoppingCart;
 
@@ -41,7 +41,7 @@ public class SalesRep {
         return currentOrder;
     }
 
-    public ArrayList<Order> getHistory(){
+    public ArrayList<SalesOrder> getHistory(){
         return history.getHistory();
     }
 

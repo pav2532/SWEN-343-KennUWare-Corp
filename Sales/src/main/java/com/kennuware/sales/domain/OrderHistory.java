@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class OrderHistory {
 
-    private ArrayList<Order> history = new ArrayList<Order>();
+    private ArrayList<SalesOrder> history = new ArrayList<SalesOrder>();
 
     public OrderHistory(){}
 
-    public void addOrder(Order newOrder){
+    public void addOrder(SalesOrder newOrder){
         history.add(newOrder);
     }
 
-    public ArrayList<Order> getHistory(){
+    public ArrayList<SalesOrder> getHistory(){
         return history;
     }
 
