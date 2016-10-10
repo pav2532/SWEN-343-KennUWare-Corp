@@ -70,7 +70,33 @@ public class APIs {
 		 *
 		 */
 		get("/revenue", (req, res) -> {
-			float revenue = 0;
+			double revenue = 0;
+			revenue = EmployeeServices.getTotalRevenue();
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+		
+		/* Gets revenue from a salesperson
+		 * HR gets revenue to calculate commissions weekly
+		 * GET
+		 *
+		 */
+		get("/revenue/employee/:eid", (req, res) -> {
+			double revenue = 0;
+			String eid = req.params(":eid");
+			revenue = EmployeeServices.getEmployeeRevenue(eid);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+		
+		/* Gets revenue from a region
+		 * GET
+		 *
+		 */
+		get("/revenue/region/:id", (req, res) -> {
+			double revenue = 0;
+			String id = req.params(":eid");
+			revenue = EmployeeServices.getRegionRevenue(id);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -80,7 +106,8 @@ public class APIs {
 		 *
 		 */
 		get("/getSale/:pid", (req, res) -> {
-			String pid = req.params(":pid"); 
+			String pid = req.params(":pid");
+			
 			return pid;
 		});
 		
@@ -89,20 +116,9 @@ public class APIs {
 		 *
 		 */
 		get("/sales/expenses", (req, res) -> {
-			float expenses = 0;
+			double expenses = 0;
 			res.type("text/json");
 			return "{\"expenses\":\"" + expenses + "\"}";
-		});
-		
-		/* HR gets employee ID and value of commissions for salespersons made weekly
-		 * GET
-		 *
-		 */
-		get("/commissions/:eid", (req, res) -> {
-			String eid = req.params(":eid");
-			float commission = 0;
-			res.type("text/json");
-			return "{\"commission\":\"" + commission + "\"}";
 		});
 
     }

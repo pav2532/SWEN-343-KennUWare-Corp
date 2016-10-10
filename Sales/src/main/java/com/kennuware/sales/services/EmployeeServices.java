@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
@@ -51,5 +53,23 @@ public class EmployeeServices {
     //Search through database for specific employee, and return their revenue
     public static double getEmployeeRevenue(String id){
         return 0;
+    }
+    
+    public static double getRegionRevenue(String region){
+    	double result = 0;
+    	for(Employee eid: getEmployees(region)){
+    		result += getEmployeeRevenue(Integer.toString(eid.getEid()));
+    		
+    	}
+    	return result;
+    }
+    
+    public static double getTotalRevenue(){
+    	double result = 0;
+    	for(Employee eid: getEmployees()){
+    		result += getEmployeeRevenue(Integer.toString(eid.getEid()));
+    		
+    	}
+    	return result;
     }
 }
