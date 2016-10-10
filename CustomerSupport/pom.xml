@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kennuware</groupId>
-    <artifactId>customer-support</artifactId>
+    <artifactId>sales</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -37,15 +37,14 @@
             <version>1.7.21</version>
         </dependency>
         <dependency>
-	 		<groupId>org.hibernate</groupId>
-		 	<artifactId>hibernate-core</artifactId>
-			 <version>4.3.5.Final</version>
-		 </dependency>
-			 <dependency>
-			 <groupId>mysql</groupId>
-			 <artifactId>mysql-connector-java</artifactId>
-			 <version>5.1.6</version>
-		</dependency>
-	    </dependencies>
-
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+    </dependencies>
 </project>
