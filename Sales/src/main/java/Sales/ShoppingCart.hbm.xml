@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- Generated Oct 9, 2016 9:27:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+
+<class
+    name="Sales.ShoppingCart"
+    table="SHOPPINGCART"
+>
+
+	<id 
+        name="customerName"
+        type="java.lang.String"
+    >
+    
+<column name="CUSTOMERNAME" />
+	    <generator class="assigned" />
+    </id>
+
+
+
+
+    <property
+        name="creditCardNumber"
+	    type="java.lang.String"
+    >
+<column name="CREDITCARDNUMBER" />
+  </property>
+
+    <property
+        name="value"
+	    type="java.lang.Double"
+        access="field"
+    >
+<column name="VALUE" />
+  </property>
+
+
+	<map name="currentItems"
+table="SHOPPINGCART"
+	lazy="true"
+        access="field"
+	>
+		<key
+		> 
+<column name="CUSTOMERNAME" />
+		</key>
+    		<map-key type="java.lang.Integer">
+		</map-key>
+<element type="java.lang.Integer">
+<column name="CURRENTITEMS" />
+</element>
+	</map>    <many-to-one
+	    name="currentCatalog"
+	    class="Sales.Catalog"
+	    
+        access="field"
+        fetch="join"
+    >
+<column name="CURRENTCATALOG" />
+   </many-to-one>
+
+</class>
+
+</hibernate-mapping>
