@@ -12,8 +12,6 @@ public class RegionalManager implements Employee {
 
     private String name;
     private String id;
-    private Double commissionRate;
-    private Double salary;
 
     public RegionalManager(String name, String id){
         this.name = name;
