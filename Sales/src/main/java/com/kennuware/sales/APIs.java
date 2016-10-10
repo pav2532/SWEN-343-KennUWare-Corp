@@ -10,7 +10,8 @@ import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Employees.Employee;
-import com.kennuware.sales.domain.Employees.SalesRep;
+import com.kennuware.sales.domain.Employees.EmployeeType;
+import com.kennuware.sales.domain.Employees.Region;
 import com.kennuware.sales.domain.Store;
 import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.services.EmployeeServices;
@@ -24,7 +25,16 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Employee employee = new Employee("Ryan", "Associate", "test");
+        Employee employee = new Employee();
+        employee.setName("Ryan");
+        employee.setPassword("test");
+        employee.setRegionId(1);
+        employee.setType(EmployeeType.GENERALMANAGER);
+
+        Region region = new Region();
+        region.setName("Northwest");
+
+        session.save(region);
         session.save(employee);
 
         Store store = new Store();
@@ -53,5 +63,6 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password);
         }, gson::toJson);
+
     }
 }

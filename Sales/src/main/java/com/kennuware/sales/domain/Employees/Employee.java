@@ -11,20 +11,55 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer eid;
 
     private String name;
-    private String type;
+    private EmployeeType type;
     private String password;
 
-    public Employee(String name, String type, String password) {
+    private Integer regionId;
+
+    public Employee() {
+    }
+
+    public Integer getEid() {
+        return eid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public EmployeeType getType() {
+        return type;
+    }
+
+    public void setType(EmployeeType type) {
         this.type = type;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+    }
+
     public Integer getId() {
-        return id;
+        return eid;
     }
 
     public boolean authenticate(String password) {

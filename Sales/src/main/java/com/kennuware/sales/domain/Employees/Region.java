@@ -1,42 +1,48 @@
 package com.kennuware.sales.domain.Employees;
 
-import com.kennuware.sales.domain.Order;
+
+import javax.persistence.*;
+
+import com.kennuware.sales.domain.SalesOrder;
 
 import java.util.HashMap;
 
+@Table
+@Entity
 public class Region {
 
-    private HashMap<String, SalesRep> salesRepresantatives = new HashMap<String, SalesRep>();
-    private RegionalManager currentManager;
 
-    public Region(RegionalManager currentManager){
-        this.currentManager = currentManager;
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    private String name;
+
+    public Region() {}
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setRegionalManager(RegionalManager newRegionalManager){
-        this.currentManager = newRegionalManager;
+    public String getName() {
+        return name;
     }
 
-    public void addSalesRep(SalesRep newSalesRep){
-        salesRepresantatives.put(newSalesRep.getid(), newSalesRep);
-    }
+//    public Double calculateRevenue() {
+//
+//        Double revenue = 0.0;
+//
+//        for (SalesRep s : salesRepresantatives.values()) {
+//            for (SalesOrder o : s.getHistory()) {
+//                //revenue += o.getValue();
+//            }
+//        }
+//
+//        return revenue;
+//    }
 
-    public void removeSalesRep(String repID){
-        salesRepresantatives.remove(repID);
-    }
-
-    public Double calculateRevenue(){
-
-        Double revenue = 0.0;
-
-        for(SalesRep s : salesRepresantatives.values()){
-            for(Order o : s.getHistory()){
-                revenue += o.getValue();
-            }
-        }
-
-        return revenue;
-
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
