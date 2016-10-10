@@ -7,5 +7,6 @@ package Services;
 
 public class MiscExternalServices {
     //Gets the total revenue of all employees
-    public double getTotalRevenue(){return 0;}
+    //Loop through all employees in database, add revenues, and return
+    public static double getTotalRevenue(){return 0;}
 }

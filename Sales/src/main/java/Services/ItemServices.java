@@ -4,13 +4,18 @@
 
 package Services;
 
+import Sales.*;
+import Sales.Wearables.*;
 
 public class ItemServices {
     //Gets a catalog of all items that can be sold
-    //Change to return catalog object
-    public void getCatalog(){}
+    public static Catalog getCatalog(){
+        return new Catalog();
+    }
 
     //Gets a previously sold wearable for customer support
-    //Change to return wearable object
-    public void getWearable(){}
+    //Change to pull a wearable from the database based off idNumber
+    public static Wearable getWearable(int idNumber){
+        return null;
+    }
 }

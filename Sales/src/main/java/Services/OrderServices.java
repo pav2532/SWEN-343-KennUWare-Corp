@@ -4,13 +4,20 @@
 
 package Services;
 
-import java.util.HashMap;
+import Sales.Wearables.*;
+import Sales.*;
+
 
 public class OrderServices {
     //Adds an item to the shopping cart
-    public void addToCart(/*item object*/){}
+    //Change to add an item to the current shopping cart
+    public static void addToCart(Wearable temp){
+
+    }
 
     //Returns the entire shopping cart
-    //Change to return a shopping cart object
-    public HashMap getCart(){return null;}
+    //Change to return the current shopping card of the employee whose id is given
+    public static ShoppingCart getCart(int id){
+        return null;
+    }
 }
