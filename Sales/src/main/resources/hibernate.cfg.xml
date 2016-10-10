@@ -17,6 +17,7 @@
         <property name="hibernate.hbm2ddl.auto">create</property>
 
         <mapping class="com.kennuware.sales.domain.Employees.Employee"></mapping>
+        <mapping class="com.kennuware.sales.domain.Employees.Region"></mapping>
 
         <!--<mapping resource ="com.kennuware.sales.domain.Order.hbm.xml"/>-->
         <!--<mapping resource ="com.kennuware.sales.domain.OrderHistory.hbm.xml"/>-->
