@@ -19,6 +19,8 @@
         <mapping class="com.kennuware.sales.domain.Employees.Employee"></mapping>
         <mapping class="com.kennuware.sales.domain.Employees.Region"></mapping>
         <mapping class="com.kennuware.sales.domain.SalesOrder"></mapping>
+        <mapping class="com.kennuware.sales.domain.Store"></mapping>
+        <mapping class="com.kennuware.sales.domain.StoreEmployee"></mapping>
 
         <!--<mapping resource ="com.kennuware.sales.domain.Order.hbm.xml"/>-->
         <!--<mapping resource ="com.kennuware.sales.domain.OrderHistory.hbm.xml"/>-->
