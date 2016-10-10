@@ -24,6 +24,7 @@ const initialState = fromJS({
   employee: {
     username: '',
     type: '',
+    id: '',
   },
 });
 
@@ -32,7 +33,9 @@ function appReducer(state = initialState, action) {
     case LOGIN_SUCCESS:
       return state
         .set('authenticated', true)
-        .set('employee', action.data.employee);
+        .setIn(['employee', 'username'], action.data.username)
+        .setIn(['employee', 'type'], action.data.type)
+        .setIn(['employee', 'id'], action.data.id);
     default:
       return state;
   }

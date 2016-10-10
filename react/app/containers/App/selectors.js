@@ -27,7 +27,7 @@ const selectAuthenticated = () => createSelector(
 
 const selectEmployee = () => createSelector(
   selectGlobal(),
-  (state) => state.get('employee'),
+  (state) => state.get('employee').toJS(),
 );
 
 export {

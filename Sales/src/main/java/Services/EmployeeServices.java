@@ -12,11 +12,14 @@ import java.util.ArrayList;
 public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
-    public static String login(String username, String password){;
+    public static String login(String username, String password){
         Gson gson = new Gson();
-        if((username.equals("Timmy") & password.equals("password")) ||
-                (username.equals("Bobby") & password.equals("rainbows"))|| (username.equals("Felicia") & password.equals("Something"))) {
+        if((username.equals("Timmy") & password.equals("password"))) {
             return gson.toJson(new SalesRep(username, "1", 6.8, .5, 1000.0));
+        } else if((username.equals("Bobby") & password.equals("rainbows"))) {
+            return gson.toJson(new RegionalManager(username, "2"));
+        } else if((username.equals("Felicia") & password.equals("Something"))) {
+            return gson.toJson(new GeneralManager(username, "3"));
         }
         else{ // fail case
             return null;

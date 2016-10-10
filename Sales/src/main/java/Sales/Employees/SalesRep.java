@@ -11,6 +11,7 @@ public class SalesRep implements Employee {
 
     private String name;
     private String id;
+    private String type;
     private ShoppingCart currentOrder;
     private OrderHistory history = new OrderHistory();
 
@@ -18,6 +19,8 @@ public class SalesRep implements Employee {
         this.name = name;
         this.id = id;
         this.currentOrder = new ShoppingCart();
+
+        this.type = "Associate";
     }
 
     public void checkout(){

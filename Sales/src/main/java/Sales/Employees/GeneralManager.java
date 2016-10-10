@@ -11,12 +11,15 @@ public class GeneralManager implements Employee {
 
     private String name;
     private String id;
+    private String type;
     private ShoppingCart currentOrder;
     private OrderHistory history = new OrderHistory();
 
     public GeneralManager(String name, String id){
         this.name = name;
         this.id = id;
+
+        this.type = "GeneralManager";
     }
 
 

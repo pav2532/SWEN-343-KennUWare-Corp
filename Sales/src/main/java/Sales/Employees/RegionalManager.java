@@ -12,10 +12,12 @@ public class RegionalManager implements Employee {
 
     private String name;
     private String id;
+    private String type;
 
     public RegionalManager(String name, String id){
         this.name = name;
         this.id = id;
+        this.type = "RegionalManager";
     }
 
 

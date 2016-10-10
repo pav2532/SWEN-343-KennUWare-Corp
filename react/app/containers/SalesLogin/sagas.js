@@ -23,54 +23,37 @@ export function* login() {
 
   const requestURL = '/api/sales/login';
 
-  console.log("Username: " + username);
-  console.log("Password: " + password);
-
   // Call our request helper (see 'utils/request')
-  // const auth = yield call(request, requestURL, {
-  //   method: 'POST',
-  //   body: {
-  //     username,
-  //     password,
-  //   },
-  // });
-
-  let type = 'GeneralManager';
-  if (username === 'associate') {
-    type = 'Associate';
-  } else if (username === 'RegionalManager') {
-    type = 'RegionalManager';
-  }
-  console.log('type: ', type);
-  const auth = {
-    data: {
-      authenticated: true,
-      employee: {
-        username,
-        type,
+  const auth = yield call(request, requestURL,
+    {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    },
-  };
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    }
+  );
 
   if (!auth.err) {
-    yield put(loginSuccess(auth.data));
+    yield put(loginSuccess(JSON.parse(auth.data)));
   } else {
     yield put(loginError(auth.err));
   }
 }
 
 export function* completeLogin() {
-  // TODO: check employee type, route to page
-  console.log("Completing login");
   const employee = yield select(selectEmployee());
-  console.log(employee);
 
   if (employee.type === 'RegionalManager' || employee.type === 'GeneralManager') {
     yield put(push('sales/manage'));
   } else if (employee.type === 'Associate') {
     yield put(push('sales/associate'));
   } else {
-    console.log("Employee type error", employee);
+    console.log("Employee type error: ", employee);
   }
 }
 
