@@ -9,12 +9,9 @@ import com.kennuware.customersupport.data.HibernateUtil;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.kennuware.customersupport.domain.Customer;
-import com.kennuware.customersupport.domain.DateTrail;
+import com.kennuware.customersupport.domain.*;
 import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
-import com.kennuware.customersupport.domain.Returns;
-import com.kennuware.customersupport.domain.ReturnType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
 import org.hibernate.Session;
@@ -48,7 +45,7 @@ public class APIs {
         dateTrail.setApproveDenyDate(dateFormat.format(cal.getTime()));
         dateTrail.setReceiveDate(dateFormat.format(cal.getTime()));
         dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
-        dateTrail.setResolveDate(dateFormat.format(cal.getTime()));
+        dateTrail.setReturnsID(4);
 
         Returns returns = new Returns();
         returns.setStoreID(2);
@@ -56,6 +53,11 @@ public class APIs {
         returns.setRMA("BASF3245");
         returns.setType(ReturnType.REFUND);
 
+        Refund refund = new Refund();
+        refund.setRMA("TMDSGF");
+        refund.setRefund(52.3);
+
+        session.save(refund);
         session.save(returns);
         session.save(dateTrail);
         session.save(employee);

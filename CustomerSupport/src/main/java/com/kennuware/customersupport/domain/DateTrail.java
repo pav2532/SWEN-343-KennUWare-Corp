@@ -16,6 +16,7 @@ public class DateTrail {
     @Id
     @GeneratedValue
     private int id;
+    private int returnsID;
     private String requestDate;
     private String approveDenyDate;
     private String receiveDate;
@@ -54,5 +55,12 @@ public class DateTrail {
     }
     public void setResolveDate(String resolveDate) {
         this.resolveDate = resolveDate;
+    }
+
+    public int getReturnsID() {
+        return returnsID;
+    }
+    public void setReturnsID(int returnsID) {
+        this.returnsID = returnsID;
     }
 }

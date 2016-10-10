@@ -21,6 +21,7 @@
         <mapping class="com.kennuware.customersupport.domain.DateTrail"></mapping>
         <mapping class="com.kennuware.customersupport.domain.Returns"></mapping>
         <mapping class="com.kennuware.customersupport.domain.Employees.Region"></mapping>
+        <mapping class="com.kennuware.customersupport.domain.Refund"></mapping>
 
     </session-factory>
 </hibernate-configuration>
