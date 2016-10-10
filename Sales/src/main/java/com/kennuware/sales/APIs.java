@@ -10,7 +10,10 @@ import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Employees.Employee;
-import com.kennuware.sales.domain.Employees.SalesRep;
+import com.kennuware.sales.domain.Employees.EmployeeType;
+import com.kennuware.sales.domain.Employees.Region;
+import com.kennuware.sales.domain.Store;
+import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.services.EmployeeServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,9 +25,29 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Employee employee = new Employee("Ryan", "Associate", "test");
+        Employee employee = new Employee();
+        employee.setName("Ryan");
+        employee.setPassword("test");
+        employee.setRegionId(1);
+        employee.setType(EmployeeType.GENERALMANAGER);
 
+        Region region = new Region();
+        region.setName("Northwest");
+
+        session.save(region);
         session.save(employee);
+
+        Store store = new Store();
+        store.setRegionID(1);
+        store.setAddress("Who really cares");
+        store.setName("Best Buy");
+        session.save(store);
+
+        StoreEmployee storeEmployee = new StoreEmployee();
+        storeEmployee.setEmployeeID(1);
+        storeEmployee.setStoreID(2);
+        session.save(storeEmployee);
+
         session.getTransaction().commit();
 
         session.close();
@@ -40,6 +63,7 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password);
         }, gson::toJson);
+
         
         /* Accounting gets revenue from Sales
 		 * GET
@@ -80,5 +104,6 @@ public class APIs {
 			res.type("text/json");
 			return "{\"commission\":\"" + commission + "\"}";
 		});
+
     }
 }
