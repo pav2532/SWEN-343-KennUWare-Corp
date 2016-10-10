@@ -6,17 +6,18 @@
 
 import React from 'react';
 
-import { Button } from 'react-bootstrap';
-
 import styles from './styles.css';
 
 function SideNav(props) {
   const routes = props.routes.map((route) => {
-    console.log(route);
+    let className = styles.menuItem;
+    if (props.active === route.label) {
+      className += ` ${styles.menuItemActive}`;
+    }
     return (
-      <Button key={route.label} bsStyle="success" bsSize="large" onClick={route.onClick}>
+      <button className={className} key={route.label} onClick={route.onClick}>
         {route.label}
-      </Button>
+      </button>
     );
   });
   return (
@@ -30,6 +31,7 @@ function SideNav(props) {
 
 SideNav.propTypes = {
   className: React.PropTypes.string,
+  active: React.PropTypes.string,
   routes: React.PropTypes.array,
 };
 

@@ -5,7 +5,8 @@ import { SIGN_OUT } from 'containers/App/constants';
 
 export function* signOut() {
   // redirect to login page
-  // TODO: do some de-auth stuff here
+  // TODO: do some de-auth stuff 
+  // Also clear stuff like the content route on this page from state
   yield put(push('/sales'));
 }
 

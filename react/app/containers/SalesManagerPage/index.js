@@ -31,6 +31,7 @@ import {
 } from 'containers/App/actions';
 
 import { Button } from 'react-bootstrap';
+import ItemOrderForm from 'components/ItemOrderForm';
 
 import styles from './styles.css';
 
@@ -46,31 +47,26 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
   }
 
   render() {
-    console.log(this.props.authenticated);
-    console.log(this.props.employee);
-
     // Determine the content to show
+    let activeRoute = 'Dashboard';
     let content = (<div>Hello</div>);
     if (this.props.sales.content === 'dashboard') {
+      activeRoute = 'Dashboard';
       content = (
         <TotalRevenue />
       );
     } else if (this.props.sales.content === 'orderEditor') {
+      activeRoute = 'Bulk Order';
       content = (
         <div>
-          <h2>Order Editor</h2>
-          <input value={this.state.itemName} onChange={(evt) => this.setState({ itemName: evt.target.value })} />
-          <input value={this.state.itemQuantity} onChange={(evt) => this.setState({ itemQuantity: evt.target.value })} />
-          <input value={this.state.itemUnitPrice} onChange={(evt) => this.setState({ itemUnitPrice: evt.target.value })} />
-          <Button bsStyle="primary" bsSize="lg" onClick={() => this.props.onAddItemToCart({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice }, this.state.itemQuantity)}>
-            Add item
-          </Button>
-          <div style={{ width: '50%' }}>
+          <div style={{ width: '50%', float: 'left', height: '600px' }}>
+            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
             <ShoppingCart items={this.props.sales.shoppingCart} />
           </div>
         </div>
       );
     } else if (this.props.sales.content === 'userManagement') {
+      activeRoute = 'User Management';
       content = (
         <div>
           <h2>User Management</h2>
@@ -80,13 +76,16 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
     const navRoutes = [
       { label: 'Dashboard', onClick: this.props.onGoToDashboard },
-      { label: 'Order Editor', onClick: this.props.onGoToOrderEditor },
       { label: 'User Management', onClick: this.props.onGoToUserManagement },
     ];
+    if (this.props.employee.type === 'GeneralManager') {
+      navRoutes.push(
+      { label: 'Bulk Order', onClick: this.props.onGoToOrderEditor },)
+    }
 
     return (
       <div>
-        <SideNav className={styles.sideNav} routes={navRoutes} />
+        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
         <AccountInfo
           className={styles.accountInfo}
           name={this.props.employee.username}

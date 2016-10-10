@@ -38,7 +38,10 @@ export function* login() {
   let type = 'GeneralManager';
   if (username === 'associate') {
     type = 'Associate';
+  } else if (username === 'RegionalManager') {
+    type = 'RegionalManager';
   }
+  console.log('type: ', type);
   const auth = {
     data: {
       authenticated: true,
