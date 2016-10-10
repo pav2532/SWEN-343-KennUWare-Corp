@@ -2,3 +2,13 @@ insert into employee (name, type, password) values ("SalesRep1", "Associate", "t
 insert into employee (name, type, password) values ("RegionalManager1", "RegionalManager", "test");
 insert into employee (name, type, password) values ("TheGeneral", "GeneralManager", "test");
 insert into employee (name, type, password) values ("SalesRep2", "Associate", "test");
+insert into store (regionID, name, address) values (1, "Best Buy", "Some address");
+insert into store (regionID, name, address) values (4, "Radioshack", "Another address");
+insert into store (regionID, name, address) values (2, "Circuit City", "Who needs addresses?");
+insert into store (regionID, name, address) values (3, "Wal-Mart", "The corner of mulberry and main street");
+insert into storeEmployee (storeID, employeeID) values (1, 1);
+insert into storeEmployee (storeID, employeeID) values (1, 2);
+insert into storeEmployee (storeID, employeeID) values (1, 3);
+insert into storeEmployee (storeID, employeeID) values (3, 4);
+insert into storeEmployee (storeID, employeeID) values (2, 5);
+insert into storeEmployee (storeID, employeeID) values (1, 6);
