@@ -33,9 +33,9 @@ function appReducer(state = initialState, action) {
     case LOGIN_SUCCESS:
       return state
         .set('authenticated', true)
-        .setIn(['employee', 'username'], action.data.username)
+        .setIn(['employee', 'username'], action.data.name)
         .setIn(['employee', 'type'], action.data.type)
-        .setIn(['employee', 'id'], action.data.id);
+        .setIn(['employee', 'id'], action.data.eid);
     default:
       return state;
   }

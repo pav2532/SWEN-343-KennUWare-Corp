@@ -4,7 +4,7 @@
 
 package com.kennuware.sales;
 
-// import com.kennuware.sales.data.HibernateUtil;
+import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
@@ -21,9 +21,9 @@ import org.hibernate.SessionFactory;
 public class APIs {
     public static void main(String[] args) {
 
-//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        session.beginTransaction();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 //
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -61,7 +61,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password);
+            return EmployeeServices.login(username, password, session);
         }, gson::toJson);
 
         System.out.println("Running login");
