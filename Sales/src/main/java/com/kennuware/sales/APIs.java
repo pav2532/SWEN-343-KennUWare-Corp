@@ -71,7 +71,11 @@ public class APIs {
 		 */
 		get("/revenue", (req, res) -> {
 			double revenue = 0;
-			revenue = EmployeeServices.getTotalRevenue();
+			try{
+				revenue = EmployeeServices.getTotalRevenue();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
