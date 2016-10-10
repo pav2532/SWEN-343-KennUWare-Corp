@@ -4,7 +4,7 @@
 
 package com.kennuware.sales;
 
-import com.kennuware.sales.data.HibernateUtil;
+// import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
@@ -21,36 +21,36 @@ import org.hibernate.SessionFactory;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        Employee employee = new Employee();
-        employee.setName("Ryan");
-        employee.setPassword("test");
-        employee.setRegionId(1);
-        employee.setType(EmployeeType.GENERALMANAGER);
-
-        Region region = new Region();
-        region.setName("Northwest");
-
-        session.save(region);
-        session.save(employee);
-
-        Store store = new Store();
-        store.setRegionID(1);
-        store.setAddress("Who really cares");
-        store.setName("Best Buy");
-        session.save(store);
-
-        StoreEmployee storeEmployee = new StoreEmployee();
-        storeEmployee.setEmployeeID(1);
-        storeEmployee.setStoreID(2);
-        session.save(storeEmployee);
-
-        session.getTransaction().commit();
-
-        session.close();
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        session.beginTransaction();
+//
+//        Employee employee = new Employee();
+//        employee.setName("Ryan");
+//        employee.setPassword("test");
+//        employee.setRegionId(1);
+//        employee.setType(EmployeeType.GENERALMANAGER);
+//
+//        Region region = new Region();
+//        region.setName("Northwest");
+//
+//        session.save(region);
+//        session.save(employee);
+//
+//        Store store = new Store();
+//        store.setRegionID(1);
+//        store.setAddress("Who really cares");
+//        store.setName("Best Buy");
+//        session.save(store);
+//
+//        StoreEmployee storeEmployee = new StoreEmployee();
+//        storeEmployee.setEmployeeID(1);
+//        storeEmployee.setStoreID(2);
+//        session.save(storeEmployee);
+//
+//        session.getTransaction().commit();
+//
+//        session.close();
 
         Gson gson = new Gson();
 
@@ -64,7 +64,8 @@ public class APIs {
             return EmployeeServices.login(username, password);
         }, gson::toJson);
 
-        
+        System.out.println("Running login");
+
         /* Accounting gets revenue from Sales
 		 * GET
 		 *
@@ -104,6 +105,9 @@ public class APIs {
 			res.type("text/json");
 			return "{\"commission\":\"" + commission + "\"}";
 		});
+
+
+        System.out.println("Ran through all apis");
 
     }
 }
