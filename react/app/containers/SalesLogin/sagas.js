@@ -4,7 +4,15 @@
 
 import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE, push } from 'react-router-redux';
-import { LOGIN, LOGIN_SUCCESS, LOGIN_ERROR } from './constants';
+import {
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+
+  ASSOCIATE,
+  GENERALMANAGER,
+  REGIONALMANAGER
+} from './constants';
 import { loginSuccess, loginError } from './actions';
 
 
@@ -48,9 +56,9 @@ export function* login() {
 export function* completeLogin() {
   const employee = yield select(selectEmployee());
 
-  if (employee.type === 'REGIONALMANAGER' || employee.type === 'GENERALMANAGER') {
+  if (employee.type === REGIONALMANAGER || employee.type === GENERALMANAGER) {
     yield put(push('sales/manage'));
-  } else if (employee.type === 'ASSOCIATE') {
+  } else if (employee.type === ASSOCIATE) {
     yield put(push('sales/associate'));
   } else {
     console.log("Employee type error: ", employee);

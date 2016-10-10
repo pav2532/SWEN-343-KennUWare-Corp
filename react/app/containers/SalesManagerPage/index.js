@@ -27,6 +27,12 @@ import {
 } from './actions.js';
 
 import {
+  ASSOCIATE,
+  REGIONALMANAGER,
+  GENERALMANAGER,
+} from 'containers/SalesLogin/constants';
+
+import {
   signOut,
 } from 'containers/App/actions';
 
@@ -78,7 +84,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       { label: 'Dashboard', onClick: this.props.onGoToDashboard },
       { label: 'User Management', onClick: this.props.onGoToUserManagement },
     ];
-    if (this.props.employee.type === 'GeneralManager') {
+    if (this.props.employee.type === GENERALMANAGER) {
       navRoutes.push(
       { label: 'Bulk Order', onClick: this.props.onGoToOrderEditor },)
     }
