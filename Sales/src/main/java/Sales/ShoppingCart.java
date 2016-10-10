@@ -1,10 +1,9 @@
 package Sales;
 
+import Sales.Wearables.Wearable;
+
 import java.util.HashMap;
 
-/**
- * Created by benjamin on 10/7/16.
- */
 public class ShoppingCart {
 
     private String customerName;
@@ -50,6 +49,8 @@ public class ShoppingCart {
     public void emptyCart(){
         currentItems.clear();
         value = 0.0;
+        customerName = "None";
+        creditCardNumber = "None";
     }
 
     public void setCustomerName(String customerName){

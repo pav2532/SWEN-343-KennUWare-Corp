@@ -4,24 +4,46 @@
 
 package Services;
 
+import Sales.Employees.*;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class EmployeeServices {
     //Called when someone logs in
-    //Change what this returns to a username and an employee type
-    public void login(String username, String password){}
+    //Search through database for employee, check if password is right
+    public static String login(String username, String password){;
+        Gson gson = new Gson();
+        if((username.equals("Timmy") & password.equals("password")) ||
+                (username.equals("Bobby") & password.equals("rainbows"))|| (username.equals("Felicia") & password.equals("Something"))) {
+            return gson.toJson(new SalesRep(username, "1", 6.8, .5, 1000.0));
+        }
+        else{ // fail case
+            return null;
+        }
+    }
 
     //Called when a list of employees is needed
-    //Change to return an array of employees
-    public void getEmployees(){}
+    //Get all employees and return an Arraylist of them
+    public static ArrayList<Employee> getEmployees(){
+        return null;
+    }
 
     ////Called when a list of employees is needed from a region
-    //Change to return an array of employees
-    public void getEmployees(String region){}
+    //Get all employees and return an Arraylist of them
+    public static ArrayList<Employee> getEmployees(String region){
+        return null;
+    }
 
     ////Called when a list of employees is needed from a specific store
-    //Change to return an array of employees
-    public void getEmployees(String region, String store){}
+    //Get all employees and return an Arraylist of them
+    public static ArrayList<Employee> getEmployees(String region, String store){
+        return null;
+    }
 
     //Called when revenue from an employee is needed
-    public double getEmployeeRevenue(/*Employee object or employee identifier*/){return 0;}
+    //Search through database for specific employee, and return their revenue
+    public static double getEmployeeRevenue(String id){
+        return 0;
+    }
 }
