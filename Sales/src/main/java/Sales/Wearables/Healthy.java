@@ -2,9 +2,6 @@ package Sales.Wearables;
 
 import java.util.HashMap;
 
-/**
- * Created by benjamin on 10/9/16.
- */
 public class Healthy {
     private int uid;
     private int quantity;

@@ -5,9 +5,7 @@ import Sales.Order;
 import Sales.OrderHistory;
 import Sales.ShoppingCart;
 
-/**
- * Created by benjamin on 10/7/16.
- */
+import java.util.ArrayList;
 
 public class GeneralManager implements Employee {
 
@@ -17,7 +15,7 @@ public class GeneralManager implements Employee {
     private Double commission;
     private Double commissionRate;
     private Double salary;
-    private OrderHistory history;
+    private OrderHistory history = new OrderHistory();
 
     public GeneralManager(String name, String id){
         this.name = name;
@@ -40,8 +38,20 @@ public class GeneralManager implements Employee {
         return name;
     }
 
-    public Double calcSalary(){
-        return salary + commission;
+    public void setCommissionRate(Double commissionRate){
+        this.commissionRate = commissionRate;
+    }
+
+    public Double getCommission(){
+        return commission;
+    }
+
+    public void setSalary(Double Salary){
+        this.salary = salary;
+    }
+
+    public ArrayList<Order> getHistory(){
+        return history.getHistory();
     }
 
 }

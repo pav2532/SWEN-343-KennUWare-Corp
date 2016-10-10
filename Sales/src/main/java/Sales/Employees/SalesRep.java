@@ -5,9 +5,8 @@ import Sales.ShoppingCart;
 
 import Sales.*;
 
-/**
- * Created by benjamin on 10/7/16.
- */
+import java.util.ArrayList;
+
 public class SalesRep implements Employee {
 
     private String name;
@@ -16,19 +15,17 @@ public class SalesRep implements Employee {
     private Double commission;
     private Double commissionRate;
     private Double salary;
-    private OrderHistory history;
+    private OrderHistory history = new OrderHistory();
 
-    public SalesRep(String name, String id, Double commission, Double commissionRate, Double salary, OrderHistory history){
+    public SalesRep(String name, String id, Double commission, Double commissionRate, Double salary){
         this.name = name;
         this.id = id;
         this.currentOrder = new ShoppingCart();
         this.commissionRate = commissionRate;
         this.commission = commission;
         this.salary = salary;
-        this.history = history;
     }
 
-    //Checks out the current shopping cart
     public void checkout(){
         commission = commission + (commissionRate * currentOrder.getValue());
         history.addOrder(new Order(currentOrder.getCustomerName(), id, currentOrder.getValue(), currentOrder.getCreditCardNumber()));
@@ -59,8 +56,8 @@ public class SalesRep implements Employee {
         return currentOrder;
     }
 
-    public Double calcSalary(){
-        return salary + commission;
+    public ArrayList<Order> getHistory(){
+        return history.getHistory();
     }
 
 }

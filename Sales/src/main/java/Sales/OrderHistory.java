@@ -2,9 +2,6 @@ package Sales;
 
 import java.util.ArrayList;
 
-/**
- * Created by benjamin on 10/9/16.
- */
 public class OrderHistory {
 
     private ArrayList<Order> history = new ArrayList<Order>();
@@ -13,6 +10,10 @@ public class OrderHistory {
 
     public void addOrder(Order newOrder){
         history.add(newOrder);
+    }
+
+    public ArrayList<Order> getHistory(){
+        return history;
     }
 
 }

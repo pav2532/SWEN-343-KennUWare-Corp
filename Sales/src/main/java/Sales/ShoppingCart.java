@@ -4,9 +4,6 @@ import Sales.Wearables.Wearable;
 
 import java.util.HashMap;
 
-/**
- * Created by benjamin on 10/7/16.
- */
 public class ShoppingCart {
 
     private String customerName;

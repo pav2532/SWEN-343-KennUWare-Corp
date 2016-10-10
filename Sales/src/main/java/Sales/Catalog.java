@@ -4,9 +4,6 @@ import Sales.Wearables.Wearable;
 
 import java.util.HashMap;
 
-/**
- * Created by benjamin on 10/9/16.
- */
 public class Catalog {
 
     private HashMap<Integer, Wearable> stock;

@@ -1,8 +1,5 @@
 package Sales;
 
-/**
- * Created by benjamin on 10/9/16.
- */
 public class Order {
 
     private String customerName;
@@ -15,6 +12,10 @@ public class Order {
         this.employeeID = employeeID;
         this.transactionValue = transactionValue;
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public Double getValue(){
+        return transactionValue;
     }
 
 }
