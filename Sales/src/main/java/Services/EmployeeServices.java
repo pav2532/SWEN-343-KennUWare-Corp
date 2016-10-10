@@ -5,20 +5,17 @@
 package Services;
 
 import Sales.Employees.*;
-import Sales.*;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import static spark.Spark.get;
-
 public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
-    public static String login(String username, String password){
+    public static String login(String username, String password){;
         Gson gson = new Gson();
-        if(username.equals("Timmy") & password.equals("password")) {
-            System.out.println("Employee logged in!");
+        if((username.equals("Timmy") & password.equals("password")) ||
+                (username.equals("Bobby") & password.equals("rainbows"))|| (username.equals("Felicia") & password.equals("Something"))) {
             return gson.toJson(new SalesRep(username, "1", 6.8, .5, 1000.0));
         }
         else{ // fail case
