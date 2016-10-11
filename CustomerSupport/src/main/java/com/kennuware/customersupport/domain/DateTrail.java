@@ -4,11 +4,18 @@
 
 package com.kennuware.customersupport.domain;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
+
+@NamedQueries({
+        @NamedQuery(name = "findDateTrail", query = "select d from DateTrail d where d.returnsID = :returnsID")
+})
 
 @Entity
 @Table
