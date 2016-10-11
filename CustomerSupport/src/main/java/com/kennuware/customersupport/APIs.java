@@ -123,5 +123,14 @@ public class APIs {
             returnID = returnID.substring(1,returnID.length()-1);
             return EmployeeServices.resolve(returnID, session);
         }, gson::toJson);
+
+        get("/getTotalRefunds", (req, res) -> {
+            Double refunds = 0.0;
+            List<Refund> list = session.createCriteria(Refund.class).list();
+            for(Refund r:list){
+                refunds += r.getRefund();
+            }
+            return refunds;
+        }, gson::toJson);
     }
 }
