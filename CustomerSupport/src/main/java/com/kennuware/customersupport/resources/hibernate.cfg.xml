@@ -15,6 +15,7 @@
         <!-- This property tells it to create all new tables every time the program is run -->
         <!-- We can set up scripts that will initialize some data into the database to make it easier for testing -->
         <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.import_files">/com/kennuware/customersupport/resource/import.sql</property>
 
         <mapping class="com.kennuware.customersupport.domain.Employees.Employee"></mapping>
         <mapping class="com.kennuware.customersupport.domain.Customer"></mapping>
