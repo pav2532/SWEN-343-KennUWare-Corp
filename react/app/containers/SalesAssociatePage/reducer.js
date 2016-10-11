@@ -10,9 +10,14 @@ import {
   SET_PAYMENT_INFO_NAME,
   SET_PAYMENT_INFO_CCNUMBER,
   SET_PAYMENT_INFO_EXPIRATION,
+
+  CHECKOUT,
+  CHECKOUT_SUCCESS,
+  CHECKOUT_ERROR,
 } from './constants';
 
 const initialState = fromJS({
+  loading: false,
   shoppingCart: [],
   paymentInfo: {
     name: '',
@@ -36,6 +41,15 @@ function salesAssociatePageReducer(state = initialState, action) {
     case SET_PAYMENT_INFO_EXPIRATION:
       return state
         .setIn(['paymentInfo', 'expiration'], action.value);
+    case CHECKOUT:
+      return state
+        .set('loading', true);
+    case CHECKOUT_SUCCESS:
+      return state
+        .set('loading', false);
+    case CHECKOUT_ERROR:
+      return state
+        .set('loading', false);
     default:
       return state;
   }

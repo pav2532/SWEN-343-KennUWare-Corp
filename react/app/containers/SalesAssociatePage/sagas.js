@@ -8,6 +8,11 @@ import {
 } from './constants';
 
 import {
+  checkoutSuccess,
+  checkoutError,
+} from './actions';
+
+import {
   SIGN_OUT,
 } from 'containers/App/constants';
 
@@ -20,18 +25,12 @@ export function* checkout() {
   const paymentInfo = yield select(selectPaymentInfo());
   const employee = yield select(selectEmployee());
 
-  console.log('shoppingcart: ', shoppingCart);
-  console.log('paymentInfo', paymentInfo);
-
   const requestURL = '/api/sales/order';
 
   const requestedProducts = [];
   for (let i = 0; i < shoppingCart.length; i += 1) {
     requestedProducts.push({ itemID: shoppingCart[i].item.id, quantity: shoppingCart[i].quantity });
   }
-
-  console.log("Requested: ");
-  console.log(requestedProducts);
 
   const body = {
     employeeID: employee.id,
@@ -42,8 +41,6 @@ export function* checkout() {
     requestedProducts,
   };
 
-  console.log("Body: " + JSON.stringify(body));
-
   const options = {
     method: 'post',
     headers: {
@@ -53,7 +50,6 @@ export function* checkout() {
     body: JSON.stringify(body),
   };
 
-  console.log("About to call this api order");
   // Call our request helper (see 'utils/request')
   const order = yield call(request, requestURL, options);
 
@@ -61,6 +57,11 @@ export function* checkout() {
   console.log(order);
 
   // TODO: success and error flow for checking out
+  if (order.data !== -1) {
+    yield put(checkoutSuccess());
+  } else {
+    yield put(checkoutError());
+  }
 }
 
 export function* signOut() {

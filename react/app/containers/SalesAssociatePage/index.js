@@ -55,8 +55,15 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
       buttonStyle += ' disabled';
     }
+    let loadingContent = (<div></div>);
+    if (this.props.sales.loading) {
+      loadingContent = (
+        <h1>LOADING</h1>
+      );
+    }
     return (
       <div className={styles.salesAssociatePage}>
+        {loadingContent}
         <div className={styles.title}>
           <h1>KennUWare Sales</h1>
         </div>

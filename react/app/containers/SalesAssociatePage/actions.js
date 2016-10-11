@@ -13,6 +13,8 @@ import {
   SET_PAYMENT_INFO_EXPIRATION,
 
   CHECKOUT,
+  CHECKOUT_SUCCESS,
+  CHECKOUT_ERROR,
 } from './constants';
 
 export function addToCart(item, quantity) {
@@ -54,6 +56,18 @@ export function setPaymentInfoExpiration(value) {
 export function checkout() {
   return {
     type: CHECKOUT,
+  };
+}
+
+export function checkoutSuccess() {
+  return {
+    type: CHECKOUT_SUCCESS,
+  };
+}
+
+export function checkoutError() {
+  return {
+    type: CHECKOUT_ERROR,
   };
 }
 
