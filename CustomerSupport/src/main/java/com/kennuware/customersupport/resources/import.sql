@@ -11,8 +11,8 @@ insert into Customer (address, name) values ("555 Temp road", "Joey");
 insert into Customer (address, name) values ("IDK", "Bobby");
 insert into Customer (address, name) values ("SATISFIED?", "Tina");
 
-insert into Datetrail (returnsID, approveDenyDate, receiveDate, requestDate, resolveDate) values (2, '2000-05-12 07:34:25', '2000-05-13 07:34:25', '2000-05-14 07:34:25', '2000-05-15 15:23:25');
-insert into Datetrail (returnsID, approveDenyDate, receiveDate, requestDate, resolveDate) values (3, '2020-08-16 07:34:25', '2000-05-13 07:34:25', '1998-05-14 07:34:25', '1996-05-15 15:23:25');
+insert into DateTrail (returnsID, approveDenyDate, receiveDate, requestDate, resolveDate) values (2, '2000-05-12 07:34:25', '2000-05-13 07:34:25', '2000-05-14 07:34:25', '2000-05-15 15:23:25');
+insert into DateTrail (returnsID, approveDenyDate, receiveDate, requestDate, resolveDate) values (3, '2020-08-16 07:34:25', '2000-05-13 07:34:25', '1998-05-14 07:34:25', '1996-05-15 15:23:25');
 
 insert into Region (name) values ("Northeast");
 insert into Region (name) values ("Southeast");
