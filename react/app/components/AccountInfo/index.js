@@ -8,13 +8,24 @@ import React from 'react';
 
 import { Button } from 'react-bootstrap';
 
-// import styles from './styles.css';
+import {
+  GENERALMANAGER,
+  REGIONALMANAGER,
+} from 'containers/SalesLogin/constants';
+
+import styles from './styles.css';
 
 function AccountInfo(props) {
+  let employeeType = 'Associate';
+  if (props.employeeType === REGIONALMANAGER) {
+    employeeType = 'Regional Manager';
+  } else if (props.employeeType === GENERALMANAGER) {
+    employeeType = 'General Manager';
+  }
   return (
     <div className={props.className}>
-      <div>{props.name}</div>
-      <div>{props.employeeType}</div>
+      <div className={styles.name}>{props.name}</div>
+      <div>{employeeType}</div>
       <div>
         <Button bsStyle="warning" bsSize="small" onClick={props.onSignOut}>
           Sign out

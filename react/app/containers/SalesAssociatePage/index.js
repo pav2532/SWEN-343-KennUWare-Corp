@@ -35,6 +35,10 @@ import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 import ShoppingCart from 'components/ShoppingCart';
 
+function paymentInfoComplete(paymentInfo) {
+  return paymentInfo.name && paymentInfo.ccNumber && paymentInfo.expiration;
+}
+
 export class SalesAssociatePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -47,19 +51,23 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
   }
 
   render() {
-    console.log("Props");
-    console.log(this.props);
+    let buttonStyle = 'primary';
+    if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
+      buttonStyle += ' disabled';
+    }
     return (
       <div className={styles.salesAssociatePage}>
+        <div className={styles.title}>
+          <h1>KennUWare Sales</h1>
+        </div>
         <div className={styles.accountInfo}>
           <AccountInfo
             name={this.props.employee.username}
             employeeType={this.props.employee.type}
-
             onSignOut={this.props.onSignOut}
           />
         </div>
-        <div style={{ width: '50%', float: 'left', height: '600px' }}>
+        <div className={styles.orderEntry} style={{ width: '50%', float: 'left', height: '600px' }}>
           <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
           <ShoppingCart items={this.props.sales.shoppingCart} />
         </div>
@@ -69,7 +77,7 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
           setExpiration={this.props.setPaymentInfoExpiration}
         />
         <div>
-          <Button bsStyle="success" bsSize="lg" onClick={this.props.onCheckout}>
+          <Button bsStyle={buttonStyle} bsSize="lg" onClick={this.props.onCheckout}>
             Checkout
           </Button>
         </div>

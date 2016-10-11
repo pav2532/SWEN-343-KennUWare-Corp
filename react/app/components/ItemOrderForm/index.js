@@ -25,29 +25,36 @@ class ItemOrderForm extends React.Component {
   }
 
   render() {
+    const labelStyle = {
+      width: '90px',
+    };
     return (
       <div className={styles.itemOrderForm}>
         <h2>Add Item</h2>
         <Input
           label="Item ID"
+          labelStyle={labelStyle}
           onChange={(itemID) => {
             this.setState({ itemID });
           }}
         />
         <Input
           label="Item Name"
+          labelStyle={labelStyle}
           onChange={(itemName) => {
             this.setState({ itemName });
           }}
         />
         <Input
           label="Quantity"
+          labelStyle={labelStyle}
           onChange={(itemQuantity) => {
             this.setState({ itemQuantity });
           }}
         />
         <Input
           label="Unit Price"
+          labelStyle={labelStyle}
           onChange={(itemUnitPrice) => {
             this.setState({ itemUnitPrice });
           }}

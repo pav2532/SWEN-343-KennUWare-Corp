@@ -1,3 +1,7 @@
 .accountInfo { /* stylelint-disable */
 
 }
+
+.name {
+  font-size: 20px;
+}
