@@ -105,7 +105,21 @@ public class EmployeeServices {
     ////Called when a list of employees is needed from a specific store
     //Get all employees and return an Arraylist of them
     public static ArrayList<Employee> getEmployees(String region, String store){
-        return null;
+    	SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+//        
+        ArrayList<Employee> employees = new ArrayList<>();
+        Integer regionID = Integer.parseInt(region);
+        
+//        regionID = ((Region) session.createQuery("FROM Region r"
+//        		+ "WHERE r.name='" + region + "'").list().get(0)).getId();
+        
+        employees = (ArrayList<Employee>) session.createQuery("FROM Store s "
+        		+ "WHERE s.regionId='" + regionID + "' "
+        				+ "AND s.name='" + store + "'").list();
+        
+    	return employees;
     }
 
     //Called when revenue from an employee is needed
