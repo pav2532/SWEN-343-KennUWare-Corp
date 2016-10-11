@@ -17,20 +17,23 @@ import com.kennuware.sales.domain.Employees.Region;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Store;
 import com.kennuware.sales.domain.StoreEmployee;
+import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Iterator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 //
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -59,19 +62,17 @@ public class APIs {
 //
 //        session.close();
 
-        Gson gson = new Gson();
+		Gson gson = new Gson();
 
-        post("/login", (req, res) -> {
-            String body = req.body();
-            JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").toString();
-            String password = json.get("password").toString();
-            username = username.substring(1,username.length()-1);
-            password = password.replace("\"", "");
-            return EmployeeServices.login(username, password, session);
-        }, gson::toJson);
-
-        System.out.println("Running login");
+		post("/login", (req, res) -> {
+			String body = req.body();
+			JsonObject json = gson.fromJson(body, JsonObject.class);
+			String username = json.get("username").toString();
+			String password = json.get("password").toString();
+			username = username.substring(1, username.length() - 1);
+			password = password.replace("\"", "");
+			return EmployeeServices.login(username, password, session);
+		}, gson::toJson);
 
         /* Accounting gets revenue from Sales
 		 * GET
@@ -88,7 +89,7 @@ public class APIs {
 		 *
 		 */
 		get("/getSale/:pid", (req, res) -> {
-			String pid = req.params(":pid"); 
+			String pid = req.params(":pid");
 			return pid;
 		});
 		
@@ -114,31 +115,47 @@ public class APIs {
 		});
 
 		post("/order", (req, res) -> {
-					String body = req.body();
-					JsonObject json = gson.fromJson(body, JsonObject.class);
-					int employeeID = json.get("employeeID").getAsInt();
-					String customerName = json.get("custName").getAsString();
-					String creditCardNumber = json.get("creditCardNumber").getAsString();
-					String expirationDate = json.get("expirationDate").getAsString();
-					Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
-					JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
-					int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
-							expirationDate, bulkDiscount, session);
+			String body = req.body();
+			JsonObject json = gson.fromJson(body, JsonObject.class);
+			int employeeID = json.get("employeeID").getAsInt();
+			String customerName = json.get("custName").getAsString();
+			String creditCardNumber = json.get("creditCardNumber").getAsString();
+			String expirationDate = json.get("expirationDate").getAsString();
+			Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
+			JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
+			int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
+					expirationDate, bulkDiscount, session);
 
+			if (check != -1) {
+				JsonObject item;
+				for (int i = 0; i < requestedProducts.size(); i++) {
+					item = requestedProducts.get(i).getAsJsonObject();
+					OrderServices.addItemOrders(check, item.get("itemID").getAsInt(), item.get("quantity").getAsInt(), session);
+				}
+			}
 
-					if(check != -1){
-                        JsonObject item;
-						for (int i = 0 ; i < requestedProducts.size(); i++) {
-                            item = requestedProducts.get(i).getAsJsonObject();
-							OrderServices.addItemOrders(check, item.get("itemID").getAsInt(), item.get("quantity").getAsInt(), session);
-						}
-					}
+			return check;
+		}, gson::toJson);
 
-                    session.getTransaction().commit();
-					return check;}, gson::toJson);
+		post("/getPrice", (req, res) -> {
+			String body = req.body();
+			JsonObject json = gson.fromJson(body, JsonObject.class);
 
+			int id = json.get("id").getAsInt();
 
-        System.out.println("Ran through all apis");
+			List<Item> list = session.createCriteria(Item.class).list();
+			System.out.println(id);
+			for (Item i : list) {
+				if (i.getId() == id) {
+					return i.getUnitPrice();
+				}
+			}
+			return 0.0;
+		}, gson::toJson);
+
+		post("/getAllItems", (req, res) -> {
+			return session.createCriteria(Item.class).list();
+		}, gson::toJson);
 
     }
 }
