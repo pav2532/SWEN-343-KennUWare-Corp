@@ -98,19 +98,25 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
           />
         </div>
         <div className={styles.orderEntry} style={{ width: '50%', float: 'left', height: '600px' }}>
-          <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
-          <ShoppingCart items={this.props.sales.shoppingCart} />
+          <div className={styles.itemEntry}>
+            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+          </div>
+          <div className={styles.shoppingCart}>
+            <ShoppingCart items={this.props.sales.shoppingCart} />
+          </div>
         </div>
-        <PaymentForm
-          name={this.props.sales.paymentInfo.name}
-          ccNumber={this.props.sales.paymentInfo.ccNumber}
-          expiration={this.props.sales.paymentInfo.expiration}
-          
-          setName={this.props.setPaymentInfoName}
-          setCCNumber={this.props.setPaymentInfoCCNumber}
-          setExpiration={this.props.setPaymentInfoExpiration}
-        />
-        <div>
+        <div className={styles.paymentForm}>
+          <PaymentForm
+            name={this.props.sales.paymentInfo.name}
+            ccNumber={this.props.sales.paymentInfo.ccNumber}
+            expiration={this.props.sales.paymentInfo.expiration}
+
+            setName={this.props.setPaymentInfoName}
+            setCCNumber={this.props.setPaymentInfoCCNumber}
+            setExpiration={this.props.setPaymentInfoExpiration}
+          />
+        </div>
+        <div className={styles.checkoutButton}>
           <Button bsStyle={buttonStyle} bsSize="lg" onClick={this.props.onCheckout}>
             Checkout
           </Button>

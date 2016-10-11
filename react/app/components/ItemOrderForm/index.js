@@ -34,6 +34,7 @@ class ItemOrderForm extends React.Component {
         <Input
           label="Item ID"
           labelStyle={labelStyle}
+          value={this.state.itemID}
           onChange={(itemID) => {
             this.setState({ itemID });
           }}
@@ -41,6 +42,7 @@ class ItemOrderForm extends React.Component {
         <Input
           label="Item Name"
           labelStyle={labelStyle}
+          value={this.state.itemName}
           onChange={(itemName) => {
             this.setState({ itemName });
           }}
@@ -48,6 +50,7 @@ class ItemOrderForm extends React.Component {
         <Input
           label="Quantity"
           labelStyle={labelStyle}
+          value={this.state.itemQuantity}
           onChange={(itemQuantity) => {
             this.setState({ itemQuantity });
           }}
@@ -55,13 +58,27 @@ class ItemOrderForm extends React.Component {
         <Input
           label="Unit Price"
           labelStyle={labelStyle}
+          value={this.state.itemUnitPrice}
           onChange={(itemUnitPrice) => {
             this.setState({ itemUnitPrice });
           }}
         />
         <div>
-          <Button bsStyle="primary" bsSize="small" onClick={() => this.props.onAddItem({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice, id: this.state.itemID }, this.state.itemQuantity)}>
+          <Button
+            className={styles.button}
+            bsStyle="primary"
+            bsSize="small"
+            onClick={() => this.props.onAddItem({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice, id: this.state.itemID }, this.state.itemQuantity)}
+          >
             Add item
+          </Button>
+          <Button
+            className={styles.button}
+            bsStyle="warning"
+            bsSize="small"
+            onClick={() => this.setState({ itemID: '', itemName: '', itemQuantity: '', itemUnitPrice: '' })}
+          >
+            Clear
           </Button>
         </div>
       </div>
