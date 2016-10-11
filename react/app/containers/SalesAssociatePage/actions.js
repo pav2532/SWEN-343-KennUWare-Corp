@@ -5,6 +5,9 @@
  */
 
 import {
+  START_ORDER,
+  CONTINUE_ORDER,
+
   ADD_TO_CART,
   REMOVE_FROM_CART,
 
@@ -59,6 +62,18 @@ export function checkout() {
   };
 }
 
+export function newOrder() {
+  return {
+    type: START_ORDER,
+  };
+}
+
+export function continueOrder() {
+  return {
+    type: CONTINUE_ORDER,
+  };
+}
+
 export function checkoutSuccess() {
   return {
     type: CHECKOUT_SUCCESS,
@@ -71,3 +86,8 @@ export function checkoutError() {
   };
 }
 
+export function restart() {
+  return {
+    type: START_ORDER,
+  };
+}

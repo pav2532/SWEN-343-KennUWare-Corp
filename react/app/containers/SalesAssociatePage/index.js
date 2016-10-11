@@ -26,9 +26,11 @@ import {
   setPaymentInfoExpiration,
 
   checkout,
+  newOrder,
+  continueOrder,
 } from './actions.js';
 
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 import AccountInfo from 'components/AccountInfo';
 import ItemOrderForm from 'components/ItemOrderForm';
@@ -55,15 +57,36 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
       buttonStyle += ' disabled';
     }
-    let loadingContent = (<div></div>);
-    if (this.props.sales.loading) {
-      loadingContent = (
-        <h1>LOADING</h1>
-      );
-    }
+    const successModal = (
+      <Modal show={this.props.sales.successModal} onHide={this.close}>
+        <Modal.Header>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>The transaction completed successfully.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onNewOrder}>New Order</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+    const errorModal = (
+      <Modal show={this.props.sales.errorModal} onHide={this.close}>
+        <Modal.Header>
+          <Modal.Title>Failure</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>There was an error with the payment information.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onContinueOrder}>Edit Order</Button>
+        </Modal.Footer>
+      </Modal>
+    );
     return (
       <div className={styles.salesAssociatePage}>
-        {loadingContent}
+        {successModal}
+        {errorModal}
         <div className={styles.title}>
           <h1>KennUWare Sales</h1>
         </div>
@@ -79,6 +102,10 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
           <ShoppingCart items={this.props.sales.shoppingCart} />
         </div>
         <PaymentForm
+          name={this.props.sales.paymentInfo.name}
+          ccNumber={this.props.sales.paymentInfo.ccNumber}
+          expiration={this.props.sales.paymentInfo.expiration}
+          
           setName={this.props.setPaymentInfoName}
           setCCNumber={this.props.setPaymentInfoCCNumber}
           setExpiration={this.props.setPaymentInfoExpiration}
@@ -103,6 +130,8 @@ SalesAssociatePage.propTypes = {
   setPaymentInfoExpiration: React.PropTypes.func,
 
   onCheckout: React.PropTypes.func,
+  onNewOrder: React.PropTypes.func,
+  onContinueOrder: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -121,6 +150,8 @@ function mapDispatchToProps(dispatch) {
     setPaymentInfoExpiration: (value) => dispatch(setPaymentInfoExpiration(value)),
 
     onCheckout: () => dispatch(checkout()),
+    onNewOrder: () => dispatch(newOrder()),
+    onContinueOrder: () => dispatch(continueOrder()),
 
     onSignOut: () => dispatch(signOut()),
 

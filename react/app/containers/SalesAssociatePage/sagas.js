@@ -32,6 +32,7 @@ export function* checkout() {
     requestedProducts.push({ itemID: shoppingCart[i].item.id, quantity: shoppingCart[i].quantity });
   }
 
+  // The request body
   const body = {
     employeeID: employee.id,
     custName: paymentInfo.name,
@@ -53,10 +54,6 @@ export function* checkout() {
   // Call our request helper (see 'utils/request')
   const order = yield call(request, requestURL, options);
 
-  console.log("Called order");
-  console.log(order);
-
-  // TODO: success and error flow for checking out
   if (order.data !== -1) {
     yield put(checkoutSuccess());
   } else {
@@ -81,6 +78,7 @@ export function* signOutWatcher() {
     yield call(signOut);
   }
 }
+
 // Individual exports for testing
 export function* checkoutData() {
   const watcher = yield fork(checkoutWatcher);
