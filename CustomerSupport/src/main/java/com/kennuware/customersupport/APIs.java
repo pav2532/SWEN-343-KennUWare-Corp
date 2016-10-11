@@ -14,6 +14,7 @@ import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
+import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +33,7 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Employee employee = new Employee();
+        /*Employee employee = new Employee();
         employee.setName("Ryan");
         employee.setPassword("test");
         employee.setRegionId(1);
@@ -65,7 +66,11 @@ public class APIs {
         session.save(dateTrail);
         session.save(employee);
         session.save(customer);
-        
+
+        session.getTransaction().commit();
+
+        session.close();*/
+
         Gson gson = new Gson();
 
         post("/login", (req, res) -> {
@@ -75,17 +80,48 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password);
+            return EmployeeServices.login(username, password, session);
         }, gson::toJson);
 
-        get("/getTotalRefunds", (req, res) -> {
-            Double refunds = 0.0;
-            List<Refund> list = session.createCriteria(Refund.class).list();
-            for(Refund r:list){
-                refunds += r.getRefund();
-            }
-            return refunds;
+        post("/requestReturn", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String customerName = json.get("customerName").toString();
+            String customerAddress = json.get("customerAddress").toString();
+            String reason = json.get("reason").toString();
+            int storeID = json.get("storeID").getAsInt();
+            String itemID = json.get("itemID").toString();
+            customerName = customerName.substring(1,customerName.length()-1);
+            customerAddress = customerAddress.substring(1,customerAddress.length()-1);
+            reason = reason.substring(1,reason.length()-1);
+            itemID = itemID.substring(1,itemID.length()-1);
+            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
+        }, gson::toJson);
+
+        post("/requestStatus", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String returnID = json.get("returnID").toString();
+            String status = json.get("status").toString();
+            returnID = returnID.substring(1,returnID.length()-1);
+            status = status.substring(1,status.length()-1);
+            return EmployeeServices.changeStatus(returnID, status, session);
+        }, gson::toJson);
+
+        post("/markReceived", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String returnID = json.get("returnID").toString();
+            returnID = returnID.substring(1,returnID.length()-1);
+            return EmployeeServices.markReceived(returnID, session);
+        }, gson::toJson);
+
+        post("/resolve", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String returnID = json.get("returnID").toString();
+            returnID = returnID.substring(1,returnID.length()-1);
+            return EmployeeServices.resolve(returnID, session);
         }, gson::toJson);
     }
 }
-

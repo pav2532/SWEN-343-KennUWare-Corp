@@ -4,10 +4,17 @@
 
 package com.kennuware.customersupport.domain;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+@NamedQueries({
+        @NamedQuery(name = "findRefunds", query = "select r.refund from Refund r"),
+})
 
 @Entity
 @Table

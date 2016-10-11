@@ -2,9 +2,9 @@ insert into employee (name, type, password, regionId) values ("CSAgent1", 0, "te
 insert into employee (name, type, password, regionId) values ("CSAgent2", 0, "test", 1);
 insert into employee (name, type, password, regionId) values ("Tina", 1, "test", 1);
 insert into employee (name, type, password, regionId) values ("CSManager", 0, "test", 1);
-insert into returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0);
-insert into returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1);
-insert into returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0);
+insert into returns (reason, storeID, type, itemID) values ("It broke", 1, 0, "Yello");
+insert into returns (reason, storeID, type, itemID) values ("Screen fell off", 1, 1, "Active");
+insert into returns (reason, storeID, type) values ("Hated it", 1, 0);
 insert into customer (address, name) values ("555 Temp road", "Joey");
 insert into customer (address, name) values ("IDK", "Bobby");
 insert into customer (address, name) values ("SATISFIED?", "Tina");
