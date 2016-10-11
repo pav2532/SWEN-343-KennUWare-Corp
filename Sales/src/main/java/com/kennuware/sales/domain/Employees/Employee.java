@@ -11,7 +11,8 @@ import javax.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "findEmployeeByEmployeeId", query = "select e from Employee e where e.eid = :eid"),
         @NamedQuery(name = "findEmployeeByEmployeeName", query = "select e from Employee e where e.name = :name"),
-        @NamedQuery(name = "findAllEmployees", query = "select e from Employee e")
+        @NamedQuery(name = "findAllEmployees", query = "select e from Employee e"),
+        @NamedQuery(name = "findEmployeeByRegionId", query = "FROM Employee e WHERE e.regionId = :regionID")
 })
 
 

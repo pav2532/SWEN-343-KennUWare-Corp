@@ -8,6 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "findStoreByRegionIdAndName", query = "FROM Store s "
+    		+ "WHERE s.regionID = :regionID "
+			+ "AND s.name = :store")
+})
+
 @Entity
 @Table
 public class Store {

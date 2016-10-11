@@ -17,7 +17,15 @@ public class Item {
 	
 	private double unitPrice;
 
-	public Item() {
+	
+	public Item(){
+		
+	}
+	
+	public Item(int id, String name, double unitPrice){
+		this.id = id;
+		this.name = name;
+		this.unitPrice = unitPrice;
 	}
 
 	public int getId() {
