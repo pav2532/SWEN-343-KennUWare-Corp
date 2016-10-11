@@ -8,7 +8,10 @@ const selectCustSupportAgentDomain = () => (state) => state.get('custSupportAgen
 /**
  * Other specific selectors
  */
-
+const selectReturn = () => createSelector(
+  selectCustSupportAgentDomain(),
+  (state) => state.get('newReturn').toJS()
+);
 
 /**
  * Default selector used by CustSupportAgent
@@ -22,4 +25,5 @@ const selectCustSupportAgent = () => createSelector(
 export default selectCustSupportAgent;
 export {
   selectCustSupportAgentDomain,
+  selectReturn,
 };

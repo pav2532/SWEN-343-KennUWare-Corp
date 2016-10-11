@@ -17,12 +17,20 @@ import {
 import {
   gotoNewReturn,
   gotoReturns,
+
+  setCustomerName,
+  setCustomerAddress,
+  setReturnReason,
+  setReturnItemId,
+
+  submitReturn,
 } from './actions';
 
 import styles from './styles.css';
 
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
+import NewReturnForm from 'components/NewReturnForm';
 
 export class CustSupportAgent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -31,7 +39,21 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
     if (this.props.page.content === 'newReturn') {
       activeRoute = 'New Return';
       content = (
-        <div>New Return</div>
+        <div>
+          <NewReturnForm
+            name={this.props.page.newReturn.customerName}
+            address={this.props.page.newReturn.customerAddress}
+            reason={this.props.page.newReturn.reason}
+            itemId={this.props.page.newReturn.itemId}
+
+            setName={this.props.onSetCustomerName}
+            setAddress={this.props.onSetCustomerAddress}
+            setReason={this.props.onSetReturnReason}
+            setItemId={this.props.onSetReturnItemId}
+
+            submitReturn={this.props.onSubmitReturn}
+          />
+        </div>
       );
     } else if (this.props.page.content === 'returns') {
       activeRoute = 'Returns';
@@ -72,6 +94,13 @@ CustSupportAgent.propTypes = {
   onGoToNewReturn: React.PropTypes.func,
   onGoToReturns: React.PropTypes.func,
 
+  onSetCustomerName: React.PropTypes.func,
+  onSetCustomerAddress: React.PropTypes.func,
+  onSetReturnReason: React.PropTypes.func,
+  onSetReturnItemId: React.PropTypes.func,
+
+  onSubmitReturn: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -84,6 +113,13 @@ function mapDispatchToProps(dispatch) {
   return {
     onGoToNewReturn: () => dispatch(gotoNewReturn()),
     onGoToReturns: () => dispatch(gotoReturns()),
+
+    onSetCustomerName: (value) => dispatch(setCustomerName(value)),
+    onSetCustomerAddress: (value) => dispatch(setCustomerAddress(value)),
+    onSetReturnReason: (value) => dispatch(setReturnReason(value)),
+    onSetReturnItemId: (value) => dispatch(setReturnItemId(value)),
+
+    onSubmitReturn: () => dispatch(submitReturn()),
 
     onSignOut: () => dispatch(signOut()),
 
