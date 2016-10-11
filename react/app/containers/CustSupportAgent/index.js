@@ -13,6 +13,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
   render() {
     return (
       <div className={styles.custSupportAgent}>
+        Customer Support Agent
       </div>
     );
   }

@@ -8,7 +8,15 @@ const selectCustSupportLoginDomain = () => (state) => state.get('custSupportLogi
 /**
  * Other specific selectors
  */
+const selectUsername = () => createSelector(
+  selectCustSupportLoginDomain(),
+  (state) => state.get('username')
+);
 
+const selectPassword = () => createSelector(
+  selectCustSupportLoginDomain(),
+  (state) => state.get('password')
+);
 
 /**
  * Default selector used by CustSupportLogin
@@ -22,4 +30,6 @@ const selectCustSupportLogin = () => createSelector(
 export default selectCustSupportLogin;
 export {
   selectCustSupportLoginDomain,
+  selectUsername,
+  selectPassword,
 };
