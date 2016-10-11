@@ -1,3 +1,16 @@
 .salesLogin { /* stylelint-disable */
+  display: flex;
+  height: 100vh;
+  background: #2A4494;
+}
 
+.loginFormContainer {
+  margin: auto;
+  border: 8px solid #FF8552;
+  border-radius: 15px;
+  background: #E6E6E6;
+}
+
+.loginButton {
+  background: #2A4494;
 }
