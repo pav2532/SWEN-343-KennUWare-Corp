@@ -38,6 +38,7 @@ import {
 
 import { Button } from 'react-bootstrap';
 import ItemOrderForm from 'components/ItemOrderForm';
+import PaymentForm from 'components/PaymentForm';
 
 import styles from './styles.css';
 
@@ -68,6 +69,22 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           <div style={{ width: '50%', float: 'left', height: '600px' }}>
             <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
             <ShoppingCart items={this.props.sales.shoppingCart} />
+          </div>
+          <div className={styles.paymentForm}>
+            <PaymentForm
+              name={this.props.sales.paymentInfo.name}
+              ccNumber={this.props.sales.paymentInfo.ccNumber}
+              expiration={this.props.sales.paymentInfo.expiration}
+
+              setName={this.props.setPaymentInfoName}
+              setCCNumber={this.props.setPaymentInfoCCNumber}
+              setExpiration={this.props.setPaymentInfoExpiration}
+            />
+          </div>
+          <div className={styles.checkoutButton}>
+            <Button bsStyle="primary" bsSize="lg" onClick={this.props.onCheckout}>
+              Checkout
+            </Button>
           </div>
         </div>
       );
