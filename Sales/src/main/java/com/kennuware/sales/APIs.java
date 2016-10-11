@@ -17,11 +17,13 @@ import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.services.EmployeeServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure(
+				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
