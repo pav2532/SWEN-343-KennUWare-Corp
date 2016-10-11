@@ -14,6 +14,11 @@ import {
   SET_RETURN_ITEM_ID,
 
   SUBMIT_RETURN,
+  SUBMIT_RETURN_SUCCESS,
+  SUBMIT_RETURN_ERROR,
+
+  EDIT_RETURN_REQUEST,
+  COMPLETE_RETURN_REQUEST,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -59,5 +64,30 @@ export function setReturnItemId(id) {
 export function submitReturn() {
   return {
     type: SUBMIT_RETURN,
+  };
+}
+
+export function submitReturnSuccess(data) {
+  return {
+    type: SUBMIT_RETURN_SUCCESS,
+    data,
+  };
+}
+
+export function submitReturnError() {
+  return {
+    type: SUBMIT_RETURN_ERROR,
+  };
+}
+
+export function editReturnRequest() {
+  return {
+    type: EDIT_RETURN_REQUEST,
+  };
+}
+
+export function completeReturnRequest() {
+  return {
+    type: COMPLETE_RETURN_REQUEST,
   };
 }

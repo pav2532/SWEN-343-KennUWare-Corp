@@ -23,10 +23,15 @@ import {
   setReturnReason,
   setReturnItemId,
 
+  completeReturnRequest,
+  editReturnRequest,
+
   submitReturn,
 } from './actions';
 
 import styles from './styles.css';
+
+import { Button, Modal } from 'react-bootstrap';
 
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
@@ -36,6 +41,32 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
   render() {
     let activeRoute = 'New Return';
     let content = (<div>Hello</div>);
+    const successModal = (
+      <Modal show={this.props.page.successModal} onHide={this.close}>
+        <Modal.Header>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>The transaction completed successfully.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onNewRequest}>New Order</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+    const errorModal = (
+      <Modal show={this.props.page.errorModal} onHide={this.close}>
+        <Modal.Header>
+          <Modal.Title>Failure</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>There was an error with the payment information.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onEditRequest}>Edit Order</Button>
+        </Modal.Footer>
+      </Modal>
+    );
     if (this.props.page.content === 'newReturn') {
       activeRoute = 'New Return';
       content = (
@@ -71,6 +102,8 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
 
     return (
       <div className={styles.custSupportAgent}>
+        {successModal}
+        {errorModal}
         <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
         <AccountInfo
           className={styles.accountInfo}
@@ -100,6 +133,8 @@ CustSupportAgent.propTypes = {
   onSetReturnItemId: React.PropTypes.func,
 
   onSubmitReturn: React.PropTypes.func,
+  onNewRequest: React.PropTypes.func,
+  onEditRequest: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -120,6 +155,8 @@ function mapDispatchToProps(dispatch) {
     onSetReturnItemId: (value) => dispatch(setReturnItemId(value)),
 
     onSubmitReturn: () => dispatch(submitReturn()),
+    onNewRequest: () => dispatch(completeReturnRequest()),
+    onEditRequest: () => dispatch(editReturnRequest()),
 
     onSignOut: () => dispatch(signOut()),
 

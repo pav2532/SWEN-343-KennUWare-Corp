@@ -13,5 +13,10 @@ export const SET_RETURN_REASON = 'app/CustSupportAgent/SET_RETURN_REASON';
 export const SET_RETURN_ITEM_ID = 'app/CustSupportAgent/SET_RETURN_ITEM_ID';
 
 export const SUBMIT_RETURN = 'app/CustSupportAgent/SUBMIT_RETURN';
+export const SUBMIT_RETURN_SUCCESS = 'app/CustSupportAgent/SUBMIT_RETURN_SUCCESS';
+export const SUBMIT_RETURN_ERROR = 'app/CustSupportAgent/SUBMIT_RETURN_ERROR';
+
+export const EDIT_RETURN_REQUEST = 'app/CustSupportAgent/EDIT_RETURN_REQUEST';
+export const COMPLETE_RETURN_REQUEST = 'app/CustSupportAgent/COMPLETE_RETURN_REQUEST';
 
 export const AGENT = 'AGENT';

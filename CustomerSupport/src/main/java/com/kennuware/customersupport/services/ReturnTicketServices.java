@@ -26,9 +26,13 @@ public class ReturnTicketServices {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
 
+        System.out.println("Completed 1: ");
+
         customer.setAddress(customerAddress);
         customer.setName(customerName);
         dbSession.save(customer);
+
+        System.out.println("Completed 2: ");
 
         returns.setType(ReturnType.PENDING);
         returns.setStoreID(storeID);
@@ -36,9 +40,13 @@ public class ReturnTicketServices {
         returns.setItemID(itemID);
         dbSession.save(returns);
 
+        System.out.println("Completed 3: ");
+
         dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
         dateTrail.setReturnsID(returns.getID());
         dbSession.save(dateTrail);
+
+        System.out.println("Completed 4: ");
 
         return returns;
     }

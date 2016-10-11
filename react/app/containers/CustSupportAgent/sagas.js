@@ -2,6 +2,8 @@ import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE, push } from 'react-router-redux';
 import { SIGN_OUT } from 'containers/App/constants';
 
+import request from 'utils/request';
+
 import {
   SUBMIT_RETURN,
 } from './constants';
@@ -9,6 +11,11 @@ import {
 import {
   selectReturn,
 } from './selectors';
+
+import {
+  submitReturnSuccess,
+  submitReturnError,
+} from './actions';
 
 // Sign out saga
 export function* signOut() {
@@ -40,9 +47,29 @@ export function* submitReturn() {
   // Gather the data using selectors for the return
   const newReturn = yield select(selectReturn());
 
-  console.log("New return");
-  console.log(newReturn);
+  const requestURL = '/api/customer-support/requestReturn';
+
   // Make the api call
+  const options = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newReturn),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const returnRequest = yield call(request, requestURL, options);
+
+  console.log("Return api result");
+  console.log(returnRequest);
+
+  if (!returnRequest.err) {
+    yield put(submitReturnSuccess(returnRequest.data));
+  } else {
+    yield put(submitReturnError());
+  }
 
   // Do some success actions
 }

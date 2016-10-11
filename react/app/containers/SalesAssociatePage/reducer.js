@@ -22,6 +22,7 @@ import {
 const initialState = fromJS({
   loading: false,
   successModal: false,
+  errorModal: false,
   shoppingCart: [],
   paymentInfo: {
     name: '',
