@@ -17,13 +17,16 @@ import com.kennuware.sales.domain.Employees.Region;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Store;
 import com.kennuware.sales.domain.StoreEmployee;
+import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import java.util.Iterator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class APIs {
     public static void main(String[] args) {
@@ -125,7 +128,6 @@ public class APIs {
 					int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
 							expirationDate, bulkDiscount, session);
 
-
 					if(check != -1){
                         JsonObject item;
 						for (int i = 0 ; i < requestedProducts.size(); i++) {
@@ -134,9 +136,26 @@ public class APIs {
 						}
 					}
 
-                    session.getTransaction().commit();
 					return check;}, gson::toJson);
 
+        post("/getPrice", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+
+            int id = json.get("id").getAsInt();
+
+            List<Item> list = session.createCriteria(Item.class).list();
+            System.out.println(id);
+            for(Item i:list){
+                System.out.println("!!!");
+                if(i.getId() == id){
+                    return i.getUnitPrice();
+                }
+            }
+            return 0.0;}, gson::toJson);
+
+        post("/getAllItems", (req, res) -> {
+            return session.createCriteria(Item.class).list();}, gson::toJson);
 
         System.out.println("Ran through all apis");
 

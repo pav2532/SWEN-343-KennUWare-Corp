@@ -14,13 +14,16 @@ import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class APIs {
     public static void main(String[] args) {
@@ -63,9 +66,9 @@ public class APIs {
         session.save(employee);
         session.save(customer);
 
-        session.getTransaction().commit();
+        //session.getTransaction().commit();
 
-        session.close();
+        //session.close();
 
         Gson gson = new Gson();
 
@@ -77,6 +80,15 @@ public class APIs {
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password);
+        }, gson::toJson);
+
+        get("/getTotalRefunds", (req, res) -> {
+            Double refunds = 0.0;
+            List<Refund> list = session.createCriteria(Refund.class).list();
+            for(Refund r:list){
+                refunds += r.getRefund();
+            }
+            return refunds;
         }, gson::toJson);
     }
 }
