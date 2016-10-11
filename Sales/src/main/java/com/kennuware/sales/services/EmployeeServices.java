@@ -19,6 +19,7 @@ public class EmployeeServices {
 
         // TODO: get employee from database with matching username
         // call employee.authenticate(password) and return the employee data if it is valid
+        Employee employee = new Employee();
         Gson gson = new Gson();
 
         Query query = dbSession.getNamedQuery("findEmployeeByEmployeeName").setString("name", username);
