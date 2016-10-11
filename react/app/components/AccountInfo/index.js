@@ -13,6 +13,10 @@ import {
   REGIONALMANAGER,
 } from 'containers/SalesLogin/constants';
 
+import {
+  AGENT,
+} from 'containers/CustSupportLogin/constants';
+
 import styles from './styles.css';
 
 function AccountInfo(props) {
@@ -21,6 +25,8 @@ function AccountInfo(props) {
     employeeType = 'Regional Manager';
   } else if (props.employeeType === GENERALMANAGER) {
     employeeType = 'General Manager';
+  } else if (props.employeeType === AGENT) {
+    employeeType = 'Customer Support Agent';
   }
   return (
     <div className={props.className}>
