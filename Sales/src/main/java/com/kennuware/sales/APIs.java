@@ -33,7 +33,7 @@ public class APIs {
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		
 //
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -75,9 +75,8 @@ public class APIs {
 		}, gson::toJson);
 
 
-        session.getTransaction().commit();
+        
 
-        session.close();
 
         
 
@@ -89,7 +88,7 @@ public class APIs {
 		get("/revenue/region/:rid", (req, res) -> {
 			double revenue = 0;
 			String rid = req.params(":rid");
-			revenue = EmployeeServices.getRegionRevenue(rid);
+			revenue = EmployeeServices.getRegionRevenue(rid, session);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -102,7 +101,7 @@ public class APIs {
 		get("/revenue/employee/:eid", (req, res) -> {
 			double revenue = 0;
 			String eid = req.params(":eid");
-			revenue = EmployeeServices.getEmployeeRevenue(eid);
+			revenue = EmployeeServices.getEmployeeRevenue(eid, session);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -115,7 +114,7 @@ public class APIs {
 		get("/revenue", (req, res) -> {
 			double revenue = 0;
 			try{
-				revenue = EmployeeServices.getTotalRevenue();
+				revenue = EmployeeServices.getTotalRevenue(session);
 			} catch(Exception e){
 				e.printStackTrace();
 			}
