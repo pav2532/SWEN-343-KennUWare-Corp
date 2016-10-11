@@ -5,11 +5,18 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  GOTO_NEW_RETURN,
+  GOTO_RETURNS,
 } from './constants';
 
-export function defaultAction() {
+export function gotoNewReturn() {
   return {
-    type: DEFAULT_ACTION,
+    type: GOTO_NEW_RETURN,
+  };
+}
+
+export function gotoReturns() {
+  return {
+    type: GOTO_RETURNS,
   };
 }

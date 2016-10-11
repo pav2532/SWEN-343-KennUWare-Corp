@@ -6,15 +6,22 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  GOTO_NEW_RETURN,
+  GOTO_RETURNS,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  content: 'newReturn',
+});
 
 function custSupportAgentReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case GOTO_NEW_RETURN:
+      return state
+        .set('content', 'newReturn');
+    case GOTO_RETURNS:
+      return state
+        .set('content', 'returns');
     default:
       return state;
   }
