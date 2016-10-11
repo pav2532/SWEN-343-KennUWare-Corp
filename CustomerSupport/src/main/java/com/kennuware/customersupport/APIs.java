@@ -87,20 +87,38 @@ public class APIs {
             String customerAddress = json.get("customerAddress").toString();
             String reason = json.get("reason").toString();
             int storeID = json.get("storeID").getAsInt();
+            String itemID = json.get("itemID").toString();
             customerName = customerName.substring(1,customerName.length()-1);
             customerAddress = customerAddress.substring(1,customerAddress.length()-1);
             reason = reason.substring(1,reason.length()-1);
-            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, session);
+            itemID = itemID.substring(1,itemID.length()-1);
+            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
         }, gson::toJson);
 
         post("/requestStatus", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String requestID = json.get("requestID").toString();
+            String returnID = json.get("returnID").toString();
             String status = json.get("status").toString();
-            requestID = requestID.substring(1,requestID.length()-1);
+            returnID = returnID.substring(1,returnID.length()-1);
             status = status.substring(1,status.length()-1);
-            return EmployeeServices.changeStatus(requestID, status, session);
+            return EmployeeServices.changeStatus(returnID, status, session);
+        }, gson::toJson);
+
+        post("/markReceived", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String returnID = json.get("returnID").toString();
+            returnID = returnID.substring(1,returnID.length()-1);
+            return EmployeeServices.markReceived(returnID, session);
+        }, gson::toJson);
+
+        post("/resolve", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String returnID = json.get("returnID").toString();
+            returnID = returnID.substring(1,returnID.length()-1);
+            return EmployeeServices.resolve(returnID, session);
         }, gson::toJson);
     }
 }

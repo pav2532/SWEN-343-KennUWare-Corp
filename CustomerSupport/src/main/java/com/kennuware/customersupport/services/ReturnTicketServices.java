@@ -19,7 +19,7 @@ public class ReturnTicketServices {
     //Amount of money refunded to customers
     public static double returnLosses(){return 0;}
 
-    public static Returns returnRequest(String customerName, String customerAddress, String reason, int storeID, Session dbSession){
+    public static Returns returnRequest(String customerName, String customerAddress, String reason, int storeID, String itemID, Session dbSession){
         Customer customer = new Customer();
         Returns returns = new Returns();
         DateTrail dateTrail = new DateTrail();
@@ -33,6 +33,7 @@ public class ReturnTicketServices {
         returns.setType(ReturnType.PENDING);
         returns.setStoreID(storeID);
         returns.setReason(reason);
+        returns.setItemID(itemID);
         dbSession.save(returns);
 
         dateTrail.setRequestDate(dateFormat.format(cal.getTime()));

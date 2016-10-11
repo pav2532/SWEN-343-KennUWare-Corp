@@ -13,9 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @NamedQueries({
-        @NamedQuery(name = "findEmployeeByEmployeeId", query = "select e from Employee e where e.eid = :eid"),
-        @NamedQuery(name = "findEmployeeByEmployeeName", query = "select e from Employee e where e.name = :name"),
-        @NamedQuery(name = "findAllEmployees", query = "select e from Employee e")
+        @NamedQuery(name = "findReturn", query = "select r from Returns r where r.id = :id")
 })
 
 @Entity
@@ -27,6 +25,14 @@ public class Returns {
     private String reason;
     private int storeID;
     private ReturnType type;
+    private String itemID;
+
+    public String getItemID() {
+        return itemID;
+    }
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
+    }
 
     public Returns(){}
 
