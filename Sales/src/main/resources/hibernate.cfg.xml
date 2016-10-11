@@ -18,6 +18,7 @@
         <property name="hibernate.hbm2ddl.import_files">import.sql
         </property>
         <property name="hibernate.format_sql">true</property>
+       
 
         <mapping class="com.kennuware.sales.domain.Employees.Employee"></mapping>
 
@@ -43,4 +44,11 @@
         <!--<mapping resource ="com.kennuware.sales.Wearable.Wearable.hbm.xml"/>-->
 
     </session-factory>
+     <logger name="org.hibernate.tool.hbm2ddl" additivity="false">
+   		 <level value="info"/><appender-ref ref="console" /> 
+		</logger>
+
+	<logger name="org.hibernate" additivity="false">
+    <level value="warn"/><appender-ref ref="console" /> 
+	</logger>
 </hibernate-configuration>
