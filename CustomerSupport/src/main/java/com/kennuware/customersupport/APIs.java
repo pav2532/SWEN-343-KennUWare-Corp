@@ -65,10 +65,7 @@ public class APIs {
         session.save(dateTrail);
         session.save(employee);
         session.save(customer);
-
-        //session.getTransaction().commit();
-
-        //session.close();
+        
 
         Gson gson = new Gson();
 
