@@ -20,6 +20,7 @@ public class ItemOrders {
 	private int quantity;
 	
 	public ItemOrders(){
+
 		
 	}
 	
@@ -27,6 +28,7 @@ public class ItemOrders {
 		this.orderId = orderId;
 		this.itemId = itemId;
 		this.quantity = quantity;
+
 	}
 
 	public int getOrderId() {
