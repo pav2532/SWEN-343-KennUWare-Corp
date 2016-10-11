@@ -12,9 +12,8 @@
         <property name="show_sql">true</property>
         <property name="connection.pool_size">1</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
-        <property name="hibernate.hbm2ddl.import_files"> /com/kennuware/resource/import.sql</property>
+        <property name="hibernate.hbm2ddl.import_files">/resource/import.sql</property>
 
         <!-- This property tells it to create all new tables every time the program is run -->
         <!-- We can set up scripts that will initialize some data into the database to make it easier for testing -->
