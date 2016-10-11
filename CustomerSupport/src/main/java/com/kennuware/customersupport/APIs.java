@@ -66,7 +66,6 @@ public class APIs {
         session.save(employee);
         session.save(customer);
         
-
         Gson gson = new Gson();
 
         post("/login", (req, res) -> {
