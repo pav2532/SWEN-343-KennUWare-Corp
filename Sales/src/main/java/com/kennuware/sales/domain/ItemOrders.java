@@ -19,6 +19,10 @@ public class ItemOrders {
 	
 	private int quantity;
 	
+	public ItemOrders(){
+		
+	}
+	
 	public ItemOrders(int orderId, int itemId, int quantity){
 		this.orderId = orderId;
 		this.itemId = itemId;

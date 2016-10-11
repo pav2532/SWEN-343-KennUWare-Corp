@@ -4,11 +4,15 @@
 
 package com.kennuware.sales.services;
 
+import com.kennuware.sales.data.HibernateUtil;
+import com.kennuware.sales.domain.Item;
+import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Employees.*;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.In;
 
@@ -82,7 +86,20 @@ public class EmployeeServices {
     ////Called when a list of employees is needed from a region
     //Get all employees and return an Arraylist of them
     public static ArrayList<Employee> getEmployees(String region){
-        return null;
+    	SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+//        
+        ArrayList<Employee> employees = new ArrayList<>();
+        Integer regionID = Integer.parseInt(region);
+        
+//        regionID = ((Region) session.createQuery("FROM Region r"
+//        		+ "WHERE r.name='" + region + "'").list().get(0)).getId();
+        
+        employees = (ArrayList<Employee>) session.createQuery("FROM Employee e "
+        		+ "WHERE e.regionId='" + regionID + "'").list();
+        
+    	return employees;
     }
 
     ////Called when a list of employees is needed from a specific store
@@ -95,32 +112,51 @@ public class EmployeeServices {
     //Search through database for specific employee, and return their revenue
     public static double getEmployeeRevenue(String id){
         double result = 0;
-        Query queryResult;
+        ArrayList<Integer> orderIds = null;
+        Query itemOrders = null;
+        Query items = null;
         int eid = Integer.parseInt(id);
-    	try{
-        	Configuration conf = (new Configuration()).configure();
-        	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-                    conf.getProperties()). build();
-        	factory = conf.buildSessionFactory(serviceRegistry);
-        } catch(Throwable ex){
-        	System.out.println("Failed to create sessionFactory object." + ex);
-        	throw new ExceptionInInitializerError(ex);
+        
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+    	
+        
+        
+        	
+        	
+        itemOrders = session.createQuery("FROM ItemOrders");
+        	
+        System.out.println("1");
+        orderIds = (ArrayList<Integer>) session.createQuery("SELECT s.orderid FROM SalesOrder s "
+        		+ "WHERE s.employeeID='" + eid + "'").list();
+        System.out.println("2");
+        items = session.createQuery("FROM Item");
+        System.out.println("3");
+        
+        
+        int quantity = 0;
+        int itemid = 0;
+        double unitPrice = 0;
+        System.out.println("Code here");
+        for(Iterator it = itemOrders.iterate();it.hasNext();){
+        	ItemOrders itemorder = (ItemOrders) it.next();
+        	System.out.println("ItemOrder: " + itemorder);
+        	itemid = itemorder.getItemId();
+        	if( orderIds.contains(itemorder.getOrderId())){
+        		quantity = itemorder.getQuantity();
+        		System.out.println(quantity);
+        		for(Iterator iterator = items.iterate();iterator.hasNext();){
+        			Item item = (Item)iterator.next();
+        			if( item.getId() == itemid){
+        				unitPrice = item.getUnitPrice();
+        				System.out.println(unitPrice);
+        				result += quantity * unitPrice;
+        			}
+        		}
+        	}
         }
-    	Session session = factory.openSession();
-        Transaction tx = null;
-        try{
-        	tx = session.beginTransaction();
-        	// Put database calls here Ex:
-        	queryResult = session.createQuery("FROM Employee "
-        			+ "WHERE id='" + eid + "'");
-        	tx.commit();
-        }catch(HibernateException e){
-        	if(tx != null) tx.rollback();
-        	e.printStackTrace();
-        }finally{
-        	session.close();
-        }
-        result = eid;
+        
     	return result;
     }
     

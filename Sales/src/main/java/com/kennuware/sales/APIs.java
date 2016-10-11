@@ -65,17 +65,14 @@ public class APIs {
         }, gson::toJson);
 
         
-        /* Accounting gets revenue from Sales
+        /* Gets revenue from a region
 		 * GET
 		 *
 		 */
-		get("/revenue", (req, res) -> {
+		get("/revenue/region/:rid", (req, res) -> {
 			double revenue = 0;
-			try{
-				revenue = EmployeeServices.getTotalRevenue();
-			} catch(Exception e){
-				e.printStackTrace();
-			}
+			String rid = req.params(":rid");
+			revenue = EmployeeServices.getRegionRevenue(rid);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -93,14 +90,17 @@ public class APIs {
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
 		
-		/* Gets revenue from a region
+		/* Accounting gets revenue from Sales
 		 * GET
 		 *
 		 */
-		get("/revenue/region/:id", (req, res) -> {
+		get("/revenue", (req, res) -> {
 			double revenue = 0;
-			String id = req.params(":eid");
-			revenue = EmployeeServices.getRegionRevenue(id);
+			try{
+				revenue = EmployeeServices.getTotalRevenue();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
