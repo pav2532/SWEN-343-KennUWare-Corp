@@ -36,6 +36,7 @@ import AccountInfo from 'components/AccountInfo';
 import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 import ShoppingCart from 'components/ShoppingCart';
+import GenericModal from 'components/GenericModal';
 
 function paymentInfoComplete(paymentInfo) {
   return paymentInfo.name && paymentInfo.ccNumber && paymentInfo.expiration;
@@ -58,30 +59,22 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
       buttonStyle += ' disabled';
     }
     const successModal = (
-      <Modal show={this.props.sales.successModal} onHide={this.close}>
-        <Modal.Header>
-          <Modal.Title>Success</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>The transaction completed successfully.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onNewOrder}>New Order</Button>
-        </Modal.Footer>
-      </Modal>
+      <GenericModal
+        show={this.props.sales.successModal}
+        title="Success"
+        body="The transaction completed successfully."
+        buttonLabel="New Order"
+        onButtonClick={this.props.onNewOrder}
+      />
     );
     const errorModal = (
-      <Modal show={this.props.sales.errorModal} onHide={this.close}>
-        <Modal.Header>
-          <Modal.Title>Failure</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>There was an error with the payment information.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onContinueOrder}>Edit Order</Button>
-        </Modal.Footer>
-      </Modal>
+      <GenericModal
+        show={this.props.sales.errorModal}
+        title="Failure"
+        body="There was an error with the payment information."
+        buttonLabel="Edit Order"
+        onButtonClick={this.props.onContinueOrder}
+      />
     );
     return (
       <div className={styles.salesAssociatePage}>

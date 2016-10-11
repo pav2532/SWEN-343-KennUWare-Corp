@@ -36,36 +36,29 @@ import { Button, Modal } from 'react-bootstrap';
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
 import NewReturnForm from 'components/NewReturnForm';
+import GenericModal from 'components/GenericModal';
 
 export class CustSupportAgent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     let activeRoute = 'New Return';
     let content = (<div>Hello</div>);
     const successModal = (
-      <Modal show={this.props.page.successModal} onHide={this.close}>
-        <Modal.Header>
-          <Modal.Title>Success</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>The transaction completed successfully.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onNewRequest}>New Order</Button>
-        </Modal.Footer>
-      </Modal>
+      <GenericModal
+        show={this.props.page.successModal}
+        title="Success"
+        body="The transaction completed successfully."
+        buttonLabel="New Return Request"
+        onButtonClick={this.props.onNewRequest}
+      />
     );
     const errorModal = (
-      <Modal show={this.props.page.errorModal} onHide={this.close}>
-        <Modal.Header>
-          <Modal.Title>Failure</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>There was an error with the payment information.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onEditRequest}>Edit Order</Button>
-        </Modal.Footer>
-      </Modal>
+      <GenericModal
+        show={this.props.page.errorModal}
+        title="Failure"
+        body="There was an error with the payment information."
+        buttonLabel="Edit Request"
+        onButtonClick={this.props.onEditRequest}
+      />
     );
     if (this.props.page.content === 'newReturn') {
       activeRoute = 'New Return';
