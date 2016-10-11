@@ -24,7 +24,11 @@ public class APIs {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-//
+
+		// Set the port
+		// This must be done before any routes are defined
+		port(8000);
+
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
@@ -63,8 +67,6 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password, session);
         }, gson::toJson);
-
-        System.out.println("Running login");
 
         /* Accounting gets revenue from Sales
 		 * GET
@@ -106,8 +108,6 @@ public class APIs {
 			return "{\"commission\":\"" + commission + "\"}";
 		});
 
-
-        System.out.println("Ran through all apis");
 
     }
 }

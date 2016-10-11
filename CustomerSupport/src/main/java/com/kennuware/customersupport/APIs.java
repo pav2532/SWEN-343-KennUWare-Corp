@@ -29,6 +29,10 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        // Set the port number
+        // This must be run before any routes are defined
+        port(8001);
+
         /*Employee employee = new Employee();
         employee.setName("Ryan");
         employee.setPassword("test");
@@ -78,6 +82,7 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password, session);
         }, gson::toJson);
+
     }
 }
 

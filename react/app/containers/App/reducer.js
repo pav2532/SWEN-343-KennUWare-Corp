@@ -12,7 +12,7 @@
 
 import {
   LOGIN_SUCCESS,
-} from 'containers/SalesLogin/constants';
+} from './constants';
 import { fromJS } from 'immutable';
 
 // The initial state of the App

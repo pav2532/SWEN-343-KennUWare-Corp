@@ -6,13 +6,17 @@ import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE, push } from 'react-router-redux';
 import {
   LOGIN,
-  LOGIN_SUCCESS,
   LOGIN_ERROR,
 
   ASSOCIATE,
   GENERALMANAGER,
   REGIONALMANAGER
 } from './constants';
+
+import {
+  LOGIN_SUCCESS,
+} from 'containers/App/constants';
+
 import { loginSuccess, loginError } from './actions';
 
 
