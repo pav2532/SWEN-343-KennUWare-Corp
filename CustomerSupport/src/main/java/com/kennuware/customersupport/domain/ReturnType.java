@@ -6,5 +6,7 @@ package com.kennuware.customersupport.domain;
 
 public enum ReturnType {
     REFUND,
-    REFURBISH
+    REFURBISH,
+    DENIED,
+    PENDING
 }

@@ -4,10 +4,19 @@
 
 package com.kennuware.customersupport.domain.Employees;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+@NamedQueries({
+        @NamedQuery(name = "findEmployeeByEmployeeId", query = "select e from Employee e where e.eid = :eid"),
+        @NamedQuery(name = "findEmployeeByEmployeeName", query = "select e from Employee e where e.name = :name"),
+        @NamedQuery(name = "findAllEmployees", query = "select e from Employee e")
+})
 
 @Entity
 @Table
