@@ -16,6 +16,7 @@ import AccountInfo from 'components/AccountInfo';
 import SideNav from 'components/SideNav';
 import TotalRevenue from 'components/TotalRevenue';
 import ShoppingCart from 'components/ShoppingCart';
+import GenericModal from 'components/GenericModal';
 
 import {
   goToDashboard,
@@ -24,6 +25,14 @@ import {
 
   addToCart,
   removeFromCart,
+
+  setPaymentInfoName,
+  setPaymentInfoCCNumber,
+  setPaymentInfoExpiration,
+
+  checkout,
+  newOrder,
+  continueOrder,
 } from './actions.js';
 
 import {
@@ -54,6 +63,24 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
   }
 
   render() {
+    const successModal = (
+      <GenericModal
+        show={this.props.sales.successModal}
+        title="Success"
+        body="The transaction completed successfully."
+        buttonLabel="New Order"
+        onButtonClick={this.props.onNewOrder}
+      />
+    );
+    const errorModal = (
+      <GenericModal
+        show={this.props.sales.errorModal}
+        title="Failure"
+        body="There was an error with the payment information."
+        buttonLabel="Edit Order"
+        onButtonClick={this.props.onContinueOrder}
+      />
+    );
     // Determine the content to show
     let activeRoute = 'Dashboard';
     let content = (<div>Hello</div>);
@@ -66,6 +93,8 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       activeRoute = 'Bulk Order';
       content = (
         <div>
+          {successModal}
+          {errorModal}
           <div style={{ width: '50%', float: 'left', height: '600px' }}>
             <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
             <ShoppingCart items={this.props.sales.shoppingCart} />
@@ -103,7 +132,8 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
     ];
     if (this.props.employee.type === GENERALMANAGER) {
       navRoutes.push(
-      { label: 'Bulk Order', onClick: this.props.onGoToOrderEditor },)
+      { label: 'Bulk Order', onClick: this.props.onGoToOrderEditor }
+      );
     }
 
     return (
@@ -134,7 +164,14 @@ SalesManagerPage.propTypes = {
   onGoToOrderEditor: React.PropTypes.func,
   onGoToUserManagement: React.PropTypes.func,
 
+  setPaymentInfoName: React.PropTypes.func,
+  setPaymentInfoCCNumber: React.PropTypes.func,
+  setPaymentInfoExpiration: React.PropTypes.func,
+
+  onCheckout: React.PropTypes.func,
   onAddItemToCart: React.PropTypes.func,
+  onNewOrder: React.PropTypes.func,
+  onContinueOrder: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -151,6 +188,14 @@ function mapDispatchToProps(dispatch) {
     onGoToUserManagement: () => dispatch(goToUserManagement()),
 
     onAddItemToCart: (item, quantity) => dispatch(addToCart(item, quantity)),
+
+    setPaymentInfoName: (value) => dispatch(setPaymentInfoName(value)),
+    setPaymentInfoCCNumber: (value) => dispatch(setPaymentInfoCCNumber(value)),
+    setPaymentInfoExpiration: (value) => dispatch(setPaymentInfoExpiration(value)),
+
+    onCheckout: () => dispatch(checkout()),
+    onNewOrder: () => dispatch(newOrder()),
+    onContinueOrder: () => dispatch(continueOrder()),
 
     onSignOut: () => dispatch(signOut()),
 

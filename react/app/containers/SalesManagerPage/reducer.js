@@ -13,6 +13,9 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
 
+  START_ORDER,
+  CONTINUE_ORDER,
+
   SET_PAYMENT_INFO_NAME,
   SET_PAYMENT_INFO_CCNUMBER,
   SET_PAYMENT_INFO_EXPIRATION,
@@ -45,6 +48,18 @@ function salesReducer(state = initialState, action) {
     case GOTO_USER_MGMT:
       return state
         .set('content', 'userManagement');
+    case START_ORDER:
+      return state
+        .set('successModal', false)
+        .set('errorModal', false)
+        .set('shoppingCart', [])
+        .setIn(['paymentInfo', 'name'], '')
+        .setIn(['paymentInfo', 'ccNumber'], '')
+        .setIn(['paymentInfo', 'expiration'], '');
+    case CONTINUE_ORDER:
+      return state
+        .set('successModal', false)
+        .set('errorModal', false);
     case ADD_TO_CART:
       return state
         .updateIn(['shoppingCart'], (arr) => arr.push({ item: action.item, quantity: action.quantity }));

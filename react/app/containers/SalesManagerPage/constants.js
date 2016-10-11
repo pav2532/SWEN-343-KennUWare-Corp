@@ -4,6 +4,9 @@
  *
  */
 
+export const START_ORDER = 'app/SalesAssociatePage/START_ORDER';
+export const CONTINUE_ORDER = 'app/SalesAssociatePage/CONTINUE_ORDER';
+
 export const GOTO_DASHBOARD = 'app/Sales/GOTO_DASHBOARD';
 export const GOTO_ORDER_EDITOR = 'app/Sales/GOTO_ORDER_EDITOR';
 export const GOTO_USER_MGMT = 'app/Sales/GOTO_USER_MGMT';
