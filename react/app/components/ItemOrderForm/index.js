@@ -17,6 +17,7 @@ class ItemOrderForm extends React.Component {
     super(props);
 
     this.state = {
+      itemID: '',
       itemName: '',
       itemQuantity: '',
       itemUnitPrice: '',
@@ -27,6 +28,12 @@ class ItemOrderForm extends React.Component {
     return (
       <div className={styles.itemOrderForm}>
         <h2>Add Item</h2>
+        <Input
+          label="Item ID"
+          onChange={(itemID) => {
+            this.setState({ itemID });
+          }}
+        />
         <Input
           label="Item Name"
           onChange={(itemName) => {
@@ -46,7 +53,7 @@ class ItemOrderForm extends React.Component {
           }}
         />
         <div>
-          <Button bsStyle="primary" bsSize="small" onClick={() => this.props.onAddItem({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice }, this.state.itemQuantity)}>
+          <Button bsStyle="primary" bsSize="small" onClick={() => this.props.onAddItem({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice, id: this.state.itemID }, this.state.itemQuantity)}>
             Add item
           </Button>
         </div>

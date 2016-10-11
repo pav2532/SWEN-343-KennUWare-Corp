@@ -117,6 +117,7 @@ public class APIs {
 
 		post("/order", (req, res) -> {
 					String body = req.body();
+					System.out.println("Got the req: " + req.body());
 					JsonObject json = gson.fromJson(body, JsonObject.class);
 					int employeeID = json.get("employeeID").getAsInt();
 					String customerName = json.get("custName").getAsString();
@@ -128,15 +129,18 @@ public class APIs {
 							expirationDate, bulkDiscount, session);
 
 
+					System.out.println("Checked: " + check);
 					if(check != -1){
+						System.out.println("Checked: " + check);
                         JsonObject item;
 						for (int i = 0 ; i < requestedProducts.size(); i++) {
+							System.out.println("Checked: " + check);
                             item = requestedProducts.get(i).getAsJsonObject();
 							OrderServices.addItemOrders(check, item.get("itemID").getAsInt(), item.get("quantity").getAsInt(), session);
 						}
 					}
 
-                    session.getTransaction().commit();
+                    // session.getTransaction().commit();
 					return check;}, gson::toJson);
 
 
