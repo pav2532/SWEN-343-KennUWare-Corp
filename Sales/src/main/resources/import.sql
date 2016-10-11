@@ -1,4 +1,6 @@
 insert into Item (name, unitPrice) values ("Fitness", "10.0");
+insert into Item (name, unitPrice) values ("health", "20.0");
+insert into Item (name, unitPrice) values ("whatever", "40.0");
 
 insert into ItemOrders (orderId, itemId, quantity) values ("1", "1", "10");
 
