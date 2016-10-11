@@ -4,6 +4,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "findOrderIdsByEmployeeID", query = "SELECT s.orderid FROM SalesOrder s "
+    		+ "WHERE s.employeeID=:eid")
+})
+
 @Entity
 @Table
 public class SalesOrder {

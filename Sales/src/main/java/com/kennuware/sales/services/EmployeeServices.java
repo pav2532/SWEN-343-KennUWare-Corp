@@ -70,7 +70,7 @@ public class EmployeeServices {
         ArrayList<Employee> employees = null;
         try{
         	tx = session.beginTransaction();
-        	employees = (ArrayList<Employee>) session.createQuery("FROM Employee").list();
+        	employees = (ArrayList<Employee>) session.getNamedQuery("findAllEmployees").list();
         	tx.commit();
         }catch(HibernateException e){
         	if(tx != null) tx.rollback();
@@ -100,8 +100,8 @@ public class EmployeeServices {
 //        regionID = ((Region) session.createQuery("FROM Region r"
 //        		+ "WHERE r.name='" + region + "'").list().get(0)).getId();
         
-        employees = (ArrayList<Employee>) session.createQuery("FROM Employee e "
-        		+ "WHERE e.regionId='" + regionID + "'").list();
+        employees = (ArrayList<Employee>) session.getNamedQuery("findEmployeeByRegionId")
+        		.setString("regionID", region).list();
         
     	return employees;
     }
@@ -119,9 +119,8 @@ public class EmployeeServices {
 //        regionID = ((Region) session.createQuery("FROM Region r"
 //        		+ "WHERE r.name='" + region + "'").list().get(0)).getId();
         
-        employees = (ArrayList<Employee>) session.createQuery("FROM Store s "
-        		+ "WHERE s.regionId='" + regionID + "' "
-        				+ "AND s.name='" + store + "'").list();
+        employees = (ArrayList<Employee>) session.getNamedQuery("findStoreByRegionIdAndName")
+        		.setString("regionID", region).setString("store", store).list();
         
     	return employees;
     }
@@ -145,30 +144,24 @@ public class EmployeeServices {
         	
         itemOrders = session.createQuery("FROM ItemOrders");
         	
-        System.out.println("1");
-        orderIds = (ArrayList<Integer>) session.createQuery("SELECT s.orderid FROM SalesOrder s "
-        		+ "WHERE s.employeeID='" + eid + "'").list();
-        System.out.println("2");
+        
+        orderIds = (ArrayList<Integer>) session.getNamedQuery("findOrderIdsByEmployeeID")
+        		.setString("eid", id).list();
         items = session.createQuery("FROM Item");
-        System.out.println("3");
         
         
         int quantity = 0;
         int itemid = 0;
         double unitPrice = 0;
-        System.out.println("Code here");
         for(Iterator it = itemOrders.iterate();it.hasNext();){
         	ItemOrders itemorder = (ItemOrders) it.next();
-        	System.out.println("ItemOrder: " + itemorder);
         	itemid = itemorder.getItemId();
         	if( orderIds.contains(itemorder.getOrderId())){
         		quantity = itemorder.getQuantity();
-        		System.out.println(quantity);
         		for(Iterator iterator = items.iterate();iterator.hasNext();){
         			Item item = (Item)iterator.next();
         			if( item.getId() == itemid){
         				unitPrice = item.getUnitPrice();
-        				System.out.println(unitPrice);
         				result += quantity * unitPrice;
         			}
         		}
@@ -195,34 +188,6 @@ public class EmployeeServices {
     	}
     	return result;
     }
-    
-    
-    
-    
-// Code for setting the SessionFactory and interacting with the database
-    
-//    try{
-//    	Configuration conf = (new Configuration()).configure();
-//    	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-//                conf.getProperties()). build();
-//    	factory = conf.buildSessionFactory(serviceRegistry);
-//    } catch(Throwable ex){
-//    	System.out.println("Failed to create sessionFactory object." + ex);
-//    	throw new ExceptionInInitializerError(ex);
-//    }
-//	Session session = factory.openSession();
-//    Transaction tx = null;
-//    try{
-//    	tx = session.beginTransaction();
-//    	// Put database calls here Ex:
-//    	// employees = (ArrayList<Employee>) session.createQuery("FROM Employee").list();
-//    	tx.commit();
-//    }catch(HibernateException e){
-//    	if(tx != null) tx.rollback();
-//    	e.printStackTrace();
-//    }finally{
-//    	session.close();
-//    }
     
     
     
