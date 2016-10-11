@@ -145,9 +145,7 @@ public class APIs {
             int id = json.get("id").getAsInt();
 
             List<Item> list = session.createCriteria(Item.class).list();
-            System.out.println(id);
             for(Item i:list){
-                System.out.println("!!!");
                 if(i.getId() == id){
                     return i.getUnitPrice();
                 }
