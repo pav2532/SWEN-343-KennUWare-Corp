@@ -29,7 +29,7 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Employee employee = new Employee();
+        /*Employee employee = new Employee();
         employee.setName("Ryan");
         employee.setPassword("test");
         employee.setRegionId(1);
@@ -65,7 +65,7 @@ public class APIs {
 
         session.getTransaction().commit();
 
-        session.close();
+        session.close();*/
 
         Gson gson = new Gson();
 
@@ -76,7 +76,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password);
+            return EmployeeServices.login(username, password, session);
         }, gson::toJson);
     }
 }
