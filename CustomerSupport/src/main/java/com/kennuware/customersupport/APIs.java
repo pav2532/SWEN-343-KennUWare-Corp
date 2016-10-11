@@ -14,6 +14,7 @@ import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
+import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -78,6 +79,28 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password, session);
         }, gson::toJson);
+
+        post("/requestReturn", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String customerName = json.get("customerName").toString();
+            String customerAddress = json.get("customerAddress").toString();
+            String reason = json.get("reason").toString();
+            int storeID = json.get("storeID").getAsInt();
+            customerName = customerName.substring(1,customerName.length()-1);
+            customerAddress = customerAddress.substring(1,customerAddress.length()-1);
+            reason = reason.substring(1,reason.length()-1);
+            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, session);
+        }, gson::toJson);
+
+        post("/requestStatus", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String requestID = json.get("requestID").toString();
+            String status = json.get("status").toString();
+            requestID = requestID.substring(1,requestID.length()-1);
+            status = status.substring(1,status.length()-1);
+            return EmployeeServices.changeStatus(requestID, status, session);
+        }, gson::toJson);
     }
 }
-

@@ -6,6 +6,7 @@ package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
 import com.kennuware.customersupport.domain.Employees.Employee;
+import com.kennuware.customersupport.domain.Returns;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -29,6 +30,11 @@ public class EmployeeServices {
         }
 
         // Fine for now, but should eventually use http status codes instead
+        return null;
+    }
+
+    public static Returns changeStatus(String returnID, String status, Session session){
+        //Query query = session.getNamedQuery().setString();
         return null;
     }
 }
