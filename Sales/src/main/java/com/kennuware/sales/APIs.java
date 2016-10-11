@@ -4,6 +4,8 @@
 
 package com.kennuware.sales;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
@@ -12,11 +14,16 @@ import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.Employees.EmployeeType;
 import com.kennuware.sales.domain.Employees.Region;
+import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Store;
 import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.services.EmployeeServices;
+import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import java.util.Iterator;
+
+import java.util.ArrayList;
 
 public class APIs {
     public static void main(String[] args) {
@@ -107,6 +114,30 @@ public class APIs {
 			res.type("text/json");
 			return "{\"commission\":\"" + commission + "\"}";
 		});
+
+		post("/order", (req, res) -> {
+					String body = req.body();
+					JsonObject json = gson.fromJson(body, JsonObject.class);
+					int employeeID = json.get("employeeID").getAsInt();
+					String customerName = json.get("custName").getAsString();
+					String creditCardNumber = json.get("creditCardNumber").getAsString();
+					String expirationDate = json.get("expirationDate").getAsString();
+					Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
+					JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
+					int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
+							expirationDate, bulkDiscount, session);
+
+
+					if(check != -1){
+                        JsonObject item;
+						for (int i = 0 ; i < requestedProducts.size(); i++) {
+                            item = requestedProducts.get(i).getAsJsonObject();
+							OrderServices.addItemOrders(check, item.get("itemID").getAsInt(), item.get("quantity").getAsInt(), session);
+						}
+					}
+
+                    session.getTransaction().commit();
+					return check;}, gson::toJson);
 
 
     }
