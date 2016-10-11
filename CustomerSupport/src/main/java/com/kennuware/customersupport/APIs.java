@@ -16,6 +16,7 @@ import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,9 +26,10 @@ import java.util.Date;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+    	
+    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	Session session = sessionFactory.openSession();
+    	session.beginTransaction();
 
         // Set the port number
         // This must be run before any routes are defined
