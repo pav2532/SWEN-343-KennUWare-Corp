@@ -1,6 +1,10 @@
 insert into Item (name, unitPrice) values ("Fitness", "10.0");
 
+insert into Item (name, unitPrice) values ("health", "20.0");
+insert into Item (name, unitPrice) values ("whatever", "40.0");
+
 insert into ItemOrders (orderId, itemId, quantity) values ("1", "1", "10");
+insert into ItemOrders (orderId, itemId, quantity) values ("2", "1", "5");
 
 insert into Region (name) values ("Northeast");
 insert into Region (name) values ("Southeast");
@@ -24,5 +28,8 @@ insert into StoreEmployee (storeID, employeeID) values (1, 6);
 
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 123, "1234567890987654", "10/22");
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 456, "8484848484848484", "12/31");
+
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 1, "1234567890987654", "10/22");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 4, "8484848484848484", "12/31");
 insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Kind of Ben", 1098, "9999999999999999", "1/25");
 

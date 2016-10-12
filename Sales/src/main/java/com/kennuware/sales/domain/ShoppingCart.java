@@ -61,33 +61,7 @@ public class ShoppingCart {
         return customerName;
     }
 
-    public String setCreditCardNumber(String creditCardNumber){
-        if(creditCardNumber.length() != 16 ){
-            return "Invalid Length";
-        }
 
-        int sum = 0;
-        boolean alternate = false;
-
-        for (int i = creditCardNumber.length() - 1; i >= 0; i--){
-            int n = Integer.parseInt(creditCardNumber.substring(i, i + 1));
-            if (alternate){
-                n = n*2;
-                if (n > 9)
-                {
-                    n = (n % 10) + 1;
-                }
-            }
-            sum += n;
-            alternate = !alternate;
-        }
-        if(sum % 10 == 0) {
-            this.creditCardNumber = creditCardNumber;
-            return "Credit Card Number is Valid";
-        }else{
-            return "Invalid Credit Card Number";
-        }
-    }
 
     public String getCreditCardNumber(){
         return creditCardNumber;

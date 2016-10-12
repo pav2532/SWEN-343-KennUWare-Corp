@@ -4,10 +4,18 @@
 
 package com.kennuware.customersupport.domain;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+@NamedQueries({
+        @NamedQuery(name = "findReturn", query = "select r from Returns r where r.id = :id"),
+        @NamedQuery(name = "findAllReturns", query = "select r from Returns r")
+})
 
 @Entity
 @Table
@@ -15,22 +23,22 @@ public class Returns {
     @Id
     @GeneratedValue
     private int id;
-    private String RMA;
     private String reason;
     private int storeID;
     private ReturnType type;
+    private String itemID;
+
+    public String getItemID() {
+        return itemID;
+    }
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
+    }
 
     public Returns(){}
 
     public int getID(){
         return id;
-    }
-
-    public String getRMA(){
-        return RMA;
-    }
-    public void setRMA(String RMA){
-        this.RMA = RMA;
     }
 
     public String getReason(){
@@ -47,9 +55,8 @@ public class Returns {
         this.storeID = storeID;
     }
 
-    public ReturnType getType(){
-        return type;
-    }
+    public ReturnType getType(){return type;}
+
     public void setType(ReturnType type){
         this.type = type;
     }
