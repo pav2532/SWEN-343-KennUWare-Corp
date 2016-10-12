@@ -34,9 +34,6 @@ public class EmployeeServices {
     //Called when someone logs in
     //Search through database for employee, check if password is right
     public static Employee login(String username, String password, Session dbSession){
-
-        // TODO: get employee from database with matching username
-        // call employee.authenticate(password) and return the employee data if it is valid
         Employee employee = new Employee();
         Gson gson = new Gson();
 
