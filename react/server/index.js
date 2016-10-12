@@ -13,7 +13,8 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // This is to be able to hit the Java Spark server with /api
-app.use('/api/sales', proxy('localhost:4567'));
+app.use('/api/sales', proxy('localhost:8000'));
+app.use('/api/customer-support', proxy('localhost:8001'));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

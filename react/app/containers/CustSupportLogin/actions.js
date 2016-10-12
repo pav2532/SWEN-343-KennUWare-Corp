@@ -5,11 +5,33 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  LOGIN,
+  LOGIN_ERROR,
 } from './constants';
 
-export function defaultAction() {
+import {
+  LOGIN_SUCCESS,
+} from 'containers/App/constants';
+
+export function login(credentials) {
   return {
-    type: DEFAULT_ACTION,
+    type: LOGIN,
+    credentials,
+  };
+}
+
+export function loginSuccess(data) {
+  console.log("Sending: " + LOGIN_SUCCESS);
+  console.log(data);
+  return {
+    type: LOGIN_SUCCESS,
+    data,
+  };
+}
+
+export function loginError(err) {
+  return {
+    type: LOGIN_ERROR,
+    err,
   };
 }

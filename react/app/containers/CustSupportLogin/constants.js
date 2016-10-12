@@ -4,4 +4,9 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/CustSupportLogin/DEFAULT_ACTION';
+export const LOGIN = 'app/CustSupportLogin/LOGIN';
+export const LOGIN_SUCCESS = 'app/CustSupportLogin/LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'app/CustSupportLogin/LOGIN_ERROR';
+
+export const AGENT = 'AGENT';
+export const MANAGER = 'MANAGER';

@@ -5,6 +5,9 @@
  */
 
 import {
+  START_ORDER,
+  CONTINUE_ORDER,
+
   ADD_TO_CART,
   REMOVE_FROM_CART,
 
@@ -13,6 +16,8 @@ import {
   SET_PAYMENT_INFO_EXPIRATION,
 
   CHECKOUT,
+  CHECKOUT_SUCCESS,
+  CHECKOUT_ERROR,
 } from './constants';
 
 export function addToCart(item, quantity) {
@@ -57,3 +62,32 @@ export function checkout() {
   };
 }
 
+export function newOrder() {
+  return {
+    type: START_ORDER,
+  };
+}
+
+export function continueOrder() {
+  return {
+    type: CONTINUE_ORDER,
+  };
+}
+
+export function checkoutSuccess() {
+  return {
+    type: CHECKOUT_SUCCESS,
+  };
+}
+
+export function checkoutError() {
+  return {
+    type: CHECKOUT_ERROR,
+  };
+}
+
+export function restart() {
+  return {
+    type: START_ORDER,
+  };
+}

@@ -6,9 +6,12 @@
 
 import {
   LOGIN,
-  LOGIN_SUCCESS,
   LOGIN_ERROR,
 } from './constants';
+
+import {
+  LOGIN_SUCCESS,
+} from 'containers/App/constants';
 
 export function login(credentials) {
   return {

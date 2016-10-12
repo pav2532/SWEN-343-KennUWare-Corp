@@ -27,10 +27,12 @@ class Input extends React.Component {
   }
 
   render() {
+    const type = this.props.type ? this.props.type : 'text';
+    const value = this.props.value !== undefined ? this.props.value : this.state.value;
     return (
       <div className={styles.input}>
-        <div>{this.props.label}</div>
-        <input className={styles.textBox} type="text" value={this.state.value} onChange={this.onChange} />
+        <span className={styles.label} style={this.props.labelStyle}>{this.props.label}</span>
+        <input className={styles.textBox} type={type} value={value} onChange={this.onChange} />
       </div>
     );
   }
@@ -38,6 +40,9 @@ class Input extends React.Component {
 
 Input.propTypes = {
   label: React.PropTypes.string,
+  type: React.PropTypes.string,
+  value: React.PropTypes.string,
+  labelStyle: React.PropTypes.object,
   onChange: React.PropTypes.func,
 };
 

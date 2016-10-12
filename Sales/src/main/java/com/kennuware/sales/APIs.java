@@ -31,10 +31,15 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		
-//
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+		// Set the port
+		// This must be done before any routes are defined
+		port(8000);
+
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
@@ -64,15 +69,15 @@ public class APIs {
 
 		Gson gson = new Gson();
 
-		post("/login", (req, res) -> {
-			String body = req.body();
-			JsonObject json = gson.fromJson(body, JsonObject.class);
-			String username = json.get("username").toString();
-			String password = json.get("password").toString();
-			username = username.substring(1, username.length() - 1);
-			password = password.replace("\"", "");
-			return EmployeeServices.login(username, password, session);
-		}, gson::toJson);
+        post("/login", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String username = json.get("username").toString();
+            String password = json.get("password").toString();
+            username = username.substring(1,username.length()-1);
+            password = password.replace("\"", "");
+            return EmployeeServices.login(username, password, session);
+        }, gson::toJson);
 
 
         
