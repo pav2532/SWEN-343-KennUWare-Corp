@@ -1,7 +1,6 @@
 /**
  * Created by John King on 11-Oct-16.
  */
-package test;
 
 import com.google.gson.Gson;
 import com.kennuware.customersupport.data.HibernateUtil;
