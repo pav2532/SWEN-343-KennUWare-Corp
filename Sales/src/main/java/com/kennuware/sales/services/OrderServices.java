@@ -4,11 +4,13 @@
 
 package com.kennuware.sales.services;
 
+import com.google.gson.Gson;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.ShoppingCart;
 import com.kennuware.sales.domain.Wearables.*;
 import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
+import org.hibernate.criterion.Order;
 
 
 public class OrderServices {
@@ -44,7 +46,7 @@ public class OrderServices {
             newSO.setCustomerName(customerName);
 
             session.save(newSO);
-
+            sendOrder(newSO, session);
             return newSO.getOrderid();
         }else{
             return -1;
@@ -60,5 +62,13 @@ public class OrderServices {
         newIO.setQuantity(quantity);
 
         session.save(newIO);
+    }
+
+    public static String sendOrder(SalesOrder order, Session session){
+        Gson gson = new Gson();
+
+        //
+
+        return gson.toJson(order);
     }
 }
