@@ -26,6 +26,8 @@ import {
   completeReturnRequest,
   editReturnRequest,
 
+  getReturns,
+
   submitReturn,
 } from './actions';
 
@@ -86,6 +88,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
         <div>
           <ReturnTable
             returns={this.props.page.returns}
+            getReturns={this.props.onGetReturns}
           />
         </div>
       );
@@ -132,6 +135,8 @@ CustSupportAgent.propTypes = {
   onNewRequest: React.PropTypes.func,
   onEditRequest: React.PropTypes.func,
 
+  onGetReturns: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -153,6 +158,8 @@ function mapDispatchToProps(dispatch) {
     onSubmitReturn: () => dispatch(submitReturn()),
     onNewRequest: () => dispatch(completeReturnRequest()),
     onEditRequest: () => dispatch(editReturnRequest()),
+
+    onGetReturns: () => dispatch(getReturns()),
 
     onSignOut: () => dispatch(signOut()),
 

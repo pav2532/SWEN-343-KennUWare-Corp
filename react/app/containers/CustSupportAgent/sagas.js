@@ -16,6 +16,8 @@ import {
 import {
   submitReturnSuccess,
   submitReturnError,
+
+  getReturnsSuccess,
 } from './actions';
 
 // Sign out saga
@@ -79,7 +81,7 @@ export function* getReturns() {
 
   console.log("Requesting total revenue");
 
-  const requestURL = '/api/customer-support/revenue';
+  const requestURL = '/api/customer-support/getReturns';
 
 
   const options = {
@@ -91,13 +93,13 @@ export function* getReturns() {
   };
 
   // Call our request helper (see 'utils/request')
-  const revenue = yield call(request, requestURL, options);
+  const returns = yield call(request, requestURL, options);
 
-  console.log("Got revenue");
-  console.log(revenue);
+  console.log("Got returns");
+  console.log(returns);
 
-  if (!revenue.err) {
-    yield put(getRevenueSuccess(revenue.data));
+  if (!returns.err) {
+    yield put(getReturnsSuccess(returns.data));
   }
   // Put the error flow here
 }
