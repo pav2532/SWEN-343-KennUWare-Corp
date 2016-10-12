@@ -2,8 +2,6 @@
  * Created by John King on 11-Oct-16.
  */
 
-package test;
-
 import com.kennuware.sales.data.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

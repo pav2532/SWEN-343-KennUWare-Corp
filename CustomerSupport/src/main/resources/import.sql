@@ -3,9 +3,11 @@ insert into employee (name, type, password, regionId) values ("CSAgent2", 0, "te
 insert into employee (name, type, password, regionId) values ("Tina", 1, "test", 1);
 insert into employee (name, type, password, regionId) values ("CSManager", 1, "test", 1);
 
-insert into returns (reason, storeID, type, itemID) values ("It broke", 1, 0, "Yello");
+insert into returns (reason, storeID, type, itemID) values ("It broke", 1, 0, "Healthy");
 insert into returns (reason, storeID, type, itemID) values ("Screen fell off", 1, 1, "Active");
-insert into returns (reason, storeID, type) values ("Hated it", 1, 0);
+insert into returns (reason, storeID, type, itemID) values ("Hated it", 1, 3, "Fashion");
+insert into returns (reason, storeID, type, itemID) values ("Hated it", 1, 2, "Fashion");
+insert into returns (reason, storeID, type, itemID) values ("Hated it", 1, 4, "Comfort");
 
 insert into customer (address, name) values ("555 Temp road", "Joey");
 insert into customer (address, name) values ("IDK", "Bobby");
