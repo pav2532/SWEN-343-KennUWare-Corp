@@ -1,18 +1,13 @@
 insert into Employee (name, type, password, regionId) values ("CSAgent1", 0, "test", 1);
 insert into Employee (name, type, password, regionId) values ("CSAgent2", 0, "test", 1);
 insert into Employee (name, type, password, regionId) values ("Tina", 1, "test", 1);
-
-insert into Employee (name, type, password, regionId) values ("CSManager", 1, "test", 1);
-
-insert into Returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0);
-insert into Returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1);
-insert into Returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0);
-
-
 insert into Employee (name, type, password, regionId) values ("CSManager", 0, "test", 1);
-insert into Returns (reason, storeID, type, itemID) values ("It broke", 1, 0, "Yello");
+
+insert into Returns (reason, storeID, type, itemID) values ("It broke", 1, 0, "Healthy");
 insert into Returns (reason, storeID, type, itemID) values ("Screen fell off", 1, 1, "Active");
-insert into Returns (reason, storeID, type) values ("Hated it", 1, 0);
+insert into Returns (reason, storeID, type, itemID) values ("Hated it", 1, 3, "Fashion");
+insert into Returns (reason, storeID, type, itemID) values ("Hated it", 1, 2, "Fashion");
+insert into Returns (reason, storeID, type, itemID) values ("Hated it", 1, 4, "Comfort");
 
 insert into Customer (address, name) values ("555 Temp road", "Joey");
 insert into Customer (address, name) values ("IDK", "Bobby");

@@ -102,6 +102,8 @@ public class EmployeeServices {
             else if(r.getType()==ReturnType.REFURBISH){
 
             }
+            r.setType(ReturnType.RESOLVED);
+            session.save(r);
 
             Query q = session.getNamedQuery("findDateTrail").setString("returnsID", returnID);
             List<DateTrail> dateTrails = (List<DateTrail>)q.list();
