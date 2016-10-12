@@ -23,6 +23,8 @@ import {
   CHECKOUT,
   CHECKOUT_SUCCESS,
   CHECKOUT_ERROR,
+
+  GET_REVENUE_TOTAL_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
@@ -34,6 +36,10 @@ const initialState = fromJS({
     name: '',
     ccNumber: '',
     expiration: '',
+  },
+  revenue: {
+    total: '0',
+    region: '',
   },
 });
 
@@ -85,6 +91,10 @@ function salesReducer(state = initialState, action) {
       return state
         .set('loading', false)
         .set('errorModal', true);
+    case GET_REVENUE_TOTAL_SUCCESS:
+      console.log("Reducer revenue success");
+      return state
+        .setIn(['revenue', 'total'], action.data.revenue);
 
     default:
       return state;

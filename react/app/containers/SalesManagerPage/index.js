@@ -33,6 +33,9 @@ import {
   checkout,
   newOrder,
   continueOrder,
+
+  getRevenue,
+  getRevenueRegion,
 } from './actions.js';
 
 import {
@@ -83,11 +86,14 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
     );
     // Determine the content to show
     let activeRoute = 'Dashboard';
-    let content = (<div>Hello</div>);
+    let content = (<div></div>);
     if (this.props.sales.content === 'dashboard') {
       activeRoute = 'Dashboard';
       content = (
-        <TotalRevenue />
+        <TotalRevenue
+          loadRevenue={this.props.onLoadRevenue}
+          revenue={this.props.sales.revenue.total}
+        />
       );
     } else if (this.props.sales.content === 'orderEditor') {
       activeRoute = 'Bulk Order';
@@ -173,6 +179,8 @@ SalesManagerPage.propTypes = {
   onNewOrder: React.PropTypes.func,
   onContinueOrder: React.PropTypes.func,
 
+  onLoadRevenue: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -196,6 +204,8 @@ function mapDispatchToProps(dispatch) {
     onCheckout: () => dispatch(checkout()),
     onNewOrder: () => dispatch(newOrder()),
     onContinueOrder: () => dispatch(continueOrder()),
+
+    onLoadRevenue: () => dispatch(getRevenue()),
 
     onSignOut: () => dispatch(signOut()),
 

@@ -6,11 +6,19 @@ import request from 'utils/request';
 
 import {
   CHECKOUT,
+  GET_REVENUE_TOTAL,
+  GET_REVENUE_REGION,
 } from './constants';
 
 import {
   checkoutSuccess,
   checkoutError,
+
+  getRevenueError,
+  getRevenueSuccess,
+
+  getRevenueRegionError,
+  getRevenueRegionSuccess,
 } from './actions';
 
 import { selectShoppingCart, selectPaymentInfo } from './selectors';
@@ -65,6 +73,37 @@ export function* signOut() {
   yield put(push('/sales'));
 }
 
+export function* getTotalRevenue() {
+
+  console.log("Requesting total revenue");
+
+  const requestURL = '/api/sales/revenue';
+
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Call our request helper (see 'utils/request')
+  const revenue = yield call(request, requestURL, options);
+
+  console.log("Got revenue");
+  console.log(revenue);
+
+  if (!revenue.err) {
+    yield put(getRevenueSuccess(revenue.data));
+  }
+  // Put the error flow here
+}
+
+export function* getRegionRevenue() {
+  console.log("Requesting region revenue");
+}
+
 export function* checkoutWatcher() {
   while (yield take(CHECKOUT)) {
     yield call(checkout);
@@ -74,6 +113,18 @@ export function* checkoutWatcher() {
 export function* signOutWatcher() {
   while (yield take(SIGN_OUT)) {
     yield call(signOut);
+  }
+}
+
+export function* revenueTotalWatcher() {
+  while (yield take(GET_REVENUE_TOTAL)) {
+    yield call(getTotalRevenue);
+  }
+}
+
+export function* revenueRegionWatcher() {
+  while (yield take(GET_REVENUE_REGION)) {
+    yield call(getRegionRevenue);
   }
 }
 
@@ -94,8 +145,26 @@ export function* checkoutData() {
   return;
 }
 
+export function* revenueTotalData() {
+  const watcher = yield fork(revenueTotalWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+export function* revenueRegionData() {
+  const watcher = yield fork(revenueRegionWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
 // All sagas to be loaded
 export default [
   signOutData,
   checkoutData,
+  revenueTotalData,
+  revenueRegionData,
 ];

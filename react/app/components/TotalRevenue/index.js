@@ -9,13 +9,25 @@ import React from 'react';
 
 import styles from './styles.css';
 
-function TotalRevenue() {
-  return (
-    <div className={styles.totalRevenue}>
-      <div>Total Revenue</div>
-      <div>$1,000,000</div>
-    </div>
-  );
+class TotalRevenue extends React.Component {
+
+  componentWillMount() {
+    this.props.loadRevenue();
+  }
+
+  render() {
+    return (
+      <div className={styles.totalRevenue}>
+        <div>Total Revenue</div>
+        <div>${this.props.revenue}</div>
+      </div>
+    );
+  }
 }
+
+TotalRevenue.propTypes = {
+  revenue: React.PropTypes.string,
+  loadRevenue: React.PropTypes.func,
+};
 
 export default TotalRevenue;

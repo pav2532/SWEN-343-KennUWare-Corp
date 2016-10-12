@@ -22,6 +22,14 @@ import {
   CHECKOUT,
   CHECKOUT_SUCCESS,
   CHECKOUT_ERROR,
+
+  GET_REVENUE_REGION,
+  GET_REVENUE_REGION_ERROR,
+  GET_REVENUE_REGION_SUCCESS,
+
+  GET_REVENUE_TOTAL,
+  GET_REVENUE_TOTAL_ERROR,
+  GET_REVENUE_TOTAL_SUCCESS,
 } from './constants';
 
 export function goToDashboard() {
@@ -114,3 +122,42 @@ export function restart() {
   };
 }
 
+export function getRevenueRegion() {
+  return {
+    type: GET_REVENUE_REGION,
+  };
+}
+
+export function getRevenueRegionSuccess(data) {
+  return {
+    type: GET_REVENUE_REGION_SUCCESS,
+    data,
+  };
+}
+
+export function getRevenueRegionError(err) {
+  return {
+    type: GET_REVENUE_REGION_ERROR,
+    err,
+  };
+}
+
+export function getRevenue() {
+  return {
+    type: GET_REVENUE_TOTAL,
+  };
+}
+
+export function getRevenueSuccess(data) {
+  return {
+    type: GET_REVENUE_TOTAL_SUCCESS,
+    data,
+  };
+}
+
+export function getRevenueError(err) {
+  return {
+    type: GET_REVENUE_TOTAL_ERROR,
+    err,
+  };
+}
