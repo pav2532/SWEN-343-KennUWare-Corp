@@ -6,6 +6,7 @@ import request from 'utils/request';
 
 import {
   SUBMIT_RETURN,
+  GET_RETURNS,
 } from './constants';
 
 import {
@@ -74,9 +75,42 @@ export function* submitReturn() {
   // Do some success actions
 }
 
+export function* getReturns() {
+
+  console.log("Requesting total revenue");
+
+  const requestURL = '/api/customer-support/revenue';
+
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Call our request helper (see 'utils/request')
+  const revenue = yield call(request, requestURL, options);
+
+  console.log("Got revenue");
+  console.log(revenue);
+
+  if (!revenue.err) {
+    yield put(getRevenueSuccess(revenue.data));
+  }
+  // Put the error flow here
+}
+
 export function* returnWatcher() {
   while (yield take(SUBMIT_RETURN)) {
     yield call(submitReturn);
+  }
+}
+
+export function* getReturnsWatcher() {
+  while (yield take(GET_RETURNS)) {
+    yield call(getReturns);
   }
 }
 
@@ -89,9 +123,18 @@ export function* returnData() {
   return;
 }
 
+export function* getReturnData() {
+  const watcher = yield fork(getReturnsWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
 
 // All sagas to be loaded
 export default [
   signOutData,
   returnData,
+  getReturnData,
 ];

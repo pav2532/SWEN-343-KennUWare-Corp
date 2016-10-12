@@ -37,6 +37,7 @@ import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
 import NewReturnForm from 'components/NewReturnForm';
 import GenericModal from 'components/GenericModal';
+import ReturnTable from 'components/ReturnTable';
 
 export class CustSupportAgent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -83,7 +84,9 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
       activeRoute = 'Returns';
       content = (
         <div>
-          Returns
+          <ReturnTable
+            returns={this.props.page.returns}
+          />
         </div>
       );
     }

@@ -19,6 +19,8 @@ import {
 
   EDIT_RETURN_REQUEST,
   COMPLETE_RETURN_REQUEST,
+
+  GET_RETURNS_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
@@ -31,6 +33,7 @@ const initialState = fromJS({
     reason: '',
     itemId: '',
   },
+  returns: [],
 });
 
 function custSupportAgentReducer(state = initialState, action) {
@@ -65,13 +68,15 @@ function custSupportAgentReducer(state = initialState, action) {
     case SET_RETURN_ITEM_ID:
       return state
         .setIn(['newReturn', 'itemId'], action.id);
-
     case SUBMIT_RETURN_SUCCESS:
       return state
         .set('successModal', true);
     case SUBMIT_RETURN_ERROR:
       return state
         .set('errorModal', true);
+    case GET_RETURNS_SUCCESS:
+      return state
+        .set('returns', action.data);
 
     default:
       return state;

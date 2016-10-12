@@ -19,6 +19,10 @@ import {
 
   EDIT_RETURN_REQUEST,
   COMPLETE_RETURN_REQUEST,
+
+  GET_RETURNS,
+  GET_RETURNS_ERROR,
+  GET_RETURNS_SUCCESS,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -89,5 +93,25 @@ export function editReturnRequest() {
 export function completeReturnRequest() {
   return {
     type: COMPLETE_RETURN_REQUEST,
+  };
+}
+
+export function getReturns() {
+  return {
+    type: GET_RETURNS,
+  };
+}
+
+export function getReturnsSuccess(data) {
+  return {
+    type: GET_RETURNS_SUCCESS,
+    data,
+  };
+}
+
+export function getReturnsError(err) {
+  return {
+    type: GET_RETURNS_ERROR,
+    err,
   };
 }
