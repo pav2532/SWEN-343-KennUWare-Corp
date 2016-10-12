@@ -31,10 +31,15 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-//
+
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+		// Set the port
+		// This must be done before any routes are defined
+		port(8000);
+
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
@@ -64,22 +69,60 @@ public class APIs {
 
 		Gson gson = new Gson();
 
-		post("/login", (req, res) -> {
-			String body = req.body();
-			JsonObject json = gson.fromJson(body, JsonObject.class);
-			String username = json.get("username").toString();
-			String password = json.get("password").toString();
-			username = username.substring(1, username.length() - 1);
-			password = password.replace("\"", "");
-			return EmployeeServices.login(username, password, session);
-		}, gson::toJson);
+        post("/login", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String username = json.get("username").toString();
+            String password = json.get("password").toString();
+            username = username.substring(1,username.length()-1);
+            password = password.replace("\"", "");
+            return EmployeeServices.login(username, password, session);
+        }, gson::toJson);
 
-        /* Accounting gets revenue from Sales
+
+        
+
+
+        
+
+        
+        /* Gets revenue from a region
+		 * GET
+		 *
+		 */
+		get("/revenue/region/:rid", (req, res) -> {
+			double revenue = 0;
+			String rid = req.params(":rid");
+			revenue = EmployeeServices.getRegionRevenue(rid, session);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+		
+		/* Gets revenue from a salesperson
+		 * HR gets revenue to calculate commissions weekly
+		 * GET
+		 *
+		 */
+		get("/revenue/employee/:eid", (req, res) -> {
+			double revenue = 0;
+			String eid = req.params(":eid");
+			revenue = EmployeeServices.getEmployeeRevenue(eid, session);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+		
+		/* Accounting gets revenue from Sales
+
 		 * GET
 		 *
 		 */
 		get("/revenue", (req, res) -> {
-			float revenue = 0;
+			double revenue = 0;
+			try{
+				revenue = EmployeeServices.getTotalRevenue(session);
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -90,6 +133,7 @@ public class APIs {
 		 */
 		get("/getSale/:pid", (req, res) -> {
 			String pid = req.params(":pid");
+
 			return pid;
 		});
 		
@@ -98,20 +142,9 @@ public class APIs {
 		 *
 		 */
 		get("/sales/expenses", (req, res) -> {
-			float expenses = 0;
+			double expenses = 0;
 			res.type("text/json");
 			return "{\"expenses\":\"" + expenses + "\"}";
-		});
-		
-		/* HR gets employee ID and value of commissions for salespersons made weekly
-		 * GET
-		 *
-		 */
-		get("/commissions/:eid", (req, res) -> {
-			String eid = req.params(":eid");
-			float commission = 0;
-			res.type("text/json");
-			return "{\"commission\":\"" + commission + "\"}";
 		});
 
 		post("/order", (req, res) -> {

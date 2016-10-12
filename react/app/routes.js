@@ -94,6 +94,66 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/customer-support',
+      name: 'custSupportLogin',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/CustSupportLogin/reducer'),
+          System.import('containers/CustSupportLogin/sagas'),
+          System.import('containers/CustSupportLogin'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('custSupportLogin', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/customer-support/manage',
+      name: 'custSupportManager',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/CustSupportManager/reducer'),
+          System.import('containers/CustSupportManager/sagas'),
+          System.import('containers/CustSupportManager'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('custSupportManager', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/customer-support/agent',
+      name: 'custSupportAgent',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/CustSupportAgent/reducer'),
+          System.import('containers/CustSupportAgent/sagas'),
+          System.import('containers/CustSupportAgent'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('custSupportAgent', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

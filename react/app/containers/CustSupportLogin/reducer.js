@@ -6,15 +6,20 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  LOGIN,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  username: '',
+  password: '',
+});
 
 function custSupportLoginReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case LOGIN:
+      return state
+        .set('username', action.credentials.username)
+        .set('password', action.credentials.password);
     default:
       return state;
   }

@@ -26,14 +26,21 @@ import {
   setPaymentInfoExpiration,
 
   checkout,
+  newOrder,
+  continueOrder,
 } from './actions.js';
 
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 import AccountInfo from 'components/AccountInfo';
 import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 import ShoppingCart from 'components/ShoppingCart';
+import GenericModal from 'components/GenericModal';
+
+function paymentInfoComplete(paymentInfo) {
+  return paymentInfo.name && paymentInfo.ccNumber && paymentInfo.expiration;
+}
 
 export class SalesAssociatePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -47,29 +54,63 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
   }
 
   render() {
-    console.log("Props");
-    console.log(this.props);
+    let buttonStyle = 'primary';
+    if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
+      buttonStyle += ' disabled';
+    }
+    const successModal = (
+      <GenericModal
+        show={this.props.sales.successModal}
+        title="Success"
+        body="The transaction completed successfully."
+        buttonLabel="New Order"
+        onButtonClick={this.props.onNewOrder}
+      />
+    );
+    const errorModal = (
+      <GenericModal
+        show={this.props.sales.errorModal}
+        title="Failure"
+        body="There was an error with the payment information."
+        buttonLabel="Edit Order"
+        onButtonClick={this.props.onContinueOrder}
+      />
+    );
     return (
       <div className={styles.salesAssociatePage}>
+        {successModal}
+        {errorModal}
+        <div className={styles.title}>
+          <h1>KennUWare Sales</h1>
+        </div>
         <div className={styles.accountInfo}>
           <AccountInfo
             name={this.props.employee.username}
             employeeType={this.props.employee.type}
-
             onSignOut={this.props.onSignOut}
           />
         </div>
-        <div style={{ width: '50%', float: 'left', height: '600px' }}>
-          <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
-          <ShoppingCart items={this.props.sales.shoppingCart} />
+        <div className={styles.orderEntry} style={{ width: '50%', float: 'left', height: '600px' }}>
+          <div className={styles.itemEntry}>
+            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+          </div>
+          <div className={styles.shoppingCart}>
+            <ShoppingCart items={this.props.sales.shoppingCart} />
+          </div>
         </div>
-        <PaymentForm
-          setName={this.props.setPaymentInfoName}
-          setCCNumber={this.props.setPaymentInfoCCNumber}
-          setExpiration={this.props.setPaymentInfoExpiration}
-        />
-        <div>
-          <Button bsStyle="success" bsSize="lg" onClick={this.props.onCheckout}>
+        <div className={styles.paymentForm}>
+          <PaymentForm
+            name={this.props.sales.paymentInfo.name}
+            ccNumber={this.props.sales.paymentInfo.ccNumber}
+            expiration={this.props.sales.paymentInfo.expiration}
+
+            setName={this.props.setPaymentInfoName}
+            setCCNumber={this.props.setPaymentInfoCCNumber}
+            setExpiration={this.props.setPaymentInfoExpiration}
+          />
+        </div>
+        <div className={styles.checkoutButton}>
+          <Button bsStyle={buttonStyle} bsSize="lg" onClick={this.props.onCheckout}>
             Checkout
           </Button>
         </div>
@@ -88,6 +129,8 @@ SalesAssociatePage.propTypes = {
   setPaymentInfoExpiration: React.PropTypes.func,
 
   onCheckout: React.PropTypes.func,
+  onNewOrder: React.PropTypes.func,
+  onContinueOrder: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -106,6 +149,8 @@ function mapDispatchToProps(dispatch) {
     setPaymentInfoExpiration: (value) => dispatch(setPaymentInfoExpiration(value)),
 
     onCheckout: () => dispatch(checkout()),
+    onNewOrder: () => dispatch(newOrder()),
+    onContinueOrder: () => dispatch(continueOrder()),
 
     onSignOut: () => dispatch(signOut()),
 
