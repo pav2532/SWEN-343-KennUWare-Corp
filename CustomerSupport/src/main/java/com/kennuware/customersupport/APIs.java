@@ -95,12 +95,14 @@ public class APIs {
             String customerName = json.get("customerName").toString();
             String customerAddress = json.get("customerAddress").toString();
             String reason = json.get("reason").toString();
-            int storeID = json.get("storeID").getAsInt();
-            String itemID = json.get("itemID").toString();
+            // int storeID = json.get("storeID").getAsInt();
+            int storeID = 1;
+            String itemID = json.get("itemId").toString();
             customerName = customerName.substring(1,customerName.length()-1);
             customerAddress = customerAddress.substring(1,customerAddress.length()-1);
             reason = reason.substring(1,reason.length()-1);
             itemID = itemID.substring(1,itemID.length()-1);
+            System.out.println("Calling service");
             return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
         }, gson::toJson);
 

@@ -25,36 +25,36 @@ import styles from './styles.css';
 class PaymentForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      name: '',
-      ccNumber: '',
-      expiration: '',
-    };
   }
 
   render() {
+    const labelStyle = {
+      width: '160px',
+    };
     return (
       <div className={styles.paymentForm}>
         <h2>Payment Info</h2>
         <Input
           label="Name On Card"
+          labelStyle={labelStyle}
+          value={this.props.name}
           onChange={(name) => {
-            this.setState({ name });
             this.props.setName(name);
           }}
         />
         <Input
           label="Credit Card Number"
+          labelStyle={labelStyle}
+          value={this.props.ccNumber}
           onChange={(ccNumber) => {
-            this.setState({ ccNumber });
             this.props.setCCNumber(ccNumber);
           }}
         />
         <Input
           label="Expiration"
+          labelStyle={labelStyle}
+          value={this.props.expiration}
           onChange={(expiration) => {
-            this.setState({ expiration });
             this.props.setExpiration(expiration);
           }}
         />
@@ -64,6 +64,10 @@ class PaymentForm extends React.Component {
 }
 
 PaymentForm.propTypes = {
+  name: React.PropTypes.string,
+  ccNumber: React.PropTypes.string,
+  expiration: React.PropTypes.string,
+
   setName: React.PropTypes.func,
   setCCNumber: React.PropTypes.func,
   setExpiration: React.PropTypes.func,

@@ -19,10 +19,13 @@ export class CustSupportLogin extends React.Component { // eslint-disable-line r
   render() {
     return (
       <div className={styles.custSupportLogin}>
-        <h1>Customer Support</h1>
-        <LoginForm
-          loginFunction={(credentials) => this.props.onLogin(credentials)}
-        />
+        <div className={styles.loginFormContainer}>
+          <LoginForm
+            title="KennUWare Customer Support"
+            buttonClassName={styles.loginButton}
+            loginFunction={(credentials) => this.props.onLogin(credentials)}
+          />
+        </div>
       </div>
     );
   }

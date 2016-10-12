@@ -19,10 +19,13 @@ export class SalesLogin extends React.Component { // eslint-disable-line react/p
   render() {
     return (
       <div className={styles.salesLogin}>
-        <h1>Sales</h1>
-        <LoginForm
-          loginFunction={(credentials) => this.props.onLogin(credentials)}
-        />
+        <div className={styles.loginFormContainer}>
+          <LoginForm
+            title="KennUWare Sales"
+            buttonClassName={styles.loginButton}
+            loginFunction={(credentials) => this.props.onLogin(credentials)}
+          />
+        </div>
       </div>
     );
   }

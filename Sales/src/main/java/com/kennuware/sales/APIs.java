@@ -33,7 +33,6 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-
         SessionFactory sessionFactory = new Configuration().configure(
 				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -43,7 +42,6 @@ public class APIs {
 		// This must be done before any routes are defined
 		port(8000);
 
-		
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
@@ -73,17 +71,15 @@ public class APIs {
 
 		Gson gson = new Gson();
 
-		post("/login", (req, res) -> {
-			String body = req.body();
-			JsonObject json = gson.fromJson(body, JsonObject.class);
-			String username = json.get("username").toString();
-			String password = json.get("password").toString();
-			username = username.substring(1, username.length() - 1);
-			password = password.replace("\"", "");
-			return EmployeeServices.login(username, password, session);
-		}, gson::toJson);
-       
-        /* Accounting gets revenue from Sales
+        post("/login", (req, res) -> {
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String username = json.get("username").toString();
+            String password = json.get("password").toString();
+            username = username.substring(1,username.length()-1);
+            password = password.replace("\"", "");
+            return EmployeeServices.login(username, password, session);
+        }, gson::toJson);
         
         /* Gets revenue from a region
 		 * GET
@@ -183,6 +179,7 @@ public class APIs {
 			}
 			return 0.0;
 		}, gson::toJson);
+
 		post("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);

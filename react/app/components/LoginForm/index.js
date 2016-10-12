@@ -31,25 +31,36 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    const labelStyle = {
+      width: '80px',
+    };
     return (
       <div className={styles.loginForm}>
+        <h1>{this.props.title}</h1>
         <Input
           label="Username"
+          labelStyle={labelStyle}
           onChange={(username) => this.setState({ username })}
         />
         <Input
           label="Password"
+          type="password"
+          labelStyle={labelStyle}
           onChange={(password) => this.setState({ password })}
         />
-        <Button bsStyle="primary" bsSize="large" onClick={this.login}>
-          Submit
-        </Button>
+        <div className={styles.loginButtonDiv}>
+          <Button className={`${styles.loginButton} ${this.props.buttonClassName}`} bsStyle="primary" bsSize="large" onClick={this.login}>
+            Login
+          </Button>
+        </div>
       </div>
     );
   }
 }
 
 LoginForm.propTypes = {
+  title: React.PropTypes.string,
+  buttonClassName: React.PropTypes.string,
   loginFunction: React.PropTypes.func,
 };
 
