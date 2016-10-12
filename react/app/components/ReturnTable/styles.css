@@ -1,3 +1,23 @@
 .returnTable { /* stylelint-disable */
 
 }
+
+.displayTable {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+}
+
+.tableRow {
+  border: 1px solid black;
+}
+
+.tableHeader {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.tableCell {
+  border: 1px solid black;
+  padding: 5px;
+}

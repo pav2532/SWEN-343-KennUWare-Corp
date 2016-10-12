@@ -15,14 +15,31 @@ class ReturnTable extends React.Component {
   }
 
   getContent() {
-    return this.props.returns.map((item) => <div key={item.id}>{item.id}</div>);
+    return this.props.returns.map((item) =>
+      <tr key={item.id} className={styles.tableRow}>
+        <td className={styles.tableCell}>{item.id}</td>
+        <td className={styles.tableCell}>{item.itemID}</td>
+        <td className={styles.tableCell}>{item.reason}</td>
+        <td className={styles.tableCell}>{item.storeID}</td>
+        <td className={styles.tableCell}>{item.type}</td>
+      </tr>
+    );
   }
 
   render() {
     const content = this.getContent();
     return (
       <div className={styles.returnTable}>
-      {content}
+        <table className={styles.displayTable}>
+          <tr className={styles.tableRow}>
+            <th className={styles.tableHeader}>ID</th>
+            <th className={styles.tableHeader}>Item Name</th>
+            <th className={styles.tableHeader}>Reason for Return</th>
+            <th className={styles.tableHeader}>Store ID</th>
+            <th className={styles.tableHeader}>Type</th>
+          </tr>
+          {content}
+        </table>
       </div>
     );
   }
