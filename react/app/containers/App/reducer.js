@@ -25,6 +25,7 @@ const initialState = fromJS({
     username: '',
     type: '',
     id: '',
+    regionId: '',
   },
 });
 
@@ -35,7 +36,8 @@ function appReducer(state = initialState, action) {
         .set('authenticated', true)
         .setIn(['employee', 'username'], action.data.name)
         .setIn(['employee', 'type'], action.data.type)
-        .setIn(['employee', 'id'], action.data.eid);
+        .setIn(['employee', 'id'], action.data.eid)
+        .setIn(['employee', 'regionId'], action.data.regionId);
     default:
       return state;
   }

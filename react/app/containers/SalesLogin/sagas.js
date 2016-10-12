@@ -51,6 +51,8 @@ export function* login() {
   );
 
   if (!auth.err) {
+    console.log("Logged in successfully");
+    console.log(auth.data);
     yield put(loginSuccess(auth.data));
   } else {
     yield put(loginError(auth.err));

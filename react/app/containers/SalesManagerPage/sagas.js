@@ -102,6 +102,29 @@ export function* getTotalRevenue() {
 
 export function* getRegionRevenue() {
   console.log("Requesting region revenue");
+  const employee = yield select(selectEmployee());
+  const regionId = employee.regionId;
+
+  const requestURL = `/api/sales/revenue/region/${regionId}`;
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Call our request helper (see 'utils/request')
+  const revenue = yield call(request, requestURL, options);
+
+  console.log("Got revenue by region");
+  console.log(revenue);
+
+  if (!revenue.err) {
+    yield put(getRevenueRegionSuccess(revenue.data));
+  }
+  // Do error flow
 }
 
 export function* checkoutWatcher() {

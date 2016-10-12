@@ -89,12 +89,29 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
     let content = (<div></div>);
     if (this.props.sales.content === 'dashboard') {
       activeRoute = 'Dashboard';
-      content = (
-        <TotalRevenue
-          loadRevenue={this.props.onLoadRevenue}
-          revenue={this.props.sales.revenue.total}
-        />
-      );
+      let revenueContent = (<div></div>);
+      if (this.props.employee.type === GENERALMANAGER) {
+        revenueContent = (
+          <div>
+            <h2>Revenue across all regions</h2>
+            <TotalRevenue
+              loadRevenue={this.props.onLoadRevenue}
+              revenue={this.props.sales.revenue.total}
+            />
+          </div>
+        );
+      } else {
+        revenueContent = (
+          <div>
+            <h2>Revenue for region: {this.props.employee.regionId}</h2>
+            <TotalRevenue
+              loadRevenue={this.props.onLoadRevenueRegion}
+              revenue={this.props.sales.revenue.region}
+            />
+          </div>
+        );
+      }
+      content = revenueContent;
     } else if (this.props.sales.content === 'orderEditor') {
       activeRoute = 'Bulk Order';
       content = (
@@ -134,7 +151,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
     const navRoutes = [
       { label: 'Dashboard', onClick: this.props.onGoToDashboard },
-      { label: 'User Management', onClick: this.props.onGoToUserManagement },
+      // { label: 'User Management', onClick: this.props.onGoToUserManagement },
     ];
     if (this.props.employee.type === GENERALMANAGER) {
       navRoutes.push(
@@ -180,6 +197,7 @@ SalesManagerPage.propTypes = {
   onContinueOrder: React.PropTypes.func,
 
   onLoadRevenue: React.PropTypes.func,
+  onLoadRevenueRegion: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -206,6 +224,7 @@ function mapDispatchToProps(dispatch) {
     onContinueOrder: () => dispatch(continueOrder()),
 
     onLoadRevenue: () => dispatch(getRevenue()),
+    onLoadRevenueRegion: () => dispatch(getRevenueRegion()),
 
     onSignOut: () => dispatch(signOut()),
 
