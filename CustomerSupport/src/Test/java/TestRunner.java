@@ -2,8 +2,9 @@
  * Created by John King on 11-Oct-16.
  */
 
-package com.kennuware.customersupport.services;
-
+import com.kennuware.customersupport.data.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;

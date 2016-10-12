@@ -22,19 +22,7 @@ public class ReturnTicketServices {
     public static double returnLosses(){return 0;}
 
     public static Returns returnRequest(String customerName, String customerAddress, String reason, int storeID, String itemID, Session dbSession){
-        Customer customer = new Customer();
         Returns returns = new Returns();
-        DateTrail dateTrail = new DateTrail();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-
-        System.out.println("Completed 1: ");
-
-        customer.setAddress(customerAddress);
-        customer.setName(customerName);
-        dbSession.save(customer);
-
-        System.out.println("Completed 2: ");
 
         returns.setType(ReturnType.PENDING);
         returns.setStoreID(storeID);
@@ -42,15 +30,28 @@ public class ReturnTicketServices {
         returns.setItemID(itemID);
         dbSession.save(returns);
 
-        System.out.println("Completed 3: ");
-
-        dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
-        dateTrail.setReturnsID(returns.getID());
-        dbSession.save(dateTrail);
-
-        System.out.println("Completed 4: ");
+        makeCustomer(customerName, customerAddress, dbSession);
+        makeDateTrail(returns.getID(), dbSession);
 
         return returns;
+    }
+
+    public static Customer makeCustomer(String customerName, String customerAddress, Session session){
+        Customer customer = new Customer();
+        customer.setAddress(customerAddress);
+        customer.setName(customerName);
+        session.save(customer);
+        return customer;
+    }
+
+    public static DateTrail makeDateTrail(int id, Session dbSession){
+        DateTrail dateTrail = new DateTrail();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
+        dateTrail.setReturnsID(id);
+        dbSession.save(dateTrail);
+        return dateTrail;
     }
 
     //Get a list of all the returns
