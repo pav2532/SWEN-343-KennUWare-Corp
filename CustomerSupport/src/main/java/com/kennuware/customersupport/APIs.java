@@ -18,6 +18,7 @@ import org.hibernate.Query;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,9 +30,10 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+    	
+    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	Session session = sessionFactory.openSession();
+    	session.beginTransaction();
 
         // Set the port number
         // This must be run before any routes are defined
@@ -75,7 +77,6 @@ public class APIs {
 //
 //        session.close();
 
-
         Gson gson = new Gson();
 
         post("/login", (req, res) -> {
@@ -87,7 +88,7 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password, session);
         }, gson::toJson);
-
+        
         post("/requestReturn", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
