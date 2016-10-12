@@ -189,6 +189,5 @@ public class APIs {
 		post("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
-
     }
 }
