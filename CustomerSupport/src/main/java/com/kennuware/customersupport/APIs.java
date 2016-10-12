@@ -139,5 +139,9 @@ public class APIs {
             returnID = returnID.substring(1,returnID.length()-1);
             return EmployeeServices.resolve(returnID, session);
         }, gson::toJson);
+
+        get("/getReturns", (req, res) -> {
+           return ReturnTicketServices.getTickets(session);
+        }, gson::toJson);
     }
 }
