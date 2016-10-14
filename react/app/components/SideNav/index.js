@@ -6,25 +6,23 @@
 
 import React from 'react';
 
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+
 import styles from './styles.css';
 
 function SideNav(props) {
   const routes = props.routes.map((route) => {
-    let className = styles.menuItem;
-    if (props.active === route.label) {
-      className += ` ${styles.menuItemActive}`;
-    }
     return (
-      <button className={className} key={route.label} onClick={route.onClick}>
+      <NavItem eventKey={route.label} key={route.label} onClick={route.onClick}>
         {route.label}
-      </button>
+      </NavItem>
     );
   });
   return (
     <div className={props.className}>
-      <h1>KennUWare</h1>
-      <h2>Sales</h2>
-      {routes}
+      <Nav bsStyle="pills" activeKey={props.active} stacked>
+        {routes}
+      </Nav>
     </div>
   );
 }
