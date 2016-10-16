@@ -1,0 +1,44 @@
+.shoppingCart { /* stylelint-disable */
+  position: relative;
+}
+
+.labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  overflow: hidden;
+  border-bottom: 1px solid black;
+}
+
+.title {
+  position: absolute;
+  left: 0;
+}
+
+.priceLabel {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+}
+
+.quantityLabel {
+  position: absolute;
+  left: 75%;
+  top: 60px;
+}
+
+.itemList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  height: auto;
+}
+
+.subtotalLabel {
+  position: absolute;
+  right: 0;
+  border: 1px solid black;
+}

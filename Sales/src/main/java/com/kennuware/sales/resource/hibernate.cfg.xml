@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sales</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">test</property>
+        <property name="show_sql">true</property>
+        
+        <property name="connection.pool_size">1</property>
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- This property tells it to create all new tables every time the program is run -->
+        <!-- We can set up scripts that will initialize some data into the database to make it easier for testing -->
+        
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.import_files">/com/kennuware/sales/resource/import.sql</property>
+
+        <mapping class="com.kennuware.sales.domain.Employees.Employee"></mapping>
+
+        <mapping class="com.kennuware.sales.domain.Item"></mapping>
+        <mapping class="com.kennuware.sales.domain.ItemOrders"></mapping>
+
+        <mapping class="com.kennuware.sales.domain.Employees.Region"></mapping>
+        <mapping class="com.kennuware.sales.domain.SalesOrder"></mapping>
+        <mapping class="com.kennuware.sales.domain.Store"></mapping>
+        <mapping class="com.kennuware.sales.domain.StoreEmployee"></mapping>
+
+        <!--<mapping resource ="com.kennuware.sales.domain.Order.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.domain.OrderHistory.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.domain.ShoppingCart.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.domain.Employees.Employees.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.domain.Employees.RegionalManager.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.domain.Employees.SalesRep.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.Wearable.Active.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.Wearable.Comfort.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.Wearable.Fahsion.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.Wearable.Healthy.hbm.xml"/>-->
+        <!--<mapping resource ="com.kennuware.sales.Wearable.Wearable.hbm.xml"/>-->
+
+    </session-factory>
+</hibernate-configuration>
