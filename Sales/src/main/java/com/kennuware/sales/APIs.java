@@ -33,8 +33,7 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = new Configuration().configure(
-				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
