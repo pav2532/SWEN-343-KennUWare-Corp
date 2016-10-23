@@ -23,16 +23,18 @@ import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import java.util.Iterator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class APIs {
     public static void main(String[] args) {
 
-
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure(
+				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -78,13 +80,6 @@ public class APIs {
             password = password.replace("\"", "");
             return EmployeeServices.login(username, password, session);
         }, gson::toJson);
-
-
-        
-
-
-        
-
         
         /* Gets revenue from a region
 		 * GET
@@ -112,7 +107,6 @@ public class APIs {
 		});
 		
 		/* Accounting gets revenue from Sales
-
 		 * GET
 		 *
 		 */
@@ -189,6 +183,5 @@ public class APIs {
 		post("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
-
     }
 }
