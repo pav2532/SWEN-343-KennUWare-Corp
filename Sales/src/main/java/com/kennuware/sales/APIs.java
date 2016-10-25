@@ -20,6 +20,7 @@ import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
+import com.kennuware.sales.services.StubCallerServiceExample;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,14 +34,17 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = new Configuration().configure(
-				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
+
+		// Example httpRequest object
+		StubCallerServiceExample service = new StubCallerServiceExample();
+		service.testStub();
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
