@@ -36,8 +36,9 @@ public class Employee {
     public Integer getEid() {
         return eid;
     }
-
-    public void setEid(int eid){this.eid = eid;}
+    public void setEid(int eid){
+        this.eid = eid;
+    }
 
     public String getName() {
         return name;

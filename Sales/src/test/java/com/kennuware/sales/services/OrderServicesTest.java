@@ -5,6 +5,7 @@
 package com.kennuware.sales.services;
 
 import com.google.gson.Gson;
+import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.SalesOrder;
 import com.kennuware.sales.domain.Employees.Employee;
 import junit.framework.Assert;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.kennuware.sales.services.EmployeeServices.login;
 import static com.kennuware.sales.services.OrderServices.completeSaleOrder;
 import static com.kennuware.sales.services.OrderServices.sendOrder;
 import static com.kennuware.sales.services.EmployeeServices.login;
