@@ -37,6 +37,8 @@ public class Employee {
         return eid;
     }
 
+    public void setEid(int eid){this.eid = eid;}
+
     public String getName() {
         return name;
     }
@@ -76,5 +78,7 @@ public class Employee {
     public boolean authenticate(String password) {
         return this.password.equals(password);
     }
+
+
 
 }

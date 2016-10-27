@@ -144,14 +144,5 @@ public class APIs {
         get("/getReturns", (req, res) -> {
            return ReturnTicketServices.getTickets(session);
         }, gson::toJson);
-
-        get("/getTotalRefunds", (req, res) -> {
-            Double refunds = 0.0;
-            List<Refund> list = session.createCriteria(Refund.class).list();
-            for(Refund r:list){
-                refunds += r.getRefund();
-            }
-            return refunds;
-        }, gson::toJson);
     }
 }
