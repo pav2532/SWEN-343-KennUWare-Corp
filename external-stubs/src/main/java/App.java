@@ -18,5 +18,20 @@ public class App {
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
+
+        post("/refurbished", (req, res) -> {
+            res.status(200);
+            return res;
+        });
+
+        post("/order/refurbished", (req, res) -> {
+            res.status(200);
+            return res;
+        });
+
+        post("/order/warranty", (req, res) -> {
+            res.status(200);
+            return res;
+        });
     }
 }
