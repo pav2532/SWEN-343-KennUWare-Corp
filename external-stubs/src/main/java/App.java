@@ -20,16 +20,19 @@ public class App {
         }, gson::toJson);
 
         post("/refurbished", (req, res) -> {
+            // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
             res.status(200);
             return res;
         });
 
         post("/order/refurbished", (req, res) -> {
+            // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
             res.status(200);
             return res;
         });
 
         post("/order/warranty", (req, res) -> {
+            // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
             res.status(200);
             return res;
         });
