@@ -28,8 +28,8 @@ insert into StoreEmployee (storeID, employeeID) values (3, 4);
 insert into StoreEmployee (storeID, employeeID) values (2, 5);
 insert into StoreEmployee (storeID, employeeID) values (1, 6);
 
-insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 123, "370177912516026", "10/22");
-insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 456, "372459690681232", "12/31");
-insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 1, "375349952034831", "10/22");
-insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 4, "347981228607357", "12/31");
-insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Kind of Ben", 1098, "346915338548193", "1/25");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 1, "1234567890987654", "10/22");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 4, "8484848484848484", "12/31");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Ben", 1, "1234567890987654", "10/22");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Not Ben", 4, "8484848484848484", "12/31");
+insert into SalesOrder (customerName, employeeID, creditCardNumber, expirationDate) values ("Kind of Ben", 0, "9999999999999999", "1/25");
