@@ -11,6 +11,7 @@ import com.kennuware.sales.data.HibernateUtil;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.sales.domain.*;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.Employees.EmployeeType;
 import com.kennuware.sales.domain.Employees.Region;
@@ -20,6 +21,7 @@ import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
+import com.kennuware.sales.services.StubCallerServiceExample;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,14 +35,27 @@ import java.util.List;
 public class APIs {
     public static void main(String[] args) {
 
-        SessionFactory sessionFactory = new Configuration().configure(
-				"/com/kennuware/sales/resource/hibernate.cfg.xml").buildSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
+
+		// Example httpRequest object
+		StubCallerServiceExample service = new StubCallerServiceExample();
+		service.testStub();
+
+		System.out.println("\nVerify Employee Tests");
+		EmployeeServices.verifyEmployee(1);
+		EmployeeServices.verifyEmployee(2);
+
+		OrderServices orderService = new OrderServices();
+		ItemOrders order = new ItemOrders();
+		order.setQuantity(33);
+		order.setOrderId(12321);
+		orderService.orderItemsFromInventory("123 Whatever", order, "Ben");
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
