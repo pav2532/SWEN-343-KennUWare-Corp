@@ -15,10 +15,6 @@ public class App {
 
         port(8002);
 
-        System.out.println("\nEmployee Revenue Tests");
-        EmployeeServices.getEmployeeRevenue(1);
-        EmployeeServices.getEmployeeRevenue(4);
-
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
