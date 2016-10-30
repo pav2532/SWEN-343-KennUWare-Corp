@@ -53,5 +53,11 @@ public class App {
             return res;
         });
 
+        post("/productOrderInv", (req, res) -> {
+            System.out.println("/productorder called");
+            System.out.println(req.body());
+            res.status(200);
+            return res;
+        });
     }
 }

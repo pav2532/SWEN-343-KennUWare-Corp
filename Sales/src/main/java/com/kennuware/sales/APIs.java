@@ -11,6 +11,7 @@ import com.kennuware.sales.data.HibernateUtil;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.sales.domain.*;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.Employees.EmployeeType;
 import com.kennuware.sales.domain.Employees.Region;
@@ -49,6 +50,12 @@ public class APIs {
 		System.out.println("\nVerify Employee Tests");
 		EmployeeServices.verifyEmployee(1);
 		EmployeeServices.verifyEmployee(2);
+
+		OrderServices orderService = new OrderServices();
+		ItemOrders order = new ItemOrders();
+		order.setQuantity(33);
+		order.setOrderId(12321);
+		orderService.orderItemsFromInventory("123 Whatever", order, "Ben");
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
