@@ -15,6 +15,10 @@ import com.kennuware.sales.domain.*;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.Employees.EmployeeType;
 import com.kennuware.sales.domain.Employees.Region;
+import com.kennuware.sales.domain.ItemOrders;
+import com.kennuware.sales.domain.Store;
+import com.kennuware.sales.domain.StoreEmployee;
+import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
 import com.kennuware.sales.services.StubCallerServiceExample;
@@ -42,6 +46,10 @@ public class APIs {
 		// Example httpRequest object
 		StubCallerServiceExample service = new StubCallerServiceExample();
 		service.testStub();
+
+		System.out.println("\nVerify Employee Tests");
+		EmployeeServices.verifyEmployee(1);
+		EmployeeServices.verifyEmployee(2);
 
 		OrderServices orderService = new OrderServices();
 		String address;
