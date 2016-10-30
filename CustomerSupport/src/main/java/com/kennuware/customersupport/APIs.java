@@ -52,6 +52,10 @@ public class APIs {
         // This must be run before any routes are defined
         port(8001);
 
+        System.out.println("\nVerify Employee Tests");
+        EmployeeServices.verifyEmployee(1);
+        EmployeeServices.verifyEmployee(2);
+
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");

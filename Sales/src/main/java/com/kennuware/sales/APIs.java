@@ -46,6 +46,10 @@ public class APIs {
 		StubCallerServiceExample service = new StubCallerServiceExample();
 		service.testStub();
 
+		System.out.println("\nVerify Employee Tests");
+		EmployeeServices.verifyEmployee(1);
+		EmployeeServices.verifyEmployee(2);
+
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
