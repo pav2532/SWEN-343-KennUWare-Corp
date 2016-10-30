@@ -122,7 +122,7 @@ public class APIs {
             for(Refund r:list){
                 refunds += r.getRefund();
             }
-            return refunds;
+            return "{ totalRefunded : " + refunds + " }";
         }, gson::toJson);
 
         post("/markReceived", (req, res) -> {
