@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.domain.*;
 import com.kennuware.customersupport.services.EmployeeServices;
+import com.kennuware.customersupport.services.ItemServices;
 import com.kennuware.customersupport.services.OrderService;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
@@ -44,6 +45,8 @@ public class APIs {
         System.out.println("\nVerify Employee Tests");
         EmployeeServices.verifyEmployee(1);
         EmployeeServices.verifyEmployee(2);
+        System.out.println("\nVerify Get items");
+        ItemServices.getItems();
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
