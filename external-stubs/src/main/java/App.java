@@ -16,14 +16,14 @@ public class App {
         port(8002);
 
         System.out.println("\nEmployee Revenue Tests");
-        EmployeeServices.getEmployeeRevenue(0);
+        EmployeeServices.getEmployeeRevenue(1);
         EmployeeServices.getEmployeeRevenue(4);
 
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
 
-        get("verifySalesEID/:eid/", (req, res) -> {
+        get("verifySalesEID/:eid", (req, res) -> {
             boolean exists;
             String eid = req.params(":eid");
             exists = EmployeeServices.verifySalesEmployee(Integer.parseInt(eid));
@@ -31,7 +31,7 @@ public class App {
             return "{\"exists\":\"" + exists + "\"}";
         });
 
-        get("verifyCustomerSupportEID/:eid/", (req, res) -> {
+        get("verifyCustomerSupportEID/:eid", (req, res) -> {
             boolean exists;
             String eid = req.params(":eid");
             exists = EmployeeServices.verifyCustomerSupportEmployee(Integer.parseInt(eid));

@@ -133,7 +133,7 @@ public class EmployeeServices {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             try {
-                HttpGet httpget = new HttpGet("http://localhost:8002/verifyCustomerSupportEID/" + eid + "/");
+                HttpGet httpget = new HttpGet("http://localhost:8002/verifyCustomerSupportEID/" + eid);
 
                 System.out.println("Executing request " + httpget.getRequestLine());
 
