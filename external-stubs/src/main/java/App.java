@@ -18,5 +18,20 @@ public class App {
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
+
+        post("/refurbished", (req, res) -> {
+            // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
+            res.status(200);
+            return res;
+        });
+
+        post("/productorder", (req, res) -> {
+            // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
+            System.out.println("/productorder called");
+            System.out.println(req.body());
+            res.status(200);
+            return res;
+        });
+
     }
 }
