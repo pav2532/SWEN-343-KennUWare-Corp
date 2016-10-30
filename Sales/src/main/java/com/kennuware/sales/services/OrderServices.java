@@ -72,7 +72,7 @@ public class OrderServices {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             try {
-                HttpPost request = new HttpPost("http://localhost:8002/productorder");
+                HttpPost request = new HttpPost("http://localhost:8002/productOrderInv");
 
                 InventoryCustomer customer = new InventoryCustomer();
                 customer.setCustomerName(custName);
