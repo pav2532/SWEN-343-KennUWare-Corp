@@ -1,6 +1,7 @@
 package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.ItemOrders;
 import com.kennuware.customersupport.domain.Order;
 import org.apache.http.HttpEntity;
@@ -23,11 +24,10 @@ import java.io.IOException;
  */
 public class OrderService {
 
-    public void orderRefurbishedItem(Order order, ItemOrders itemOrder) {
+    public void orderRefurbishedItem(Order order, ItemOrders itemOrder, HttpPost request) {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             try {
-                HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
                 InventoryCustomer customer = new InventoryCustomer();
                 customer.setCustomerName(order.getCustomerName());
@@ -37,29 +37,7 @@ public class OrderService {
                 iOrder.setType("refurbished");
                 iOrder.setWearableID(itemOrder.getItemId());
 
-                Gson gson = new Gson();
-                StringEntity body = new StringEntity(gson.toJson(iOrder));
-                request.addHeader("content-type", "application/json");
-                request.setEntity(body);
-
-                System.out.println("Executing request " + request.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                String responseBody = httpClient.execute(request, responseHandler);
+                String responseBody = HttpUtils.handle(request, iOrder, "http://localhost:8002/productorder");
                 System.out.println("----------------------------------------");
                 System.out.println(responseBody);
             } finally {
@@ -70,11 +48,10 @@ public class OrderService {
         }
     }
 
-    public void orderWarrantyItem(Order order, ItemOrders itemOrder) {
+    public void orderWarrantyItem(Order order, ItemOrders itemOrder, HttpPost request) {
         try {
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
             try {
-                HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
                 InventoryCustomer customer = new InventoryCustomer();
                 customer.setCustomerName(order.getCustomerName());
@@ -84,29 +61,7 @@ public class OrderService {
                 iOrder.setType("warranty");
                 iOrder.setWearableID(itemOrder.getItemId());
 
-                Gson gson = new Gson();
-                StringEntity body = new StringEntity(gson.toJson(iOrder));
-                request.addHeader("content-type", "application/json");
-                request.setEntity(body);
-
-                System.out.println("Executing request " + request.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                String responseBody = httpclient.execute(request, responseHandler);
+                String responseBody = HttpUtils.handle(request, iOrder, "http://localhost:8002/productorder");
                 System.out.println("----------------------------------------");
                 System.out.println(responseBody);
             } finally {

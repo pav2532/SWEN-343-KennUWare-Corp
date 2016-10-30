@@ -21,7 +21,6 @@ import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
-import com.kennuware.sales.services.StubCallerServiceExample;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,19 +43,19 @@ public class APIs {
 		port(8000);
 
 		// Example httpRequest object
-		StubCallerServiceExample service = new StubCallerServiceExample();
-		service.testStub();
+//		StubCallerServiceExample service = new StubCallerServiceExample();
+//		service.testStub();
 
 		System.out.println("\nVerify Employee Tests");
 		EmployeeServices.verifyEmployee(1);
 		EmployeeServices.verifyEmployee(2);
-
+/*
 		OrderServices orderService = new OrderServices();
 		ItemOrders order = new ItemOrders();
 		order.setQuantity(33);
 		order.setOrderId(12321);
 		orderService.orderItemsFromInventory("123 Whatever", order, "Ben");
-
+*/
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
 //        employee.setPassword("test");
