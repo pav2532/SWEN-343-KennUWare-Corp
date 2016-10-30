@@ -25,8 +25,10 @@ public class App {
             return res;
         });
 
-        post("/productOrder", (req, res) -> {
+        post("/productorder", (req, res) -> {
             // TODO: parse the recieved object and ensure it is correct. Set the status based on that.
+            System.out.println("/productorder called");
+            System.out.println(req.body());
             res.status(200);
             return res;
         });

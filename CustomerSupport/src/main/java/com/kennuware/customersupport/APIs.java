@@ -14,6 +14,7 @@ import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
+import com.kennuware.customersupport.services.OrderService;
 import org.hibernate.Query;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
@@ -34,6 +35,9 @@ public class APIs {
     	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
+
+        OrderService orderService = new OrderService();
+        orderService.orderRefurbishedItem(null);
 
         // Set the port number
         // This must be run before any routes are defined
