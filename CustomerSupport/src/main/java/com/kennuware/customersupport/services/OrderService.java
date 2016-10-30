@@ -1,5 +1,7 @@
 package com.kennuware.customersupport.services;
 
+import com.google.gson.Gson;
+import com.kennuware.customersupport.domain.ItemOrders;
 import com.kennuware.customersupport.domain.Order;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,15 +23,24 @@ import java.io.IOException;
  */
 public class OrderService {
 
-    public void orderRefurbishedItem(Order order) {
+    public void orderRefurbishedItem(Order order, ItemOrders itemOrder) {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             try {
                 HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
-                StringEntity params = new StringEntity("{\"name\":\"myname\",\"age\":\"20\"}");
+                InventoryCustomer customer = new InventoryCustomer();
+                customer.setCustomerName(order.getCustomerName());
+
+                InventoryOrder iOrder = new InventoryOrder();
+                iOrder.setOrderDetails(customer);
+                iOrder.setType("refurbished");
+                iOrder.setWearableID(itemOrder.getItemId());
+
+                Gson gson = new Gson();
+                StringEntity body = new StringEntity(gson.toJson(iOrder));
                 request.addHeader("content-type", "application/json");
-                request.setEntity(params);
+                request.setEntity(body);
 
                 System.out.println("Executing request " + request.getRequestLine());
 
@@ -90,6 +101,45 @@ public class OrderService {
             }
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private class InventoryOrder {
+        private int wearableID;
+        private String type;
+        private InventoryCustomer orderDetails;
+
+        public InventoryOrder() {}
+
+        public void setWearableID(int id) {
+            wearableID = id;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setOrderDetails(InventoryCustomer customer) {
+            orderDetails = customer;
+        }
+
+    }
+
+    private class InventoryCustomer {
+        private String customerName;
+        private String address;
+
+        public InventoryCustomer() {
+            customerName = "";
+            address = "";
+        }
+
+        public void setCustomerName(String name) {
+            customerName = name;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
     }
 }
