@@ -11,13 +11,10 @@ import com.kennuware.sales.data.HibernateUtil;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.sales.domain.*;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.Employees.EmployeeType;
 import com.kennuware.sales.domain.Employees.Region;
-import com.kennuware.sales.domain.ItemOrders;
-import com.kennuware.sales.domain.Store;
-import com.kennuware.sales.domain.StoreEmployee;
-import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
 import com.kennuware.sales.services.OrderServices;
 import com.kennuware.sales.services.StubCallerServiceExample;
@@ -45,6 +42,15 @@ public class APIs {
 		// Example httpRequest object
 		StubCallerServiceExample service = new StubCallerServiceExample();
 		service.testStub();
+
+		OrderServices orderService = new OrderServices();
+		String address;
+		ItemOrders order = new ItemOrders();
+		ShoppingCart custCart = new ShoppingCart();
+		custCart.setCustomerName("Ben");
+		order.setQuantity(33);
+		order.setOrderId(12321);
+		orderService.orderItemsFromInventory("123 Whatever", order, custCart);
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
