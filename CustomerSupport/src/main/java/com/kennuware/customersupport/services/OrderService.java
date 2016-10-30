@@ -72,7 +72,7 @@ public class OrderService {
 
     public void orderWarrantyItem(Order order, ItemOrders itemOrder) {
         try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
+            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
             try {
                 HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
