@@ -14,6 +14,7 @@ import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.domain.Employees.Region;
+import com.kennuware.customersupport.services.OrderService;
 import org.hibernate.Query;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
@@ -31,9 +32,21 @@ public class APIs {
     public static void main(String[] args) {
 
     	
-    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
+
+//        OrderService orderService = new OrderService();
+//        Order order = new Order();
+//        order.setBulkDiscount(0.0);
+//        order.setCreditCardNumber("4566");
+//        order.setCustomerName("Ryan");
+//        order.setOrderid(1);
+//        ItemOrders itemOrder = new ItemOrders();
+//        itemOrder.setOrderId(1);
+//        itemOrder.setItemId(1);
+//        itemOrder.setQuantity(1);
+//        orderService.orderRefurbishedItem(order, itemOrder);
 
         // Set the port number
         // This must be run before any routes are defined
