@@ -122,14 +122,15 @@ public class APIs {
             return EmployeeServices.changeStatus(returnID, status, session);
         }, gson::toJson);
 
-        get("/totalRefunded", (req, res) -> {
+        get("/getTotalRefunds", (req, res) -> {
             Double refunds = 0.0;
             List<Refund> list = session.createCriteria(Refund.class).list();
             for(Refund r:list){
                 refunds += r.getRefund();
             }
-            return refunds;
-        }, gson::toJson);
+            res.type("text/json");
+            return "{\"totalRefunded\":\"" + Math.round(refunds*100.00)/100.00 + "\"}";
+        });
 
         post("/markReceived", (req, res) -> {
             String body = req.body();
