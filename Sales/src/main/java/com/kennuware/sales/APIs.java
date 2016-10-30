@@ -125,7 +125,7 @@ public class APIs {
 		 * GET
 		 *
 		 */
-		get("/revenue", (req, res) -> {
+		get("/totalSales", (req, res) -> {
 			double revenue = 0;
 			try{
 				revenue = EmployeeServices.getTotalRevenue(session);
