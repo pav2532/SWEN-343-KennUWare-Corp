@@ -20,7 +20,6 @@ import com.kennuware.sales.domain.Store;
 import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.services.EmployeeServices;
-import com.kennuware.sales.services.ItemServices;
 import com.kennuware.sales.services.OrderServices;
 import com.kennuware.sales.services.StubCallerServiceExample;
 import org.hibernate.Query;
@@ -51,7 +50,6 @@ public class APIs {
 		System.out.println("\nVerify Employee Tests");
 		EmployeeServices.verifyEmployee(1);
 		EmployeeServices.verifyEmployee(2);
-		ItemServices.getItems();
 
 		OrderServices orderService = new OrderServices();
 		ItemOrders order = new ItemOrders();
@@ -127,7 +125,7 @@ public class APIs {
 		 * GET
 		 *
 		 */
-		get("/revenue", (req, res) -> {
+		get("/totalSales", (req, res) -> {
 			double revenue = 0;
 			try{
 				revenue = EmployeeServices.getTotalRevenue(session);
@@ -197,7 +195,7 @@ public class APIs {
 			return 0.0;
 		}, gson::toJson);
 
-		post("/getAllItems", (req, res) -> {
+		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
     }

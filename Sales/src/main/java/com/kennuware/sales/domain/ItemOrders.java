@@ -5,6 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "findAllItemOrders", query = "FROM ItemOrders")
+})
+
 @Entity
 @Table
 public class ItemOrders {

@@ -15,10 +15,6 @@ public class App {
 
         port(8002);
 
-        System.out.println("\nEmployee Revenue Tests");
-        EmployeeServices.getEmployeeRevenue(1);
-        EmployeeServices.getEmployeeRevenue(4);
-
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
@@ -54,7 +50,7 @@ public class App {
         });
 
         post("/productOrderInv", (req, res) -> {
-            System.out.println("/productorder called");
+            System.out.println("/productOrderInv called");
             System.out.println(req.body());
             res.status(200);
             return res;
@@ -63,6 +59,5 @@ public class App {
         get("/itemCatalog", (req, res) -> {
             return new Wearables();
         }, gson::toJson);
-
     }
 }
