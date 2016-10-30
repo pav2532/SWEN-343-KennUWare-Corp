@@ -4,28 +4,17 @@
 
 package com.kennuware.customersupport;
 
-import com.kennuware.customersupport.data.HibernateUtil;
-
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.domain.*;
-import com.kennuware.customersupport.domain.Employees.Employee;
-import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
-import com.kennuware.customersupport.domain.Employees.Region;
 import com.kennuware.customersupport.services.OrderService;
-import org.hibernate.Query;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class APIs {

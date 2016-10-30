@@ -117,15 +117,15 @@ public class EmployeeServices {
         double result = 0;
         ArrayList<Integer> orderIds = null;
         Query itemOrders = null;
-        Query items = null;
+        ArrayList<Item> items = null;
         int eid = Integer.parseInt(id);
         
     	
-        itemOrders = session.createQuery("FROM ItemOrders");	
+        itemOrders = session.getNamedQuery("findAllItemOrders");
         
         orderIds = (ArrayList<Integer>) session.getNamedQuery("findOrderIdsByEmployeeID")
         		.setString("eid", id).list();
-        items = session.createQuery("FROM Item");
+        items = (ArrayList<Item>)session.getNamedQuery("findAllItems").list();
         
         int quantity = 0;
         int itemid = 0;
@@ -135,7 +135,9 @@ public class EmployeeServices {
         	itemid = itemorder.getItemId();
         	if( orderIds.contains(itemorder.getOrderId())){
         		quantity = itemorder.getQuantity();
-        		for(Iterator iterator = items.iterate();iterator.hasNext();){
+        		Iterator iterator = items.iterator();
+        		
+        		while(iterator.hasNext()){
         			Item item = (Item)iterator.next();
         			if( item.getId() == itemid){
         				unitPrice = item.getUnitPrice();
