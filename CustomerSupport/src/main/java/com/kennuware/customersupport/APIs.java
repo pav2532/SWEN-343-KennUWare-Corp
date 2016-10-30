@@ -122,7 +122,7 @@ public class APIs {
             return EmployeeServices.changeStatus(returnID, status, session);
         }, gson::toJson);
 
-        get("/getTotalRefunds", (req, res) -> {
+        get("/totalRefunded", (req, res) -> {
             Double refunds = 0.0;
             List<Refund> list = session.createCriteria(Refund.class).list();
             for(Refund r:list){
