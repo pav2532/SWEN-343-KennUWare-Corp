@@ -128,7 +128,7 @@ public class EmployeeServices {
         return null;
     }
 
-    public static boolean verifyEmployee(int eid){
+    public static String verifyEmployee(int eid){
         String responseBody = null;
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -150,7 +150,6 @@ public class EmployeeServices {
                             throw new ClientProtocolException("Unexpected response status: " + status);
                         }
                     }
-
                 };
                 responseBody = httpclient.execute(httpget, responseHandler);
                 System.out.println("----------------------------------------");
@@ -161,11 +160,6 @@ public class EmployeeServices {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        if(responseBody.contains("true")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return responseBody;
     }
 }

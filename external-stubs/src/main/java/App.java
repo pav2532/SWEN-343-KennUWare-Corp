@@ -15,24 +15,28 @@ public class App {
 
         port(8002);
 
+        System.out.println("\nEmployee Revenue Tests");
+        EmployeeServices.getEmployeeRevenue(0);
+        EmployeeServices.getEmployeeRevenue(4);
+
         get("/test", (req, res) -> {
             return new TestObject();
         }, gson::toJson);
 
-        get("verifySalesEID/" + eid + "/", (req, res) -> {
-            double revenue = 0;
-            String rid = req.params(":rid");
-            revenue = EmployeeServices.verifySalesEmployee();
+        get("verifySalesEID/:eid/", (req, res) -> {
+            boolean exists;
+            String eid = req.params(":eid");
+            exists = EmployeeServices.verifySalesEmployee(Integer.parseInt(eid));
             res.type("text/json");
-            return "{\"revenue\":\"" + revenue + "\"}";
+            return "{\"exists\":\"" + exists + "\"}";
         });
 
-        get("verifyCustomerSupportEID/" + eid + "/", (req, res) -> {
-            double revenue = 0;
-            String rid = req.params(":rid");
-            revenue = EmployeeServices.verifyCustomerSupportEmployee();
+        get("verifyCustomerSupportEID/:eid/", (req, res) -> {
+            boolean exists;
+            String eid = req.params(":eid");
+            exists = EmployeeServices.verifyCustomerSupportEmployee(Integer.parseInt(eid));
             res.type("text/json");
-            return "{\"revenue\":\"" + revenue + "\"}";
+            return "{\"exists\":\"" + exists + "\"}";
         });
     }
 }

@@ -31,13 +31,17 @@ public class APIs {
     public static void main(String[] args) {
 
     	
-    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
 
         // Set the port number
         // This must be run before any routes are defined
         port(8001);
+
+        System.out.println("\nVerify Employee Tests");
+        EmployeeServices.verifyEmployee(1);
+        EmployeeServices.verifyEmployee(2);
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
