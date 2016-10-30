@@ -1,0 +1,13 @@
+.loginForm { /* stylelint-disable */
+  width: 300px;
+  margin: 20px;
+}
+
+.loginButtonDiv {
+  width: 100px;
+  margin: 0 auto;
+}
+
+.loginButton {
+  width: 100px;
+}

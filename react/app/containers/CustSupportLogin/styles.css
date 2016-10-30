@@ -1,0 +1,16 @@
+.custSupportLogin { /* stylelint-disable */
+  display: flex;
+  height: 100vh;
+  background: #FFD6AA;
+}
+
+.loginFormContainer {
+  margin: auto;
+  border: 8px solid #801515;
+  border-radius: 15px;
+  background: white;
+}
+
+.loginButton {
+  background: #801515;
+}
