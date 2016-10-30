@@ -1,8 +1,7 @@
-/**
- * Created by John King on 11-Oct-16.
- */
-
 package com.kennuware.sales.services;
+
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.gson.Gson;
 import com.kennuware.sales.domain.Employees.Employee;
@@ -28,20 +27,28 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OrderServicesTest {
+public class EmployeeServicesTest {
     @Test
-    public void sendOrderTest(){
+    public void loginTest(){
         Gson gson = new Gson();
         Session mockedSession = mock(Session.class);
+        List<Employee> employeeResultList = new ArrayList<Employee>();
 
-        SalesOrder salesOrder = new SalesOrder();
-        salesOrder.setBulkDiscount(1.0);
-        salesOrder.setCreditCardNumber("4485355145730911");
-        salesOrder.setExpirationDate("03/20");
-        salesOrder.setEmployeeID(1);
-        salesOrder.setCustomerName("Joey");
+        Employee e = new Employee();
+        e.setName("SalesRep1");
+        e.setRegionId(0);
+        e.setPassword("test");
+        e.setEid(1);
+        employeeResultList.add(e);
 
-        assertEquals(gson.toJson(salesOrder), sendOrder(salesOrder, mockedSession));
-        assertEquals(gson.toJson(salesOrder.getOrderid()), gson.toJson(completeSaleOrder("Joey", 1, "4485355145730911", "03/20", 1.0, mockedSession)));
+        Query mockedQuery = mock(Query.class);
+        when(mockedQuery.list()).thenReturn(employeeResultList);
+
+        when(mockedSession.getNamedQuery(Mockito.anyString())).thenReturn(mockedQuery);
+        when(mockedQuery.setString(Mockito.anyString(), Mockito.anyString())).thenReturn(mockedQuery);
+
+        assertEquals(gson.toJson(e), gson.toJson(login("SalesRep1", "test", mockedSession)));
+        assertEquals(gson.toJson(null), gson.toJson(login("NONEXISTANT USER","NONEXISTANT PASSWORD", mockedSession)));
     }
 }
+

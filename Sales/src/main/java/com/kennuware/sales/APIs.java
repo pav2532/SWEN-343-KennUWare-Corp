@@ -52,13 +52,10 @@ public class APIs {
 		EmployeeServices.verifyEmployee(2);
 
 		OrderServices orderService = new OrderServices();
-		String address;
 		ItemOrders order = new ItemOrders();
-		ShoppingCart custCart = new ShoppingCart();
-		custCart.setCustomerName("Ben");
 		order.setQuantity(33);
 		order.setOrderId(12321);
-		orderService.orderItemsFromInventory("123 Whatever", order, custCart);
+		orderService.orderItemsFromInventory("123 Whatever", order, "Ben");
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");

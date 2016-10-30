@@ -68,14 +68,14 @@ public class OrderServices {
         }
     }
 
-    public void orderItemsFromInventory(String address, ItemOrders order, ShoppingCart custCart){
+    public void orderItemsFromInventory(String address, ItemOrders order, String custName){
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             try {
                 HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
                 InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(custCart.getCustomerName());
+                customer.setCustomerName(custName);
                 customer.setAddress(address);
 
                 InventoryOrder iOrder = new InventoryOrder();
