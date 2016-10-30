@@ -70,13 +70,26 @@ public class OrderService {
         }
     }
 
-    public void orderWarrantyItem(Order order) {
+    public void orderWarrantyItem(Order order, ItemOrders itemOrder) {
         try {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             try {
-                HttpPost httpPost = new HttpPost("http://localhost:8002/productorder");
+                HttpPost request = new HttpPost("http://localhost:8002/productorder");
 
-                System.out.println("Executing request " + httpPost.getRequestLine());
+                InventoryCustomer customer = new InventoryCustomer();
+                customer.setCustomerName(order.getCustomerName());
+
+                InventoryOrder iOrder = new InventoryOrder();
+                iOrder.setOrderDetails(customer);
+                iOrder.setType("warranty");
+                iOrder.setWearableID(itemOrder.getItemId());
+
+                Gson gson = new Gson();
+                StringEntity body = new StringEntity(gson.toJson(iOrder));
+                request.addHeader("content-type", "application/json");
+                request.setEntity(body);
+
+                System.out.println("Executing request " + request.getRequestLine());
 
                 // Create a custom response handler
                 ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -93,7 +106,7 @@ public class OrderService {
                     }
 
                 };
-                String responseBody = httpclient.execute(httpPost, responseHandler);
+                String responseBody = httpclient.execute(request, responseHandler);
                 System.out.println("----------------------------------------");
                 System.out.println(responseBody);
             } finally {

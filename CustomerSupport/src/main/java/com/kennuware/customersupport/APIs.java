@@ -36,17 +36,17 @@ public class APIs {
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
 
-        OrderService orderService = new OrderService();
-        Order order = new Order();
-        order.setBulkDiscount(0.0);
-        order.setCreditCardNumber("4566");
-        order.setCustomerName("Ryan");
-        order.setOrderid(1);
-        ItemOrders itemOrder = new ItemOrders();
-        itemOrder.setOrderId(1);
-        itemOrder.setItemId(1);
-        itemOrder.setQuantity(1);
-        orderService.orderRefurbishedItem(order, itemOrder);
+//        OrderService orderService = new OrderService();
+//        Order order = new Order();
+//        order.setBulkDiscount(0.0);
+//        order.setCreditCardNumber("4566");
+//        order.setCustomerName("Ryan");
+//        order.setOrderid(1);
+//        ItemOrders itemOrder = new ItemOrders();
+//        itemOrder.setOrderId(1);
+//        itemOrder.setItemId(1);
+//        itemOrder.setQuantity(1);
+//        orderService.orderRefurbishedItem(order, itemOrder);
 
         // Set the port number
         // This must be run before any routes are defined
