@@ -55,5 +55,9 @@ public class App {
             res.status(200);
             return res;
         });
+
+        get("/itemCatalog", (req, res) -> {
+            return new Wearables();
+        }, gson::toJson);
     }
 }
