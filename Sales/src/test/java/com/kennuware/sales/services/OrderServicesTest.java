@@ -5,6 +5,7 @@
 package com.kennuware.sales.services;
 
 import com.google.gson.Gson;
+import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.SalesOrder;
@@ -60,7 +61,9 @@ public class OrderServicesTest {
         order.setQuantity(33);
         order.setOrderId(12321);
 
-        orderService.orderItemsFromInventory("123 Whatever", order, "Ben", mockedRequest);
+        HttpUtils utils = new HttpUtils(); 
+
+        orderService.orderItemsFromInventory("123 Whatever", order, "Ben", utils);
 
         String inputLine ;
 
