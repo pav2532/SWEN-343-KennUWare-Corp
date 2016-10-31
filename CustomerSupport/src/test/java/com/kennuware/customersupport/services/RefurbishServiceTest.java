@@ -16,6 +16,13 @@ import static org.mockito.Mockito.when;
  */
 public class RefurbishServiceTest {
 
+    /**
+     * This test basically just tests that RefurbishService.reportItemRefurbished(itemId, httpUtil)
+     * creates the appropriate object for the /refurbish API endpoint.
+     *
+     * This is done by creating an ArgumentCaptor using Mockito and verifying the fields on
+     * the captured object.
+     */
     @Test
     public void testReportItemRefurbished() {
         RefurbishService service = new RefurbishService();

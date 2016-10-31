@@ -1,5 +1,6 @@
 package com.kennuware.customersupport.services;
 
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.domain.Returns;
@@ -55,6 +56,17 @@ public class EmployeeServicesTest {
 
         assertEquals(e.getName(), returnedEmployee.getName());
         assertEquals(e.getEid(), returnedEmployee.getEid());
+    }
+
+    @Test
+    public void verifyEmployeeTest() {
+        EmployeeServices service = new EmployeeServices();
+        String expectedResult = "{\"exists\": true}";
+        HttpUtils util = mock(HttpUtils.class);
+        when(util.get(Mockito.anyString())).thenReturn(expectedResult);
+
+        String result = service.verifyEmployee(1, util);
+        assertEquals(expectedResult, result);
     }
 
 

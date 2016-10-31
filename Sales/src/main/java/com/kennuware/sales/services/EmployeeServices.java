@@ -169,7 +169,7 @@ public class EmployeeServices {
     	return result;
     }
 
-    public static String verifyEmployee(HttpUtils utils, int eid){
+    public static String verifyEmployee(int eid, HttpUtils utils){
         String responseBody = null;
 
         responseBody = utils.get("http://localhost:8002/verifySalesEID/" + eid);
