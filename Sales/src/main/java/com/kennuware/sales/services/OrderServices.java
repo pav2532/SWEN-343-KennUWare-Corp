@@ -73,31 +73,23 @@ public class OrderServices {
 
 
 
-    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpPost request){
-        try {
-            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-            try {
+    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils){
 
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(custName);
-                customer.setAddress(address);
 
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("new");
-                iOrder.setWearableID(order.getItemId());
-                iOrder.setQuantity(order.getQuantity());
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(custName);
+        customer.setAddress(address);
 
-                String responseBody = HttpUtils.handle(request, iOrder, "http://localhost:8002/productOrderInv");
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("new");
+        iOrder.setWearableID(order.getItemId());
+        iOrder.setQuantity(order.getQuantity());
+        String responseBody = utils.post(iOrder, "http://localhost:8002/productOrderInv");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
 
-            } finally {
-                httpClient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static void addItemOrders(int orderId, int itemId, int quantity, Session session){

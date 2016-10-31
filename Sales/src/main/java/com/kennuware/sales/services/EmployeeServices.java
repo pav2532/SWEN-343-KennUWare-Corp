@@ -4,6 +4,7 @@
 
 package com.kennuware.sales.services;
 
+import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.data.HibernateUtil;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
@@ -168,39 +169,13 @@ public class EmployeeServices {
     	return result;
     }
 
-    public static String verifyEmployee(int eid){
+    public static String verifyEmployee(HttpUtils utils, int eid){
         String responseBody = null;
-        try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
-            try {
-                HttpGet httpget = new HttpGet("http://localhost:8002/verifySalesEID/" + eid);
 
-                System.out.println("Executing request " + httpget.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                responseBody = httpclient.execute(httpget, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        responseBody = utils.get("http://localhost:8002/verifySalesEID/" + eid);
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
         return responseBody;
+
     }
 }

@@ -21,24 +21,17 @@ import java.io.IOException;
  */
 public class RefurbishService {
 
-    public void reportItemRefurbished(int itemID, HttpPost request) {
-        try {
-            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            try {
+    public void reportItemRefurbished(int itemID, HttpUtils util) {
 
-                InventoryItem item = new InventoryItem();
-                item.setWearableID(itemID);
+        InventoryItem item = new InventoryItem();
+        item.setWearableID(itemID);
 
-                String responseBody = HttpUtils.handle(request, item, "http://localhost:8002/refurbished");
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        String responseBody = util.post(item, "http://localhost:8002/refurbished");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
     }
+
+
 
     private class InventoryItem {
         private int wearableID;

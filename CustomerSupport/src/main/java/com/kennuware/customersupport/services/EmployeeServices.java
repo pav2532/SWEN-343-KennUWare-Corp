@@ -5,6 +5,7 @@
 package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.DateTrail;
 import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Refund;
@@ -129,38 +130,13 @@ public class EmployeeServices {
         return null;
     }
 
-    public static String verifyEmployee(int eid){
+    public static String verifyEmployee(int eid, HttpUtils util){
         String responseBody = null;
-        try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
-            try {
-                HttpGet httpget = new HttpGet("http://localhost:8002/verifyCustomerSupportEID/" + eid);
 
-                System.out.println("Executing request " + httpget.getRequestLine());
+        responseBody = util.get("http://localhost:8002/verifyCustomerSupportEID/" + eid);
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
 
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-                };
-                responseBody = httpclient.execute(httpget, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
         return responseBody;
     }
 }

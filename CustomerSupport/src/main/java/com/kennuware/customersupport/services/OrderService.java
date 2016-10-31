@@ -24,52 +24,36 @@ import java.io.IOException;
  */
 public class OrderService {
 
-    public void orderRefurbishedItem(Order order, ItemOrders itemOrder, HttpPost request) {
-        try {
-            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-            try {
+    public void orderRefurbishedItem(Order order, ItemOrders itemOrder, HttpUtils util) {
 
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(order.getCustomerName());
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(order.getCustomerName());
 
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("refurbished");
-                iOrder.setWearableID(itemOrder.getItemId());
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("refurbished");
+        iOrder.setWearableID(itemOrder.getItemId());
 
-                String responseBody = HttpUtils.handle(request, iOrder, "http://localhost:8002/productorder");
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpClient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        String responseBody = util.post(iOrder, "http://localhost:8002/productorder");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
+
     }
 
-    public void orderWarrantyItem(Order order, ItemOrders itemOrder, HttpPost request) {
-        try {
-            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            try {
+    public void orderWarrantyItem(Order order, ItemOrders itemOrder, HttpUtils util) {
 
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(order.getCustomerName());
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(order.getCustomerName());
 
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("warranty");
-                iOrder.setWearableID(itemOrder.getItemId());
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("warranty");
+        iOrder.setWearableID(itemOrder.getItemId());
 
-                String responseBody = HttpUtils.handle(request, iOrder, "http://localhost:8002/productorder");
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        String responseBody = util.post(iOrder, "http://localhost:8002/productorder");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
+
     }
 
     private class InventoryOrder {
