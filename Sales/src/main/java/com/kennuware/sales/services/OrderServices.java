@@ -7,26 +7,8 @@ package com.kennuware.sales.services;
 import com.google.gson.Gson;
 import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.domain.ItemOrders;
-import com.kennuware.sales.domain.ShoppingCart;
-import com.kennuware.sales.domain.Wearables.*;
-import com.kennuware.sales.Utilities.HttpUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
-import org.hibernate.criterion.Order;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 
 
 public class OrderServices {
