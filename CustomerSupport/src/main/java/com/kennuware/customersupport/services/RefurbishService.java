@@ -2,6 +2,7 @@ package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
 import com.kennuware.customersupport.Utilities.HttpUtils;
+import com.kennuware.customersupport.domain.inventory.InventoryItem;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,31 +24,12 @@ public class RefurbishService {
 
     public void reportItemRefurbished(int itemID, HttpUtils util) {
 
+        System.out.println("refurbishing");
         InventoryItem item = new InventoryItem();
         item.setWearableID(itemID);
 
         String responseBody = util.post(item, "http://localhost:8002/refurbished");
         System.out.println("----------------------------------------");
         System.out.println(responseBody);
-    }
-
-
-
-    private class InventoryItem {
-        private int wearableID;
-        private String type;
-
-        public InventoryItem() {
-            wearableID = 0;
-            type = "refurbished";
-        }
-
-        public void setWearableID(int id) {
-            wearableID = id;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
     }
 }
