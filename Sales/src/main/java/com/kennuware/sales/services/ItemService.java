@@ -6,7 +6,7 @@ package com.kennuware.sales.services;
 
 import com.google.gson.Gson;
 import com.kennuware.sales.Utilities.HttpUtils;
-import com.kennuware.sales.domain.WearableList;
+import com.kennuware.sales.domain.external.WearableList;
 
 public class ItemService {
 

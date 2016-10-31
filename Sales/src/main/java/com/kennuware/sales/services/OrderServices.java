@@ -18,8 +18,6 @@ public class OrderServices {
             return -1;
         }
 
-
-
         int sum = 0;
         boolean alternate = false;
 

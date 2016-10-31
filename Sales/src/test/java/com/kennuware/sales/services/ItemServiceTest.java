@@ -1,8 +1,8 @@
 package com.kennuware.sales.services;
 
 import com.kennuware.sales.Utilities.HttpUtils;
-import com.kennuware.sales.domain.WearableItem;
-import com.kennuware.sales.domain.WearableList;
+import com.kennuware.sales.domain.external.WearableItem;
+import com.kennuware.sales.domain.external.WearableList;
 import org.junit.Test;
 import org.mockito.Mockito;
 

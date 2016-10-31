@@ -1,4 +1,4 @@
-package com.kennuware.sales.domain;
+package com.kennuware.sales.domain.external;
 
 import java.util.ArrayList;
 import java.util.List;

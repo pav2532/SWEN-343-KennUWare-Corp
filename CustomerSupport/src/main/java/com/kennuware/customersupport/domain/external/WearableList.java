@@ -1,4 +1,4 @@
-package com.kennuware.customersupport.domain;
+package com.kennuware.customersupport.domain.external;
 
 import java.util.ArrayList;
 import java.util.List;

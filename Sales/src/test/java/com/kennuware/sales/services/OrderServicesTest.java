@@ -6,30 +6,20 @@ package com.kennuware.sales.services;
 
 import com.google.gson.Gson;
 import com.kennuware.sales.Utilities.HttpUtils;
-import com.kennuware.sales.domain.Employees.Employee;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.SalesOrder;
-import com.kennuware.sales.domain.Employees.Employee;
-import junit.framework.Assert;
 import org.apache.http.client.methods.HttpPost;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import static com.kennuware.sales.services.EmployeeServices.login;
 import static com.kennuware.sales.services.OrderServices.completeSaleOrder;
 import static com.kennuware.sales.services.OrderServices.sendOrder;
-import static com.kennuware.sales.services.EmployeeServices.login;
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.mock;
 //import static org.mockito.Mockito.when;

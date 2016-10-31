@@ -1,6 +1,6 @@
 package com.kennuware.sales.services;
 
-import static com.kennuware.sales.services.EmployeeServices.login;
+import static com.kennuware.sales.services.EmployeeService.login;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -21,7 +21,7 @@ import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EmployeeServicesTest {
+public class EmployeeServiceTest {
 
 	@Test
 	public void getEmployeeRevenueTest() throws Exception {
@@ -57,7 +57,7 @@ public class EmployeeServicesTest {
 		
 		
 		
-		assertEquals(30.0, EmployeeServices.getEmployeeRevenue("1", mockedSession), 0);
+		assertEquals(30.0, EmployeeService.getEmployeeRevenue("1", mockedSession), 0);
 	}
 
     @Test
@@ -85,7 +85,7 @@ public class EmployeeServicesTest {
 
 	@Test
 	public void verifyEmployeeTest() {
-		EmployeeServices service = new EmployeeServices();
+		EmployeeService service = new EmployeeService();
 		String expectedResult = "{\"exists\": true}";
 		HttpUtils util = mock(HttpUtils.class);
 		when(util.get(Mockito.anyString())).thenReturn(expectedResult);

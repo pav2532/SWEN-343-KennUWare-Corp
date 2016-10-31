@@ -37,7 +37,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public class EmployeeServices {
+public class EmployeeService {
 	
 	private static SessionFactory factory;
 	

@@ -5,29 +5,17 @@
 package com.kennuware.sales;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.kennuware.sales.domain.*;
-import com.kennuware.sales.domain.Employees.Employee;
-import com.kennuware.sales.domain.Employees.EmployeeType;
-import com.kennuware.sales.domain.Employees.Region;
-import com.kennuware.sales.domain.ItemOrders;
-import com.kennuware.sales.domain.Store;
-import com.kennuware.sales.domain.StoreEmployee;
 import com.kennuware.sales.domain.Item;
-import com.kennuware.sales.services.EmployeeServices;
+import com.kennuware.sales.services.EmployeeService;
 import com.kennuware.sales.services.OrderServices;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import java.util.Iterator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,8 +35,8 @@ public class APIs {
 //		service.testStub();
 
 //		System.out.println("\nVerify Employee Tests");
-//		EmployeeServices.verifyEmployee(1);
-//		EmployeeServices.verifyEmployee(2);
+//		EmployeeService.verifyEmployee(1);
+//		EmployeeService.verifyEmployee(2);
 /*
 		OrderServices orderService = new OrderServices();
 		ItemOrders order = new ItemOrders();
@@ -92,7 +80,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password, session);
+            return EmployeeService.login(username, password, session);
         }, gson::toJson);
         
         /* Gets revenue from a region
@@ -102,7 +90,7 @@ public class APIs {
 		get("/revenue/region/:rid", (req, res) -> {
 			double revenue = 0;
 			String rid = req.params(":rid");
-			revenue = EmployeeServices.getRegionRevenue(rid, session);
+			revenue = EmployeeService.getRegionRevenue(rid, session);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -115,7 +103,7 @@ public class APIs {
 		get("/revenue/employee/:eid", (req, res) -> {
 			double revenue = 0;
 			String eid = req.params(":eid");
-			revenue = EmployeeServices.getEmployeeRevenue(eid, session);
+			revenue = EmployeeService.getEmployeeRevenue(eid, session);
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
@@ -127,7 +115,7 @@ public class APIs {
 		get("/totalSales", (req, res) -> {
 			double revenue = 0;
 			try{
-				revenue = EmployeeServices.getTotalRevenue(session);
+				revenue = EmployeeService.getTotalRevenue(session);
 			} catch(Exception e){
 				e.printStackTrace();
 			}

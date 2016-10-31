@@ -1,4 +1,4 @@
-package com.kennuware.sales.domain;
+package com.kennuware.customersupport.domain.external;
 
 /**
  * Created by Ryan on 10/31/2016.
