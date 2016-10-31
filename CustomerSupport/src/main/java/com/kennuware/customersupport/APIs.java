@@ -26,27 +26,27 @@ public class APIs {
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
 
-        OrderService orderService = new OrderService();
-        Order order = new Order();
-        order.setBulkDiscount(0.0);
-        order.setCreditCardNumber("4566");
-        order.setCustomerName("Ryan");
-        order.setOrderid(1);
-        ItemOrders itemOrder = new ItemOrders();
-        itemOrder.setOrderId(1);
-        itemOrder.setItemId(1);
-        itemOrder.setQuantity(1);
-        orderService.orderRefurbishedItem(order, itemOrder);
+//        OrderService orderService = new OrderService();
+//        Order order = new Order();
+//        order.setBulkDiscount(0.0);
+//        order.setCreditCardNumber("4566");
+//        order.setCustomerName("Ryan");
+//        order.setOrderid(1);
+//        ItemOrders itemOrder = new ItemOrders();
+//        itemOrder.setOrderId(1);
+//        itemOrder.setItemId(1);
+//        itemOrder.setQuantity(1);
+//        orderService.orderRefurbishedItem(order, itemOrder);
 
         // Set the port number
         // This must be run before any routes are defined
         port(8001);
 
-        System.out.println("\nVerify Employee Tests");
-        EmployeeServices.verifyEmployee(1);
-        EmployeeServices.verifyEmployee(2);
-        System.out.println("\nVerify Get items");
-        ItemServices.getItems();
+//        System.out.println("\nVerify Employee Tests");
+//        EmployeeServices.verifyEmployee(1);
+//        EmployeeServices.verifyEmployee(2);
+//        System.out.println("\nVerify Get items");
+//        ItemServices.getItems();
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
