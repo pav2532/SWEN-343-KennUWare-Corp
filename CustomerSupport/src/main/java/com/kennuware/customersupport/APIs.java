@@ -4,40 +4,46 @@
 
 package com.kennuware.customersupport;
 
-import com.kennuware.customersupport.data.HibernateUtil;
-
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.domain.*;
-import com.kennuware.customersupport.domain.Employees.Employee;
-import com.kennuware.customersupport.domain.Employees.EmployeeType;
 import com.kennuware.customersupport.services.EmployeeServices;
-import com.kennuware.customersupport.domain.Employees.Region;
-import org.hibernate.Query;
+import com.kennuware.customersupport.services.OrderService;
 import com.kennuware.customersupport.services.ReturnTicketServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class APIs {
     public static void main(String[] args) {
 
     	
-    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
+
+        OrderService orderService = new OrderService();
+        Order order = new Order();
+        order.setBulkDiscount(0.0);
+        order.setCreditCardNumber("4566");
+        order.setCustomerName("Ryan");
+        order.setOrderid(1);
+        ItemOrders itemOrder = new ItemOrders();
+        itemOrder.setOrderId(1);
+        itemOrder.setItemId(1);
+        itemOrder.setQuantity(1);
+        orderService.orderRefurbishedItem(order, itemOrder);
 
         // Set the port number
         // This must be run before any routes are defined
         port(8001);
+
+        System.out.println("\nVerify Employee Tests");
+        EmployeeServices.verifyEmployee(1);
+        EmployeeServices.verifyEmployee(2);
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -122,7 +128,7 @@ public class APIs {
             for(Refund r:list){
                 refunds += r.getRefund();
             }
-            return "{ totalRefunded : " + refunds + " }";
+            return refunds;
         }, gson::toJson);
 
         post("/markReceived", (req, res) -> {

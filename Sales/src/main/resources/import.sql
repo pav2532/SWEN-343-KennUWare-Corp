@@ -4,6 +4,8 @@ insert into Item (name, unitPrice) values ("whatever", "40.0");
 
 insert into ItemOrders (orderId, itemId, quantity) values ("1", "1", "10");
 insert into ItemOrders (orderId, itemId, quantity) values ("2", "1", "5");
+insert into ItemOrders (orderId, itemId, quantity) values ("3", "1", "1");
+insert into ItemOrders (orderId, itemId, quantity) values ("4", "1", "2");
 
 insert into Region (name) values ("Northeast");
 insert into Region (name) values ("Southeast");
@@ -12,6 +14,7 @@ insert into Employee (name, type, password, regionId) values ("SalesRep1", 0, "t
 insert into Employee (name, type, password, regionId) values ("RegionalManager1", 1, "test", 1);
 insert into Employee (name, type, password, regionId) values ("TheGeneral", 2, "test", 1);
 insert into Employee (name, type, password, regionId) values ("SalesRep2", 0, "test", 1);
+insert into Employee (name, type, password, regionId) values ("SalesRep3", 0, "test", 1);
 
 insert into Store (regionID, name, address) values (1, "Best Buy", "Some address");
 insert into Store (regionID, name, address) values (4, "Radioshack", "Another address");
