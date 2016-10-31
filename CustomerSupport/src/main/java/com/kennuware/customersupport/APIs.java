@@ -7,6 +7,7 @@ package com.kennuware.customersupport;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
 import com.kennuware.customersupport.services.EmployeeServices;
 import com.kennuware.customersupport.services.ItemServices;
@@ -25,6 +26,11 @@ public class APIs {
     	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
+
+        HttpUtils utils = new HttpUtils();
+
+        ItemServices service = new ItemServices();
+        service.getItems(utils);
 
 //        OrderService orderService = new OrderService();
 //        Order order = new Order();

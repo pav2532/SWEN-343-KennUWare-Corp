@@ -2,11 +2,8 @@ package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
 import com.kennuware.customersupport.Utilities.HttpUtils;
-import com.kennuware.customersupport.domain.DateTrail;
+import com.kennuware.customersupport.domain.*;
 import com.kennuware.customersupport.domain.Employees.Employee;
-import com.kennuware.customersupport.domain.Refund;
-import com.kennuware.customersupport.domain.ReturnType;
-import com.kennuware.customersupport.domain.Returns;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,10 +22,11 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ItemServices{
-    public static String getItems(HttpUtils httpUtils) {
-        String result = httpUtils.get("http://localhost:8002/itemCatalog");
+    public static WearableList getItems(HttpUtils httpUtils) {
+        String stringResult = httpUtils.get("http://localhost:8002/itemCatalog");
+        Gson gson = new Gson();
+        WearableList result = gson.fromJson(stringResult, WearableList.class);
 
-        // TODO: Parse the json result into a list of Item objects
         return result;
     }
 }
