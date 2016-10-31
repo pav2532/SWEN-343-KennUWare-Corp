@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kennuware.sales.Utilities.HttpUtils;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -81,4 +82,15 @@ public class EmployeeServicesTest {
         assertEquals(gson.toJson(e), gson.toJson(login("SalesRep1", "test", mockedSession)));
         assertEquals(gson.toJson(null), gson.toJson(login("NONEXISTANT USER","NONEXISTANT PASSWORD", mockedSession)));
     }
+
+	@Test
+	public void verifyEmployeeTest() {
+		EmployeeServices service = new EmployeeServices();
+		String expectedResult = "{\"exists\": true}";
+		HttpUtils util = mock(HttpUtils.class);
+		when(util.get(Mockito.anyString())).thenReturn(expectedResult);
+
+		String result = service.verifyEmployee(1, util);
+		assertEquals(expectedResult, result);
+	}
 }
