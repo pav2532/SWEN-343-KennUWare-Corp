@@ -1,16 +1,18 @@
 package com.kennuware.customersupport.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ryan on 10/31/2016.
  */
 public class WearableList {
-    private ArrayList<WearableItem> wearables;
+    private List<WearableItem> wearables;
     public WearableList() {
+        wearables = new ArrayList<WearableItem>();
     }
 
-    public ArrayList getList(){
+    public List<WearableItem> getList(){
         return wearables;
     }
 

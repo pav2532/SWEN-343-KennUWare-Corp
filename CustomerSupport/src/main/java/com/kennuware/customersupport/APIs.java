@@ -9,10 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
-import com.kennuware.customersupport.services.EmployeeServices;
-import com.kennuware.customersupport.services.ItemServices;
-import com.kennuware.customersupport.services.OrderService;
-import com.kennuware.customersupport.services.ReturnTicketServices;
+import com.kennuware.customersupport.services.EmployeeService;
+import com.kennuware.customersupport.services.ItemService;
+import com.kennuware.customersupport.services.ReturnTicketService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -29,7 +28,7 @@ public class APIs {
 
         HttpUtils utils = new HttpUtils();
 
-        ItemServices service = new ItemServices();
+        ItemService service = new ItemService();
         service.getItems(utils);
 
 //        OrderService orderService = new OrderService();
@@ -49,10 +48,10 @@ public class APIs {
         port(8001);
 
 //        System.out.println("\nVerify Employee Tests");
-//        EmployeeServices.verifyEmployee(1);
-//        EmployeeServices.verifyEmployee(2);
+//        EmployeeService.verifyEmployee(1);
+//        EmployeeService.verifyEmployee(2);
 //        System.out.println("\nVerify Get items");
-//        ItemServices.getItems();
+//        ItemService.getItems();
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -101,7 +100,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password, session);
+            return EmployeeService.login(username, password, session);
         }, gson::toJson);
         
         post("/requestReturn", (req, res) -> {
@@ -118,7 +117,7 @@ public class APIs {
             reason = reason.substring(1,reason.length()-1);
             itemID = itemID.substring(1,itemID.length()-1);
             System.out.println("Calling service");
-            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
+            return ReturnTicketService.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
         }, gson::toJson);
 
         post("/requestStatus", (req, res) -> {
@@ -128,7 +127,7 @@ public class APIs {
             String status = json.get("status").toString();
             returnID = returnID.substring(1,returnID.length()-1);
             status = status.substring(1,status.length()-1);
-            return EmployeeServices.changeStatus(returnID, status, session);
+            return EmployeeService.changeStatus(returnID, status, session);
         }, gson::toJson);
 
         get("/getTotalRefunds", (req, res) -> {
@@ -146,7 +145,7 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
             returnID = returnID.substring(1,returnID.length()-1);
-            return EmployeeServices.markReceived(returnID, session);
+            return EmployeeService.markReceived(returnID, session);
         }, gson::toJson);
 
         post("/resolve", (req, res) -> {
@@ -154,11 +153,11 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
             returnID = returnID.substring(1,returnID.length()-1);
-            return EmployeeServices.resolve(returnID, session);
+            return EmployeeService.resolve(returnID, session);
         }, gson::toJson);
 
         get("/getReturns", (req, res) -> {
-           return ReturnTicketServices.getTickets(session);
+           return ReturnTicketService.getTickets(session);
         }, gson::toJson);
     }
 }

@@ -18,6 +18,26 @@ public class WearableItem {
         this.active=active;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
     public String toString() {
         return "ID: " + id + " Name: " + name + " Type: " + type;
     }

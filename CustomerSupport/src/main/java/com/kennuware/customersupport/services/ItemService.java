@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class ItemServices{
+public class ItemService {
     public static WearableList getItems(HttpUtils httpUtils) {
         String stringResult = httpUtils.get("http://localhost:8002/itemCatalog");
         Gson gson = new Gson();
