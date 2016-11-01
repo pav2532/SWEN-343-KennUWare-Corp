@@ -4,29 +4,30 @@
 import java.util.*;
 
 public class Wearables {
-    private ArrayList <Items> listOfWearable;
+    private ArrayList <Item> wearables;
     public Wearables() {
-        listOfWearable = new ArrayList<Items>();
-        listOfWearable.add(new Items(1, "343", "Act", 45, "yes"));
-        listOfWearable.add(new Items(2, "232", "All", 5, "no"));
-        listOfWearable.add(new Items(3, "344", "Simple", 30, "yes"));
+        wearables = new ArrayList<Item>();
+        wearables.add(new Item(1, "343", "Act", 45, "yes"));
+        wearables.add(new Item(2, "232", "All", 5, "no"));
+        wearables.add(new Item(3, "344", "Simple", 30, "yes"));
     }
 
     public ArrayList getList(){
-            return listOfWearable;
+            return wearables;
     }
 
-    class Items{
+    class Item {
         private int id;
         private String name;
         private String type;
         private int quantity;
         private String active;
 
-        public Items(int id, String name, String type, int quantity, String active){
+        public Item(int id, String name, String type, int quantity, String active){
             this.id = id;
             this.name=name;
             this.type=type;
+            this.quantity = quantity;
             this.active=active;
         }
 

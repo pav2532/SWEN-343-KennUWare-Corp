@@ -3,7 +3,6 @@ package com.kennuware.customersupport.services;
 import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.Employees.Employee;
 import com.kennuware.customersupport.domain.Employees.EmployeeType;
-import com.kennuware.customersupport.domain.Returns;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.when;
  * Created by Ryan on 10/11/2016.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class EmployeeServicesTest {
+public class EmployeeServiceTest {
 
 
     @Mock
@@ -52,7 +51,7 @@ public class EmployeeServicesTest {
         when(mockedSession.getNamedQuery(Mockito.anyString())).thenReturn(mockedQuery);
         when(mockedQuery.setString(Mockito.anyString(), Mockito.anyString())).thenReturn(mockedQuery);
 
-        Employee returnedEmployee = EmployeeServices.login("TestUser", "test", mockedSession);
+        Employee returnedEmployee = EmployeeService.login("TestUser", "test", mockedSession);
 
         assertEquals(e.getName(), returnedEmployee.getName());
         assertEquals(e.getEid(), returnedEmployee.getEid());
@@ -60,7 +59,7 @@ public class EmployeeServicesTest {
 
     @Test
     public void verifyEmployeeTest() {
-        EmployeeServices service = new EmployeeServices();
+        EmployeeService service = new EmployeeService();
         String expectedResult = "{\"exists\": true}";
         HttpUtils util = mock(HttpUtils.class);
         when(util.get(Mockito.anyString())).thenReturn(expectedResult);
