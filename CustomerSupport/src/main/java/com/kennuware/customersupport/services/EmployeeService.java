@@ -99,7 +99,7 @@ public class EmployeeService {
         return null;
     }
 
-    public static Returns resolve(String returnID, Session session){
+    public static Returns resolve(String returnID, String itemID, Session session){
         Query query = session.getNamedQuery("findReturn").setString("id", returnID);
         List<Returns> returns = (List<Returns>)query.list();
 
@@ -111,7 +111,8 @@ public class EmployeeService {
                 session.save(refund);
             }
             else if(r.getType()==ReturnType.REFURBISH){
-
+                HttpUtils util = new HttpUtils();
+                RefurbishService.reportItemRefurbished(Integer.parseInt(itemID), util);
             }
             r.setType(ReturnType.RESOLVED);
             session.save(r);

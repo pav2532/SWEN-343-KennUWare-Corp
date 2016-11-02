@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class RefurbishService {
 
-    public void reportItemRefurbished(int itemID, HttpUtils util) {
+    public static void reportItemRefurbished(int itemID, HttpUtils util) {
 
         System.out.println("refurbishing");
         InventoryItem item = new InventoryItem();

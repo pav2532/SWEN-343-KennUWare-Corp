@@ -39,7 +39,7 @@ public class OrderServicesTest {
         salesOrder.setCustomerName("Joey");
 
         assertEquals(gson.toJson(salesOrder), sendOrder(salesOrder, mockedSession));
-        assertEquals(gson.toJson(salesOrder.getOrderid()), gson.toJson(completeSaleOrder("Joey", 1, "4485355145730911", "03/20", 1.0, mockedSession)));
+        assertEquals(gson.toJson(salesOrder.getOrderid()), gson.toJson(completeSaleOrder("Joey", 1, "4485355145730911", "03/20", 1.0, "123 whatever", mockedSession)));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class OrderServicesTest {
         order.setQuantity(33);
         order.setOrderId(12321);
 
-        HttpUtils utils = new HttpUtils(); 
+        HttpUtils utils = new HttpUtils();
 
         orderService.orderItemsFromInventory("123 Whatever", order, "Ben", utils);
 

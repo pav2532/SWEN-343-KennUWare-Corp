@@ -10,6 +10,7 @@ import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Employees.*;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -169,13 +170,17 @@ public class EmployeeService {
     	return result;
     }
 
-    public static String verifyEmployee(int eid, HttpUtils utils){
-        String responseBody = null;
+    public static Boolean verifyEmployee(HttpUtils utils, int eid){
+        String responseBody = "";
 
         responseBody = utils.get("http://localhost:8002/verifySalesEID/" + eid);
         System.out.println("----------------------------------------");
         System.out.println(responseBody);
-        return responseBody;
+        if(responseBody.length() > 1){
+            return true;
+        }else {
+            return false;
+        }
 
     }
 }
