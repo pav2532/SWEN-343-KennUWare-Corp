@@ -5,11 +5,15 @@
 package com.kennuware.sales;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.kennuware.sales.Utilities.HttpUtils;
+import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Item;
+import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
 import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
@@ -25,6 +29,7 @@ public class APIs {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+		HttpUtils utils = new HttpUtils();
 
 		// Set the port
 		// This must be done before any routes are defined
@@ -103,9 +108,13 @@ public class APIs {
 		get("/revenue/employee/:eid", (req, res) -> {
 			double revenue = 0;
 			String eid = req.params(":eid");
-			revenue = EmployeeService.getEmployeeRevenue(eid, session);
-			res.type("text/json");
-			return "{\"revenue\":\"" + revenue + "\"}";
+			if(EmployeeService.verifyEmployee(utils, Integer.parseInt(eid))){
+				revenue = EmployeeService.getEmployeeRevenue(eid, session);
+				res.type("text/json");
+				return "{\"revenue\":\"" + revenue + "\"}";
+			}else{
+				return "{\"revenue\":\"" + -1.0 + "\"}";
+			}
 		});
 		
 		/* Accounting gets revenue from Sales
@@ -150,16 +159,27 @@ public class APIs {
 			String customerName = json.get("custName").getAsString();
 			String creditCardNumber = json.get("creditCardNumber").getAsString();
 			String expirationDate = json.get("expirationDate").getAsString();
+			String address = json.get("custAddress").getAsString();
 			Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
 			JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
 			int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
-					expirationDate, bulkDiscount, session);
+					expirationDate, bulkDiscount, address, session);
 
 			if (check != -1) {
 				JsonObject item;
 				for (int i = 0; i < requestedProducts.size(); i++) {
 					item = requestedProducts.get(i).getAsJsonObject();
+
+					OrderServices os = new OrderServices();
+
 					OrderServices.addItemOrders(check, item.get("itemID").getAsInt(), item.get("quantity").getAsInt(), session);
+
+					ItemOrders order = new ItemOrders();
+					order.setQuantity(item.get("quantity").getAsInt());
+					order.setOrderId(item.get("itemID").getAsInt());
+					order.setOrderId(item.get("orderID").getAsInt());
+
+					os.orderItemsFromInventory(address, order, customerName, utils);
 				}
 			}
 

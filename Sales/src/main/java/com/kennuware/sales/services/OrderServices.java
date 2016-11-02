@@ -13,7 +13,7 @@ import com.kennuware.sales.domain.SalesOrder;
 
 public class OrderServices {
     public static int completeSaleOrder(String customerName, int employeeID, String creditCardNumber,
-                                            String expirationDate, Double bulkDiscount, Session session){
+                                            String expirationDate, Double bulkDiscount, String address, Session session){
         if(creditCardNumber.length() != 16 ){
             return -1;
         }
@@ -45,16 +45,17 @@ public class OrderServices {
 
             session.save(newSO);
             sendOrder(newSO, session);
+
+            HttpUtils utils = new HttpUtils();
+            //orderItemsFromInventory(address, newSO, customerName, utils);
+
             return newSO.getOrderid();
         }else{
             return -1;
         }
     }
 
-
-
     public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils){
-
 
         InventoryCustomer customer = new InventoryCustomer();
         customer.setCustomerName(custName);

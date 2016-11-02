@@ -86,11 +86,12 @@ public class EmployeeServiceTest {
 	@Test
 	public void verifyEmployeeTest() {
 		EmployeeService service = new EmployeeService();
-		String expectedResult = "{\"exists\": true}";
+		String expectedResultJson = "{\"exists\": true}";
+		Boolean expectedResult = true;
 		HttpUtils util = mock(HttpUtils.class);
-		when(util.get(Mockito.anyString())).thenReturn(expectedResult);
+		when(util.get(Mockito.anyString())).thenReturn(expectedResultJson);
 
-		String result = service.verifyEmployee(1, util);
+		Boolean result = service.verifyEmployee(util, 1);
 		assertEquals(expectedResult, result);
 	}
 }

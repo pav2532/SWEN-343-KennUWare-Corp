@@ -11,6 +11,7 @@ import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
 import com.kennuware.customersupport.services.EmployeeService;
 import com.kennuware.customersupport.services.ItemService;
+import com.kennuware.customersupport.services.OrderService;
 import com.kennuware.customersupport.services.ReturnTicketService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,10 +49,10 @@ public class APIs {
         port(8001);
 
 //        System.out.println("\nVerify Employee Tests");
-//        EmployeeService.verifyEmployee(1);
-//        EmployeeService.verifyEmployee(2);
+//        EmployeeServices.verifyEmployee(1);
+//        EmployeeServices.verifyEmployee(2);
 //        System.out.println("\nVerify Get items");
-//        ItemService.getItems();
+//        ItemServices.getItems();
 
 //        Employee employee = new Employee();
 //        employee.setName("Ryan");
@@ -152,8 +153,9 @@ public class APIs {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
+            String itemID = json.get("itemID").toString();
             returnID = returnID.substring(1,returnID.length()-1);
-            return EmployeeService.resolve(returnID, session);
+            return EmployeeService.resolve(returnID, itemID, session);
         }, gson::toJson);
 
         get("/getReturns", (req, res) -> {
