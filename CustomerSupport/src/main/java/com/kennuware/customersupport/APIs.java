@@ -29,68 +29,9 @@ public class APIs {
 
         HttpUtils utils = new HttpUtils();
 
-        ItemService service = new ItemService();
-        service.getItems(utils);
-
-//        OrderService orderService = new OrderService();
-//        Order order = new Order();
-//        order.setBulkDiscount(0.0);
-//        order.setCreditCardNumber("4566");
-//        order.setCustomerName("Ryan");
-//        order.setOrderid(1);
-//        ItemOrders itemOrder = new ItemOrders();
-//        itemOrder.setOrderId(1);
-//        itemOrder.setItemId(1);
-//        itemOrder.setQuantity(1);
-//        orderService.orderRefurbishedItem(order, itemOrder);
-
         // Set the port number
         // This must be run before any routes are defined
         port(8001);
-
-//        System.out.println("\nVerify Employee Tests");
-//        EmployeeServices.verifyEmployee(1);
-//        EmployeeServices.verifyEmployee(2);
-//        System.out.println("\nVerify Get items");
-//        ItemServices.getItems();
-
-//        Employee employee = new Employee();
-//        employee.setName("Ryan");
-//        employee.setPassword("test");
-//        employee.setRegionId(1);
-//        employee.setType(EmployeeType.AGENT);
-//
-//        Customer customer = new Customer();
-//        customer.setName("George");
-//        customer.setAddress("FASFDSA");
-//
-//        DateTrail dateTrail = new DateTrail();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//        Calendar cal = Calendar.getInstance();
-//        dateTrail.setApproveDenyDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setReceiveDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setReturnsID(4);
-//
-//        Returns returns = new Returns();
-//        returns.setStoreID(2);
-//        returns.setReason("Just Cause");
-//        returns.setRMA("BASF3245");
-//        returns.setType(ReturnType.REFUND);
-//
-//        Refund refund = new Refund();
-//        refund.setRMA("TMDSGF");
-//        refund.setRefund(52.3);
-//
-//        session.save(refund);
-//        session.save(returns);
-//        session.save(dateTrail);
-//        session.save(employee);
-//        session.save(customer);
-//
-//        session.getTransaction().commit();
-//
-//        session.close();
 
         Gson gson = new Gson();
 
