@@ -4,11 +4,13 @@
 
 package com.kennuware.sales.services;
 
+import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.data.HibernateUtil;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Employees.*;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -36,7 +38,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public class EmployeeServices {
+public class EmployeeService {
 	
 	private static SessionFactory factory;
 	
@@ -168,39 +170,17 @@ public class EmployeeServices {
     	return result;
     }
 
-    public static String verifyEmployee(int eid){
-        String responseBody = null;
-        try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
-            try {
-                HttpGet httpget = new HttpGet("http://localhost:8002/verifySalesEID/" + eid);
+    public static Boolean verifyEmployee(HttpUtils utils, int eid){
+        String responseBody = "";
 
-                System.out.println("Executing request " + httpget.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                responseBody = httpclient.execute(httpget, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
+        responseBody = utils.get("http://localhost:8002/verifySalesEID/" + eid);
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
+        if(responseBody.length() > 1){
+            return true;
+        }else {
+            return false;
         }
-        return responseBody;
+
     }
 }

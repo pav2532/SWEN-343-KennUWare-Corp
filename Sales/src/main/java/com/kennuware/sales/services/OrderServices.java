@@ -5,35 +5,18 @@
 package com.kennuware.sales.services;
 
 import com.google.gson.Gson;
+import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.domain.ItemOrders;
-import com.kennuware.sales.domain.ShoppingCart;
-import com.kennuware.sales.domain.Wearables.*;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
-import org.hibernate.criterion.Order;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 
 public class OrderServices {
     public static int completeSaleOrder(String customerName, int employeeID, String creditCardNumber,
-                                            String expirationDate, Double bulkDiscount, Session session){
+                                            String expirationDate, Double bulkDiscount, String address, Session session){
         if(creditCardNumber.length() != 16 ){
             return -1;
         }
-
-
 
         int sum = 0;
         boolean alternate = false;
@@ -62,59 +45,32 @@ public class OrderServices {
 
             session.save(newSO);
             sendOrder(newSO, session);
+
+            HttpUtils utils = new HttpUtils();
+            //orderItemsFromInventory(address, newSO, customerName, utils);
+
             return newSO.getOrderid();
         }else{
             return -1;
         }
     }
 
-    public void orderItemsFromInventory(String address, ItemOrders order, String custName){
-        try {
-            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-            try {
-                HttpPost request = new HttpPost("http://localhost:8002/productOrderInv");
+    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils){
 
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(custName);
-                customer.setAddress(address);
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(custName);
+        customer.setAddress(address);
 
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("new");
-                iOrder.setWearableID(order.getItemId());
-                iOrder.setQuantity(order.getQuantity());
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("new");
+        iOrder.setWearableID(order.getItemId());
+        iOrder.setQuantity(order.getQuantity());
+        String responseBody = utils.post(iOrder, "http://localhost:8002/productOrderInv");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
 
-                Gson gson = new Gson();
-                StringEntity body = new StringEntity(gson.toJson(iOrder));
-                request.addHeader("content-type", "application/json");
-                request.setEntity(body);
 
-                System.out.println("Executing request " + request.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                String responseBody = httpClient.execute(request, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpClient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static void addItemOrders(int orderId, int itemId, int quantity, Session session){

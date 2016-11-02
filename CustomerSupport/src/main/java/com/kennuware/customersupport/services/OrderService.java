@@ -1,8 +1,11 @@
 package com.kennuware.customersupport.services;
 
 import com.google.gson.Gson;
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.ItemOrders;
 import com.kennuware.customersupport.domain.Order;
+import com.kennuware.customersupport.domain.inventory.InventoryCustomer;
+import com.kennuware.customersupport.domain.inventory.InventoryOrder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,136 +26,35 @@ import java.io.IOException;
  */
 public class OrderService {
 
-    public void orderRefurbishedItem(Order order, ItemOrders itemOrder) {
-        try {
-            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-            try {
-                HttpPost request = new HttpPost("http://localhost:8002/productorder");
+    public void orderRefurbishedItem(Order order, ItemOrders itemOrder, HttpUtils util) {
 
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(order.getCustomerName());
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(order.getCustomerName());
 
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("refurbished");
-                iOrder.setWearableID(itemOrder.getItemId());
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("refurbished");
+        iOrder.setWearableID(itemOrder.getItemId());
 
-                Gson gson = new Gson();
-                StringEntity body = new StringEntity(gson.toJson(iOrder));
-                request.addHeader("content-type", "application/json");
-                request.setEntity(body);
-
-                System.out.println("Executing request " + request.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                String responseBody = httpClient.execute(request, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpClient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void orderWarrantyItem(Order order, ItemOrders itemOrder) {
-        try {
-            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            try {
-                HttpPost request = new HttpPost("http://localhost:8002/productorder");
-
-                InventoryCustomer customer = new InventoryCustomer();
-                customer.setCustomerName(order.getCustomerName());
-
-                InventoryOrder iOrder = new InventoryOrder();
-                iOrder.setOrderDetails(customer);
-                iOrder.setType("warranty");
-                iOrder.setWearableID(itemOrder.getItemId());
-
-                Gson gson = new Gson();
-                StringEntity body = new StringEntity(gson.toJson(iOrder));
-                request.addHeader("content-type", "application/json");
-                request.setEntity(body);
-
-                System.out.println("Executing request " + request.getRequestLine());
-
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                    @Override
-                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
-                    }
-
-                };
-                String responseBody = httpclient.execute(request, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private class InventoryOrder {
-        private int wearableID;
-        private String type;
-        private InventoryCustomer orderDetails;
-
-        public InventoryOrder() {}
-
-        public void setWearableID(int id) {
-            wearableID = id;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public void setOrderDetails(InventoryCustomer customer) {
-            orderDetails = customer;
-        }
+        String responseBody = util.post(iOrder, "http://localhost:8002/productorder");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
 
     }
 
-    private class InventoryCustomer {
-        private String customerName;
-        private String address;
+    public void orderWarrantyItem(Order order, ItemOrders itemOrder, HttpUtils util) {
 
-        public InventoryCustomer() {
-            customerName = "";
-            address = "";
-        }
+        InventoryCustomer customer = new InventoryCustomer();
+        customer.setCustomerName(order.getCustomerName());
 
-        public void setCustomerName(String name) {
-            customerName = name;
-        }
+        InventoryOrder iOrder = new InventoryOrder();
+        iOrder.setOrderDetails(customer);
+        iOrder.setType("new");
+        iOrder.setWearableID(itemOrder.getItemId());
 
-        public void setAddress(String address) {
-            this.address = address;
-        }
+        String responseBody = util.post(iOrder, "http://localhost:8002/productorder");
+        System.out.println("----------------------------------------");
+        System.out.println(responseBody);
+
     }
 }

@@ -1,12 +1,13 @@
 package com.kennuware.sales.services;
 
-import static com.kennuware.sales.services.EmployeeServices.login;
+import static com.kennuware.sales.services.EmployeeService.login;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kennuware.sales.Utilities.HttpUtils;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -20,7 +21,7 @@ import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EmployeeServicesTest {
+public class EmployeeServiceTest {
 
 	@Test
 	public void getEmployeeRevenueTest() throws Exception {
@@ -56,7 +57,7 @@ public class EmployeeServicesTest {
 		
 		
 		
-		assertEquals(30.0, EmployeeServices.getEmployeeRevenue("1", mockedSession), 0);
+		assertEquals(30.0, EmployeeService.getEmployeeRevenue("1", mockedSession), 0);
 	}
 
     @Test
@@ -81,4 +82,16 @@ public class EmployeeServicesTest {
         assertEquals(gson.toJson(e), gson.toJson(login("SalesRep1", "test", mockedSession)));
         assertEquals(gson.toJson(null), gson.toJson(login("NONEXISTANT USER","NONEXISTANT PASSWORD", mockedSession)));
     }
+
+	@Test
+	public void verifyEmployeeTest() {
+		EmployeeService service = new EmployeeService();
+		String expectedResultJson = "{\"exists\": true}";
+		Boolean expectedResult = true;
+		HttpUtils util = mock(HttpUtils.class);
+		when(util.get(Mockito.anyString())).thenReturn(expectedResultJson);
+
+		Boolean result = service.verifyEmployee(util, 1);
+		assertEquals(expectedResult, result);
+	}
 }
