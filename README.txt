@@ -58,3 +58,6 @@ In the directory, /src/main/test find the test file or directory you wish to run
 
 In Intellij, right click the file, and click 'run "filename"'. Intellij's
 built in support for JUnit will run the tests and show the output.
+
+4. Integration Tests (Postman Scripts)
+At the file path Sales/PostmanScripts/SalesExternalAPITests.postman_collection.json is a file that can be imported into the postman application.  It will create a collection of tests that can be accessed on the left side and run as a collection.  The first run, all tests will pass.  The second run, some tests will fail which shows that the calls update the database.
