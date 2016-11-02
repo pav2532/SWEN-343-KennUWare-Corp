@@ -29,52 +29,12 @@ public class APIs {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
 		HttpUtils utils = new HttpUtils();
 
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
-
-		// Example httpRequest object
-//		StubCallerServiceExample service = new StubCallerServiceExample();
-//		service.testStub();
-
-//		System.out.println("\nVerify Employee Tests");
-//		EmployeeService.verifyEmployee(1);
-//		EmployeeService.verifyEmployee(2);
-/*
-		OrderServices orderService = new OrderServices();
-		ItemOrders order = new ItemOrders();
-		order.setQuantity(33);
-		order.setOrderId(12321);
-		orderService.orderItemsFromInventory("123 Whatever", order, "Ben");
-*/
-//        Employee employee = new Employee();
-//        employee.setName("Ryan");
-//        employee.setPassword("test");
-//        employee.setRegionId(1);
-//        employee.setType(EmployeeType.GENERALMANAGER);
-//
-//        Region region = new Region();
-//        region.setName("Northwest");
-//
-//        session.save(region);
-//        session.save(employee);
-//
-//        Store store = new Store();
-//        store.setRegionID(1);
-//        store.setAddress("Who really cares");
-//        store.setName("Best Buy");
-//        session.save(store);
-//
-//        StoreEmployee storeEmployee = new StoreEmployee();
-//        storeEmployee.setEmployeeID(1);
-//        storeEmployee.setStoreID(2);
-//        session.save(storeEmployee);
-//
-//        session.getTransaction().commit();
-//
-//        session.close();
 
 		Gson gson = new Gson();
 
