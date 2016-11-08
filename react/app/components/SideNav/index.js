@@ -6,23 +6,31 @@
 
 import React from 'react';
 
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Row, Col, Nav, NavItem } from 'react-bootstrap';
 
 import styles from './styles.css';
 
+
 function SideNav(props) {
-  const routes = props.routes.map((route) => {
-    return (
-      <NavItem eventKey={route.label} key={route.label} onClick={route.onClick}>
-        {route.label}
-      </NavItem>
-    );
-  });
+  const routes = props.routes.map((route) =>
+    <NavItem eventKey={route.label} key={route.label} onClick={route.onClick}>
+      {route.label}
+    </NavItem>
+  );
   return (
     <div className={props.className}>
-      <Nav bsStyle="pills" activeKey={props.active} stacked>
-        {routes}
-      </Nav>
+      <Row>
+        <Col md={12}>
+          <h1 className={styles.title}>TERI</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={12}>
+          <Nav bsStyle="pills" activeKey={props.active} stacked>
+            {routes}
+          </Nav>
+        </Col>
+      </Row>
     </div>
   );
 }
