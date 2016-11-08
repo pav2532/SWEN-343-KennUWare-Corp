@@ -4,78 +4,34 @@
 
 package com.kennuware.customersupport;
 
-import com.kennuware.customersupport.data.HibernateUtil;
-
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
-import com.kennuware.customersupport.domain.Employees.Employee;
-import com.kennuware.customersupport.domain.Employees.EmployeeType;
-import com.kennuware.customersupport.services.EmployeeServices;
-import com.kennuware.customersupport.domain.Employees.Region;
-import org.hibernate.Query;
-import com.kennuware.customersupport.services.ReturnTicketServices;
+import com.kennuware.customersupport.services.EmployeeService;
+import com.kennuware.customersupport.services.ItemService;
+import com.kennuware.customersupport.services.OrderService;
+import com.kennuware.customersupport.services.ReturnTicketService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class APIs {
     public static void main(String[] args) {
 
     	
-    	SessionFactory sessionFactory = new Configuration().configure("/com/kennuware/customersupport/resources/hibernate.cfg.xml").buildSessionFactory();
+    	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     	Session session = sessionFactory.openSession();
     	session.beginTransaction();
+
+        HttpUtils utils = new HttpUtils();
 
         // Set the port number
         // This must be run before any routes are defined
         port(8001);
-
-//        Employee employee = new Employee();
-//        employee.setName("Ryan");
-//        employee.setPassword("test");
-//        employee.setRegionId(1);
-//        employee.setType(EmployeeType.AGENT);
-//
-//        Customer customer = new Customer();
-//        customer.setName("George");
-//        customer.setAddress("FASFDSA");
-//
-//        DateTrail dateTrail = new DateTrail();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//        Calendar cal = Calendar.getInstance();
-//        dateTrail.setApproveDenyDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setReceiveDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setRequestDate(dateFormat.format(cal.getTime()));
-//        dateTrail.setReturnsID(4);
-//
-//        Returns returns = new Returns();
-//        returns.setStoreID(2);
-//        returns.setReason("Just Cause");
-//        returns.setRMA("BASF3245");
-//        returns.setType(ReturnType.REFUND);
-//
-//        Refund refund = new Refund();
-//        refund.setRMA("TMDSGF");
-//        refund.setRefund(52.3);
-//
-//        session.save(refund);
-//        session.save(returns);
-//        session.save(dateTrail);
-//        session.save(employee);
-//        session.save(customer);
-//
-//        session.getTransaction().commit();
-//
-//        session.close();
 
         Gson gson = new Gson();
 
@@ -86,7 +42,7 @@ public class APIs {
             String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
             password = password.replace("\"", "");
-            return EmployeeServices.login(username, password, session);
+            return EmployeeService.login(username, password, session);
         }, gson::toJson);
         
         post("/requestReturn", (req, res) -> {
@@ -103,7 +59,7 @@ public class APIs {
             reason = reason.substring(1,reason.length()-1);
             itemID = itemID.substring(1,itemID.length()-1);
             System.out.println("Calling service");
-            return ReturnTicketServices.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
+            return ReturnTicketService.returnRequest(customerName, customerAddress, reason, storeID, itemID, session);
         }, gson::toJson);
 
         post("/requestStatus", (req, res) -> {
@@ -113,7 +69,7 @@ public class APIs {
             String status = json.get("status").toString();
             returnID = returnID.substring(1,returnID.length()-1);
             status = status.substring(1,status.length()-1);
-            return EmployeeServices.changeStatus(returnID, status, session);
+            return EmployeeService.changeStatus(returnID, status, session);
         }, gson::toJson);
 
         get("/getTotalRefunds", (req, res) -> {
@@ -122,27 +78,29 @@ public class APIs {
             for(Refund r:list){
                 refunds += r.getRefund();
             }
-            return refunds;
-        }, gson::toJson);
+            res.type("text/json");
+            return "{\"totalRefunded\":\"" + Math.round(refunds*100.00)/100.00 + "\"}";
+        });
 
         post("/markReceived", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
             returnID = returnID.substring(1,returnID.length()-1);
-            return EmployeeServices.markReceived(returnID, session);
+            return EmployeeService.markReceived(returnID, session);
         }, gson::toJson);
 
         post("/resolve", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
+            String itemID = json.get("itemID").toString();
             returnID = returnID.substring(1,returnID.length()-1);
-            return EmployeeServices.resolve(returnID, session);
+            return EmployeeService.resolve(returnID, itemID, session);
         }, gson::toJson);
 
         get("/getReturns", (req, res) -> {
-           return ReturnTicketServices.getTickets(session);
+           return ReturnTicketService.getTickets(session);
         }, gson::toJson);
     }
 }
