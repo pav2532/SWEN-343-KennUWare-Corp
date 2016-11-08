@@ -103,7 +103,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
       <div className={styles.custSupportAgent}>
         {successModal}
         {errorModal}
-        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
+        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} title="Customer Support" />
         <div className={styles.header}>
           <AccountInfo
             className={styles.accountInfo}

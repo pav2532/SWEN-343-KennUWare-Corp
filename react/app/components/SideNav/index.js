@@ -21,7 +21,7 @@ function SideNav(props) {
     <div className={props.className}>
       <Row>
         <Col md={12}>
-          <h1 className={styles.title}>TERI</h1>
+          <h1 className={styles.title}>{props.title}</h1>
         </Col>
       </Row>
       <Row>
@@ -39,6 +39,7 @@ SideNav.propTypes = {
   className: React.PropTypes.string,
   active: React.PropTypes.string,
   routes: React.PropTypes.array,
+  title: React.PropTypes.string,
 };
 
 export default SideNav;
