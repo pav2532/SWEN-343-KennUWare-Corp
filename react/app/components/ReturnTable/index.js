@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { Table } from 'react-bootstrap';
 
 import styles from './styles.css';
 
@@ -30,7 +31,7 @@ class ReturnTable extends React.Component {
     const content = this.getContent();
     return (
       <div className={styles.returnTable}>
-        <table className={styles.displayTable}>
+        <Table className={styles.displayTable}>
           <tr className={styles.tableRow}>
             <th className={styles.tableHeader}>ID</th>
             <th className={styles.tableHeader}>Item Name</th>
@@ -39,7 +40,7 @@ class ReturnTable extends React.Component {
             <th className={styles.tableHeader}>Type</th>
           </tr>
           {content}
-        </table>
+        </Table>
       </div>
     );
   }

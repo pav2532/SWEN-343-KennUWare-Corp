@@ -104,13 +104,15 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
         {successModal}
         {errorModal}
         <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
-        <AccountInfo
-          className={styles.accountInfo}
-          name={this.props.employee.username}
-          employeeType={this.props.employee.type}
+        <div className={styles.header}>
+          <AccountInfo
+            className={styles.accountInfo}
+            name={this.props.employee.username}
+            employeeType={this.props.employee.type}
 
-          onSignOut={this.props.onSignOut}
-        />
+            onSignOut={this.props.onSignOut}
+          />
+        </div>
         <div className={styles.content}>
           {content}
         </div>
