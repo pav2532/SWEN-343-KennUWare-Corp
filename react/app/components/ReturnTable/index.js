@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 import styles from './styles.css';
 
@@ -23,6 +23,7 @@ class ReturnTable extends React.Component {
         <td className={styles.tableCell}>{item.reason}</td>
         <td className={styles.tableCell}>{item.storeID}</td>
         <td className={styles.tableCell}>{item.type}</td>
+        <td className={styles.tableCell}><Button onClick={() => this.props.onManageReturn(item)}>Manage</Button></td>
       </tr>
     );
   }
@@ -38,6 +39,7 @@ class ReturnTable extends React.Component {
             <th className={styles.tableHeader}>Reason for Return</th>
             <th className={styles.tableHeader}>Store ID</th>
             <th className={styles.tableHeader}>Type</th>
+            <th className={styles.tableHeader}>Manage</th>
           </tr>
           {content}
         </Table>
@@ -49,6 +51,7 @@ class ReturnTable extends React.Component {
 ReturnTable.propTypes = {
   returns: React.PropTypes.array,
   getReturns: React.PropTypes.func,
-}
+  onManageReturn: React.PropTypes.func,
+};
 
 export default ReturnTable;

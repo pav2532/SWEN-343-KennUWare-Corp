@@ -27,24 +27,29 @@ import {
   editReturnRequest,
 
   getReturns,
+  manageReturn,
 
   submitReturn,
 } from './actions';
 
 import styles from './styles.css';
 
-import { Button, Modal } from 'react-bootstrap';
-
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
 import NewReturnForm from 'components/NewReturnForm';
 import GenericModal from 'components/GenericModal';
 import ReturnTable from 'components/ReturnTable';
+import ReturnModal from 'components/ReturnModal';
 
 export class CustSupportAgent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     let activeRoute = 'New Return';
     let content = (<div>Hello</div>);
+    const returnModal = (
+      <ReturnModal
+        show={this.props.page.managingReturn}
+      />
+    );
     const successModal = (
       <GenericModal
         show={this.props.page.successModal}
@@ -89,6 +94,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
           <ReturnTable
             returns={this.props.page.returns}
             getReturns={this.props.onGetReturns}
+            onManageReturn={this.props.onManageReturn}
           />
         </div>
       );
@@ -101,6 +107,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
 
     return (
       <div className={styles.custSupportAgent}>
+        {returnModal}
         {successModal}
         {errorModal}
         <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} title="Customer Support" />
@@ -138,6 +145,7 @@ CustSupportAgent.propTypes = {
   onEditRequest: React.PropTypes.func,
 
   onGetReturns: React.PropTypes.func,
+  onManageReturn: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -162,6 +170,7 @@ function mapDispatchToProps(dispatch) {
     onEditRequest: () => dispatch(editReturnRequest()),
 
     onGetReturns: () => dispatch(getReturns()),
+    onManageReturn: (item) => dispatch(manageReturn(item)),
 
     onSignOut: () => dispatch(signOut()),
 
