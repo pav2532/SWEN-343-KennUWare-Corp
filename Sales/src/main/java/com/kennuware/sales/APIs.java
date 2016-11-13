@@ -120,10 +120,11 @@ public class APIs {
 			String creditCardNumber = json.get("creditCardNumber").getAsString();
 			String expirationDate = json.get("expirationDate").getAsString();
 			String address = json.get("custAddress").getAsString();
+			String date = json.get("date").getAsString();
 			Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
 			JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
 			int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
-					expirationDate, bulkDiscount, address, session);
+					expirationDate, bulkDiscount, address, date, session);
 
 			if (check != -1) {
 				JsonObject item;
