@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
+import com.kennuware.sales.services.ItemService;
 import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -165,5 +166,13 @@ public class APIs {
 		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
+		get("/highestseller",(req, res) -> {
+			OrderServices.getHishtestOrder(session);
+			return null;
+		}, gson::toJson);
+		get("/lowestseller",(req, res) -> {
+			return null;
+		}, gson::toJson);
+
     }
 }
