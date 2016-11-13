@@ -28,6 +28,7 @@ import {
 
   getReturns,
   manageReturn,
+  cancelManageReturn,
 
   submitReturn,
 } from './actions';
@@ -48,6 +49,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
     const returnModal = (
       <ReturnModal
         show={this.props.page.managingReturn}
+        cancel={this.props.onCancelManage}
       />
     );
     const successModal = (
@@ -146,6 +148,7 @@ CustSupportAgent.propTypes = {
 
   onGetReturns: React.PropTypes.func,
   onManageReturn: React.PropTypes.func,
+  onCancelManage: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -171,6 +174,7 @@ function mapDispatchToProps(dispatch) {
 
     onGetReturns: () => dispatch(getReturns()),
     onManageReturn: (item) => dispatch(manageReturn(item)),
+    onCancelManage: () => dispatch(cancelManageReturn()),
 
     onSignOut: () => dispatch(signOut()),
 

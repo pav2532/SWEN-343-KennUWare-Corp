@@ -21,6 +21,7 @@ import {
   COMPLETE_RETURN_REQUEST,
 
   MANAGE_RETURN,
+  CANCEL_MANAGE_RETURN,
 
   GET_RETURNS_SUCCESS,
 } from './constants';
@@ -84,6 +85,9 @@ function custSupportAgentReducer(state = initialState, action) {
     case MANAGE_RETURN:
       return state
         .set('managingReturn', true);
+    case CANCEL_MANAGE_RETURN:
+      return state
+        .set('managingReturn', false);
 
     default:
       return state;
