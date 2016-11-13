@@ -13,7 +13,8 @@ import com.kennuware.sales.domain.SalesOrder;
 
 public class OrderServices {
     public static int completeSaleOrder(String customerName, int employeeID, String creditCardNumber,
-                                            String expirationDate, Double bulkDiscount, String address, Session session){
+                                            String expirationDate, Double bulkDiscount, String address,
+                                            String date, Session session){
         if(creditCardNumber.length() != 16 ){
             return -1;
         }
@@ -42,6 +43,7 @@ public class OrderServices {
             newSO.setExpirationDate(expirationDate);
             newSO.setEmployeeID(employeeID);
             newSO.setCustomerName(customerName);
+            newSO.setDate(date);
 
             session.save(newSO);
             sendOrder(newSO, session);

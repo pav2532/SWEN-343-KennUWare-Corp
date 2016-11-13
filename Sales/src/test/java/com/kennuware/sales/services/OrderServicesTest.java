@@ -39,7 +39,7 @@ public class OrderServicesTest {
         salesOrder.setCustomerName("Joey");
 
         assertEquals(gson.toJson(salesOrder), sendOrder(salesOrder, mockedSession));
-        assertEquals(gson.toJson(salesOrder.getOrderid()), gson.toJson(completeSaleOrder("Joey", 1, "4485355145730911", "03/20", 1.0, "123 whatever", mockedSession)));
+        assertEquals(gson.toJson(salesOrder.getOrderid()), gson.toJson(completeSaleOrder("Joey", 1, "4485355145730911", "03/20", 1.0, "123 whatever", "2000-08-02 12:00:00", mockedSession)));
     }
 
     @Test
