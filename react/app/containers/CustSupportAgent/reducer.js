@@ -20,6 +20,9 @@ import {
   EDIT_RETURN_REQUEST,
   COMPLETE_RETURN_REQUEST,
 
+  MANAGE_RETURN,
+  CANCEL_MANAGE_RETURN,
+
   GET_RETURNS_SUCCESS,
 } from './constants';
 
@@ -33,6 +36,8 @@ const initialState = fromJS({
     reason: '',
     itemId: '',
   },
+  managingReturn: false,
+  returnItem: {},
   returns: [],
 });
 
@@ -77,6 +82,12 @@ function custSupportAgentReducer(state = initialState, action) {
     case GET_RETURNS_SUCCESS:
       return state
         .set('returns', action.data);
+    case MANAGE_RETURN:
+      return state
+        .set('managingReturn', true);
+    case CANCEL_MANAGE_RETURN:
+      return state
+        .set('managingReturn', false);
 
     default:
       return state;

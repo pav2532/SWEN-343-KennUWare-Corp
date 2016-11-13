@@ -23,6 +23,9 @@ import {
   GET_RETURNS,
   GET_RETURNS_ERROR,
   GET_RETURNS_SUCCESS,
+
+  MANAGE_RETURN,
+  CANCEL_MANAGE_RETURN,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -113,5 +116,18 @@ export function getReturnsError(err) {
   return {
     type: GET_RETURNS_ERROR,
     err,
+  };
+}
+
+export function manageReturn(item) {
+  return {
+    type: MANAGE_RETURN,
+    item,
+  };
+}
+
+export function cancelManageReturn() {
+  return {
+    type: CANCEL_MANAGE_RETURN,
   };
 }

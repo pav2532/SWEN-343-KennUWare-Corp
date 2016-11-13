@@ -23,4 +23,7 @@ export const GET_RETURNS = 'app/CustSupportAgent/GET_RETURNS';
 export const GET_RETURNS_SUCCESS = 'app/CustSupportAgent/GET_RETURNS_SUCCESS';
 export const GET_RETURNS_ERROR = 'app/CustSupportAgent/GET_RETURNS_ERROR';
 
+export const MANAGE_RETURN = 'app/CustSupportAgent/MANAGE_RETURN';
+export const CANCEL_MANAGE_RETURN = 'app/CustSupportAgent/CANCEL_MANAGE_RETURN';
+
 export const AGENT = 'AGENT';
