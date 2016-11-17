@@ -13,8 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @NamedQueries({
-        @NamedQuery(name = "findReturn", query = "select r from Returns r where r.id = :id"),
-        @NamedQuery(name = "findAllReturns", query = "select r from Returns r")
+        @NamedQuery(name = "findReturn", query = "select r from Returns r "
+        		+ "where r.id = :id"),
+        @NamedQuery(name = "findAllReturns", query = "select r from Returns r"),
+        @NamedQuery(name = "findReturnsByItemID", query = "select r from Returns r "
+        		+ "where r.itemID = :itemID"),
+        @NamedQuery(name = "findMostReturned", query = "select count(r) from Returns r "
+        		+ "group by r.itemID")
 })
 
 @Entity

@@ -81,6 +81,36 @@ public class APIs {
             res.type("text/json");
             return "{\"totalRefunded\":\"" + Math.round(refunds*100.00)/100.00 + "\"}";
         });
+        
+        get("/getMostRefundedModel/wDenied", (req, res) -> {
+        	
+        	return "";
+        });
+        
+        get("/getMostRefundedModel", (req, res) -> {
+        	
+        	return "";
+        });
+        
+        get("/getLeastRefundedModel/wDenied", (req, res) -> {
+        	
+        	return "";
+        });
+
+        get("/getLeastRefundedModel", (req, res) -> {
+        	
+        	return "";
+        });
+        
+        get("/getMostRefundedReason", (req, res) -> {
+        	
+        	return "";
+        });
+        
+        get("/getRefundsWith/:status", (req, res) -> {
+        	
+        	return "";
+        });
 
         post("/markReceived", (req, res) -> {
             String body = req.body();
