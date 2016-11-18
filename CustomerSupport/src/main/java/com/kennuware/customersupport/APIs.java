@@ -5,6 +5,7 @@
 package com.kennuware.customersupport;
 
 import static spark.Spark.*;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.Utilities.HttpUtils;
@@ -13,10 +14,21 @@ import com.kennuware.customersupport.services.EmployeeService;
 import com.kennuware.customersupport.services.ItemService;
 import com.kennuware.customersupport.services.OrderService;
 import com.kennuware.customersupport.services.ReturnTicketService;
+
+
+
+
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+
+
+
+
+import java.util.Iterator;
 import java.util.List;
 
 public class APIs {
@@ -82,34 +94,126 @@ public class APIs {
             return "{\"totalRefunded\":\"" + Math.round(refunds*100.00)/100.00 + "\"}";
         });
         
-        get("/getMostRefundedModel/wDenied", (req, res) -> {
+        get("/getMostReturnedModel/wDenied", (req, res) -> {
+        	List list = session.getNamedQuery("findReturnedGroupByItemIDwDenied").list();
+        	String model = "";
+        	int count = -1;
+        	for(Object arr: list){
+        		Object[] values = (Object[])arr;
+        		
+        		String tempCountStr = values[1].toString();
+        		int tempCount = (int) Integer.parseInt(tempCountStr);
+        		
+        		if( arr.equals(list.get(0)) ){
+        			model =  values[0].toString();
+        			count = tempCount;
+        		}else if(tempCount > count){
+        			count = tempCount;
+        			model =  values[0].toString();
+        		}
+        	}
         	
-        	return "";
+        	res.type("text/json");
+        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
         });
         
-        get("/getMostRefundedModel", (req, res) -> {
+        get("/getMostReturnedModel", (req, res) -> {
+        	List list = session.getNamedQuery("findReturnedGroupByItemID").list();
+        	String model = "";
+        	int count = -1;
+        	for(Object arr: list){
+        		Object[] values = (Object[])arr;
+        		
+        		String tempCountStr = values[1].toString();
+        		int tempCount = (int) Integer.parseInt(tempCountStr);
+        		
+        		if( arr.equals(list.get(0)) ){
+        			model =  values[0].toString();
+        			count = tempCount;
+        		}else if(tempCount > count){
+        			count = tempCount;
+        			model =  values[0].toString();
+        		}
+        	}
         	
-        	return "";
+        	res.type("text/json");
+        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
         });
         
-        get("/getLeastRefundedModel/wDenied", (req, res) -> {
+        get("/getLeastReturnedModel/wDenied", (req, res) -> {
+        	List list = session.getNamedQuery("findReturnedGroupByItemIDwDenied").list();
+        	String model = "";
+        	int count = -1;
+        	for(Object arr: list){
+        		Object[] values = (Object[])arr;
+        		
+        		String tempCountStr = values[1].toString();
+        		int tempCount = (int) Integer.parseInt(tempCountStr);
+        		
+        		if( arr.equals(list.get(0)) ){
+        			model =  values[0].toString();
+        			count = tempCount;
+        		}else if(tempCount < count){
+        			count = tempCount;
+        			model =  values[0].toString();
+        		}
+        	}
         	
-        	return "";
+        	res.type("text/json");
+        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
         });
 
-        get("/getLeastRefundedModel", (req, res) -> {
+        get("/getLeastReturnedModel", (req, res) -> {
+        	List list = session.getNamedQuery("findReturnedGroupByItemID").list();
+        	String model = "";
+        	int count = -1;
+        	for(Object arr: list){
+        		Object[] values = (Object[])arr;
+        		
+        		String tempCountStr = values[1].toString();
+        		int tempCount = (int) Integer.parseInt(tempCountStr);
+        		
+        		if( arr.equals(list.get(0)) ){
+        			model =  values[0].toString();
+        			count = tempCount;
+        		}else if(tempCount < count){
+        			count = tempCount;
+        			model =  values[0].toString();
+        		}
+        	}
         	
-        	return "";
+        	res.type("text/json");
+        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
         });
         
-        get("/getMostRefundedReason", (req, res) -> {
+        get("/getHighestReturnsReason", (req, res) -> {
+        	List list = session.getNamedQuery("findReturnedGroupByReason").list();
+        	String reason = "";
+        	int count = -1;
+        	for(Object arr: list){
+        		Object[] values = (Object[])arr;
+        		
+        		String tempCountStr = values[1].toString();
+        		int tempCount = (int) Integer.parseInt(tempCountStr);
+        		
+        		if( arr.equals(list.get(0)) ){
+        			reason =  values[0].toString();
+        			count = tempCount;
+        		}else if(tempCount > count){
+        			count = tempCount;
+        			reason =  values[0].toString();
+        		}
+        	}
         	
-        	return "";
+        	res.type("text/json");
+        	return "{\"model\":\"" + reason + "\", \"count\":\"" + count + "\"}";
         });
         
-        get("/getRefundsWith/:status", (req, res) -> {
-        	
-        	return "";
+        get("/getReturnsWith/:type", (req, res) -> {
+        	int type = Integer.parseInt(req.params(":type"));
+        	List list = session.getNamedQuery("findReturnedByType")
+        			.setInteger("type", type).list();
+        	return "{\"count\":\"" + list.size() + "\"}";
         });
 
         post("/markReceived", (req, res) -> {

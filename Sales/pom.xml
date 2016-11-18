@@ -32,11 +32,7 @@
             <artifactId>httpclient</artifactId>
             <version>4.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcomponents-core</artifactId>
-            <version>4.4.5</version>
-        </dependency>
+        
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -111,6 +107,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.3</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.httpcomponents</groupId>
+        	<artifactId>httpcore</artifactId>
+        	<version>4.3</version>
         </dependency>
     </dependencies>
 </project>
