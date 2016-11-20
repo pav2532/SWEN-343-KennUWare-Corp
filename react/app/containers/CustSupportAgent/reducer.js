@@ -84,10 +84,12 @@ function custSupportAgentReducer(state = initialState, action) {
         .set('returns', action.data);
     case MANAGE_RETURN:
       return state
-        .set('managingReturn', true);
+        .set('managingReturn', true)
+        .set('returnItem', action.item);
     case CANCEL_MANAGE_RETURN:
       return state
-        .set('managingReturn', false);
+        .set('managingReturn', false)
+        .set('returnItem', {});
 
     default:
       return state;

@@ -48,6 +48,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
     let content = (<div>Hello</div>);
     const returnModal = (
       <ReturnModal
+        item={this.props.page.returnItem}
         show={this.props.page.managingReturn}
         cancel={this.props.onCancelManage}
       />

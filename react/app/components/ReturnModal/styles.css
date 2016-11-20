@@ -1,3 +1,7 @@
 .returnModal { /* stylelint-disable */
 
 }
+
+.labelText {
+  font-weight: bold;
+}
