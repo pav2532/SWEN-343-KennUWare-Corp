@@ -30,17 +30,17 @@ class ReturnModal extends React.Component { // eslint-disable-line react/prefer-
       actions = (
         <div>
           <Row>
-            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('REFUND')}>
+            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('refund')}>
               Refund
             </Button>
           </Row>
           <Row>
-            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('REFURBISH')}>
+            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('refurbish')}>
               Refurbish
             </Button>
           </Row>
           <Row>
-            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('DENY')}>
+            <Button bsStyle="success" onClick={() => this.props.onSetRequestStatus('deny')}>
               Deny
             </Button>
           </Row>

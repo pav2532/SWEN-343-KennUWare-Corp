@@ -21,6 +21,11 @@ import {
   submitReturnSuccess,
   submitReturnError,
 
+  setRequestStatusError,
+  setRequestStatusSuccess,
+  resolveReturnError,
+  resolveReturnSuccess,
+
   getReturnsSuccess,
 } from './actions';
 
@@ -144,6 +149,29 @@ export function* setStatus() {
   const newStatus = yield select(selectNewStatus());
 
   console.log('set status saga', managedReturn, newStatus);
+  const requestURL = '/api/customer-support/requestStatus';
+
+  // Make the api call
+  const options = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const returnRequest = yield call(request, requestURL, options);
+
+  console.log("Return api result");
+  console.log(returnRequest);
+
+  if (!returnRequest.err) {
+    yield put(setRequestStatusSuccess(returnRequest.data));
+  } else {
+    yield put(setRequestStatusError());
+  }
 }
 
 export function* setStatusWatcher() {
@@ -165,6 +193,29 @@ export function* resolveReturn() {
   const managedReturn = yield select(selectManagedReturn());
 
   console.log('resolve saga', managedReturn);
+  const requestURL = '/api/customer-support/resolve';
+
+  // Make the api call
+  const options = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ returnID: managedReturn.id, itemID: managedReturn.itemID }),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const returnRequest = yield call(request, requestURL, options);
+
+  console.log("Return api result");
+  console.log(returnRequest);
+
+  if (!returnRequest.err) {
+    yield put(resolveReturnSuccess(returnRequest.data));
+  } else {
+    yield put(resolveReturnError());
+  }
 }
 
 export function* resolveReturnWatcher() {

@@ -15,7 +15,7 @@ const selectReturn = () => createSelector(
 
 const selectManagedReturn = () => createSelector(
   selectCustSupportAgentDomain(),
-  (state) => state.get('returnItem')
+  (state) => state.get('returnItem').toJS()
 );
 
 const selectNewStatus = () => createSelector(
