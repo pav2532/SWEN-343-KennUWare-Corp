@@ -15,6 +15,7 @@ const app = express();
 // This is to be able to hit the Java Spark server with /api
 app.use('/api/sales', proxy('localhost:8000'));
 app.use('/api/customer-support', proxy('localhost:8001'));
+app.use('/api/sso', proxy('localhost:8003'));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

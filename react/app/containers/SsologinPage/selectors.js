@@ -3,11 +3,20 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the ssologinPage state domain
  */
-const selectSsologinPageDomain = () => (state) => state.get('ssologinPage');
+const selectSSOLoginPageDomain = () => (state) => state.get('ssologinPage');
 
 /**
  * Other specific selectors
  */
+const selectUsername = () => createSelector(
+  selectSSOLoginPageDomain(),
+  (state) => state.get('username')
+);
+
+const selectPassword = () => createSelector(
+  selectSSOLoginPageDomain(),
+  (state) => state.get('password')
+);
 
 
 /**
@@ -15,11 +24,13 @@ const selectSsologinPageDomain = () => (state) => state.get('ssologinPage');
  */
 
 const selectSsologinPage = () => createSelector(
-  selectSsologinPageDomain(),
+  selectSSOLoginPageDomain(),
   (substate) => substate.toJS()
 );
 
 export default selectSsologinPage;
 export {
-  selectSsologinPageDomain,
+  selectSSOLoginPageDomain,
+  selectUsername,
+  selectPassword,
 };

@@ -1,3 +1,12 @@
 .ssologinPage { /* stylelint-disable */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #a6d1f7;
+}
 
+.mainRow {
+  margin-top: 100px;
 }
