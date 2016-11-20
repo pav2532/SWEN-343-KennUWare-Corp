@@ -27,24 +27,36 @@ import {
   editReturnRequest,
 
   getReturns,
+  manageReturn,
+  cancelManageReturn,
+  setReturnStatus,
+  resolveReturn,
 
   submitReturn,
 } from './actions';
 
 import styles from './styles.css';
 
-import { Button, Modal } from 'react-bootstrap';
-
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
 import NewReturnForm from 'components/NewReturnForm';
 import GenericModal from 'components/GenericModal';
 import ReturnTable from 'components/ReturnTable';
+import ReturnModal from 'components/ReturnModal';
 
 export class CustSupportAgent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     let activeRoute = 'New Return';
     let content = (<div>Hello</div>);
+    const returnModal = (
+      <ReturnModal
+        item={this.props.page.returnItem}
+        show={this.props.page.managingReturn}
+        cancel={this.props.onCancelManage}
+        onSetRequestStatus={this.props.onSetRequestStatus}
+        onResolveReturn={this.props.onResolveReturn}
+      />
+    );
     const successModal = (
       <GenericModal
         show={this.props.page.successModal}
@@ -89,6 +101,7 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
           <ReturnTable
             returns={this.props.page.returns}
             getReturns={this.props.onGetReturns}
+            onManageReturn={this.props.onManageReturn}
           />
         </div>
       );
@@ -101,16 +114,19 @@ export class CustSupportAgent extends React.Component { // eslint-disable-line r
 
     return (
       <div className={styles.custSupportAgent}>
+        {returnModal}
         {successModal}
         {errorModal}
-        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
-        <AccountInfo
-          className={styles.accountInfo}
-          name={this.props.employee.username}
-          employeeType={this.props.employee.type}
+        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} title="Customer Support" />
+        <div className={styles.header}>
+          <AccountInfo
+            className={styles.accountInfo}
+            name={this.props.employee.username}
+            employeeType={this.props.employee.type}
 
-          onSignOut={this.props.onSignOut}
-        />
+            onSignOut={this.props.onSignOut}
+          />
+        </div>
         <div className={styles.content}>
           {content}
         </div>
@@ -136,6 +152,11 @@ CustSupportAgent.propTypes = {
   onEditRequest: React.PropTypes.func,
 
   onGetReturns: React.PropTypes.func,
+  onManageReturn: React.PropTypes.func,
+  onCancelManage: React.PropTypes.func,
+
+  onSetRequestStatus: React.PropTypes.func,
+  onResolveReturn: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
 };
@@ -160,6 +181,11 @@ function mapDispatchToProps(dispatch) {
     onEditRequest: () => dispatch(editReturnRequest()),
 
     onGetReturns: () => dispatch(getReturns()),
+    onManageReturn: (item) => dispatch(manageReturn(item)),
+    onCancelManage: () => dispatch(cancelManageReturn()),
+
+    onSetRequestStatus: (status) => dispatch(setReturnStatus(status)),
+    onResolveReturn: () => dispatch(resolveReturn()),
 
     onSignOut: () => dispatch(signOut()),
 
