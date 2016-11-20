@@ -115,6 +115,7 @@ public class EmployeeService {
                 RefurbishService.reportItemRefurbished(Integer.parseInt(itemID), util);
             }
             r.setType(ReturnType.RESOLVED);
+            System.out.println("Setting return " + r.getID() + " to resolved.");
             session.save(r);
 
             Query q = session.getNamedQuery("findDateTrail").setString("returnsID", returnID);

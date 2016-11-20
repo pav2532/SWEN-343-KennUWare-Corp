@@ -26,6 +26,12 @@ import {
 
   MANAGE_RETURN,
   CANCEL_MANAGE_RETURN,
+  SET_RETURN_STATUS,
+  SET_RETURN_STATUS_ERROR,
+  SET_RETURN_STATUS_SUCCESS,
+  RESOLVE_RETURN,
+  RESOLVE_RETURN_ERROR,
+  RESOLVE_RETURN_SUCCESS,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -131,3 +137,44 @@ export function cancelManageReturn() {
     type: CANCEL_MANAGE_RETURN,
   };
 }
+
+export function setReturnStatus(status) {
+  return {
+    type: SET_RETURN_STATUS,
+    status,
+  };
+}
+
+export function setRequestStatusSuccess(data) {
+  return {
+    type: SET_RETURN_STATUS_SUCCESS,
+    data,
+  };
+}
+
+export function setRequestStatusError() {
+  return {
+    type: SET_RETURN_STATUS_ERROR,
+  };
+}
+
+export function resolveReturn() {
+  return {
+    type: RESOLVE_RETURN,
+  };
+}
+
+export function resolveReturnSuccess(data) {
+  return {
+    type: RESOLVE_RETURN_SUCCESS,
+    data,
+  };
+}
+
+export function resolveReturnError() {
+  return {
+    type: RESOLVE_RETURN_ERROR,
+  };
+}
+
+

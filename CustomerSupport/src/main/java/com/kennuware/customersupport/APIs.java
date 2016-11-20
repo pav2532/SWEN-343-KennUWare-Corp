@@ -67,7 +67,6 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
             String status = json.get("status").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
             status = status.substring(1,status.length()-1);
             return EmployeeService.changeStatus(returnID, status, session);
         }, gson::toJson);
@@ -95,7 +94,6 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String returnID = json.get("returnID").toString();
             String itemID = json.get("itemID").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
             return EmployeeService.resolve(returnID, itemID, session);
         }, gson::toJson);
 

@@ -22,6 +22,9 @@ import {
 
   MANAGE_RETURN,
   CANCEL_MANAGE_RETURN,
+  SET_RETURN_STATUS,
+  SET_RETURN_STATUS_SUCCESS,
+  RESOLVE_RETURN_SUCCESS,
 
   GET_RETURNS_SUCCESS,
 } from './constants';
@@ -37,7 +40,14 @@ const initialState = fromJS({
     itemId: '',
   },
   managingReturn: false,
-  returnItem: {},
+  returnItem: {
+    id: '',
+    reason: '',
+    storeID: '',
+    type: '',
+    itemID: '',
+  },
+  newStatus: '',
   returns: [],
 });
 
@@ -84,10 +94,32 @@ function custSupportAgentReducer(state = initialState, action) {
         .set('returns', action.data);
     case MANAGE_RETURN:
       return state
-        .set('managingReturn', true);
+        .set('managingReturn', true)
+        .setIn(['returnItem', 'id'], action.item.id)
+        .setIn(['returnItem', 'reason'], action.item.reason)
+        .setIn(['returnItem', 'storeID'], action.item.storeID)
+        .setIn(['returnItem', 'type'], action.item.type)
+        .setIn(['returnItem', 'itemID'], action.item.itemID);
     case CANCEL_MANAGE_RETURN:
       return state
-        .set('managingReturn', false);
+        .set('managingReturn', false)
+        .setIn(['returnItem', 'id'], '')
+        .setIn(['returnItem', 'reason'], '')
+        .setIn(['returnItem', 'storeID'], '')
+        .setIn(['returnItem', 'type'], '')
+        .setIn(['returnItem', 'itemID'], '');
+    case SET_RETURN_STATUS:
+      return state
+        .set('newStatus', action.status);
+    case SET_RETURN_STATUS_SUCCESS:
+      console.log('set return status success');
+      return state
+        .set('newStatus', '')
+        .setIn(['returnItem', 'type'], action.data.type);
+    case RESOLVE_RETURN_SUCCESS:
+      console.log('resolve return success', action.data);
+      return state
+        .setIn(['returnItem', 'type'], 'RESOLVED');
 
     default:
       return state;
