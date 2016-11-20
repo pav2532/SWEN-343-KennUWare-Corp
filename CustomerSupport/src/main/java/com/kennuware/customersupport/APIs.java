@@ -114,7 +114,7 @@ public class APIs {
         	}
         	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
+        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
         });
         
         get("/getMostReturnedModel", (req, res) -> {
@@ -137,7 +137,7 @@ public class APIs {
         	}
         	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
+        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
         });
         
         get("/getLeastReturnedModel/wDenied", (req, res) -> {
@@ -160,7 +160,7 @@ public class APIs {
         	}
         	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
+        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
         });
 
         get("/getLeastReturnedModel", (req, res) -> {
@@ -183,7 +183,7 @@ public class APIs {
         	}
         	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\":\"" + count + "\"}";
+        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
         });
         
         get("/getHighestReturnsReason", (req, res) -> {
@@ -206,14 +206,14 @@ public class APIs {
         	}
         	
         	res.type("text/json");
-        	return "{\"model\":\"" + reason + "\", \"count\":\"" + count + "\"}";
+        	return "{\"model\":\"" + reason + "\", \"count\": " + count + "}";
         });
         
         get("/getReturnsWith/:type", (req, res) -> {
         	int type = Integer.parseInt(req.params(":type"));
         	List list = session.getNamedQuery("findReturnedByType")
         			.setInteger("type", type).list();
-        	return "{\"count\":\"" + list.size() + "\"}";
+        	return "{\"count\": " + list.size() + "}";
         });
 
         post("/markReceived", (req, res) -> {
