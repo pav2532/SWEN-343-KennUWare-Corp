@@ -7,10 +7,14 @@ import request from 'utils/request';
 import {
   SUBMIT_RETURN,
   GET_RETURNS,
+  SET_RETURN_STATUS,
+  RESOLVE_RETURN,
 } from './constants';
 
 import {
   selectReturn,
+  selectManagedReturn,
+  selectNewStatus,
 } from './selectors';
 
 import {
@@ -134,9 +138,55 @@ export function* getReturnData() {
 }
 
 
+export function* setStatus() {
+  // Fill in
+  const managedReturn = yield select(selectManagedReturn());
+  const newStatus = yield select(selectNewStatus());
+
+  console.log('set status saga', managedReturn, newStatus);
+}
+
+export function* setStatusWatcher() {
+  while (yield take(SET_RETURN_STATUS)) {
+    yield call(setStatus);
+  }
+}
+
+export function* setStatusData() {
+  const watcher = yield fork(setStatusWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+export function* resolveReturn() {
+  // Fill in
+  const managedReturn = yield select(selectManagedReturn());
+
+  console.log('resolve saga', managedReturn);
+}
+
+export function* resolveReturnWatcher() {
+  while (yield take(RESOLVE_RETURN)) {
+    yield call(resolveReturn);
+  }
+}
+
+export function* resolveData() {
+  const watcher = yield fork(resolveReturnWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+
 // All sagas to be loaded
 export default [
   signOutData,
   returnData,
   getReturnData,
+  setStatusData,
+  resolveData,
 ];

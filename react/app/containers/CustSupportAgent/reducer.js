@@ -22,6 +22,7 @@ import {
 
   MANAGE_RETURN,
   CANCEL_MANAGE_RETURN,
+  SET_RETURN_STATUS,
 
   GET_RETURNS_SUCCESS,
 } from './constants';
@@ -37,7 +38,11 @@ const initialState = fromJS({
     itemId: '',
   },
   managingReturn: false,
-  returnItem: {},
+  returnItem: {
+    id: '',
+    type: '',
+  },
+  newStatus: '',
   returns: [],
 });
 
@@ -90,6 +95,9 @@ function custSupportAgentReducer(state = initialState, action) {
       return state
         .set('managingReturn', false)
         .set('returnItem', {});
+    case SET_RETURN_STATUS:
+      return state
+        .set('newStatus', action.status);
 
     default:
       return state;

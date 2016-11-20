@@ -17,13 +17,13 @@ class ReturnTable extends React.Component {
 
   getContent() {
     return this.props.returns.map((item) =>
-      <tr key={item.id} className={styles.tableRow}>
-        <td className={styles.tableCell}>{item.id}</td>
-        <td className={styles.tableCell}>{item.itemID}</td>
-        <td className={styles.tableCell}>{item.reason}</td>
-        <td className={styles.tableCell}>{item.storeID}</td>
-        <td className={styles.tableCell}>{item.type}</td>
-        <td className={styles.tableCell}><Button onClick={() => this.props.onManageReturn(item)}>Manage</Button></td>
+      <tr key={item.id}>
+        <td>{item.id}</td>
+        <td>{item.itemID}</td>
+        <td>{item.reason}</td>
+        <td>{item.storeID}</td>
+        <td>{item.type}</td>
+        <td><Button onClick={() => this.props.onManageReturn(item)}>Manage</Button></td>
       </tr>
     );
   }
@@ -32,16 +32,20 @@ class ReturnTable extends React.Component {
     const content = this.getContent();
     return (
       <div className={styles.returnTable}>
-        <Table className={styles.displayTable}>
-          <tr className={styles.tableRow}>
-            <th className={styles.tableHeader}>ID</th>
-            <th className={styles.tableHeader}>Item Name</th>
-            <th className={styles.tableHeader}>Reason for Return</th>
-            <th className={styles.tableHeader}>Store ID</th>
-            <th className={styles.tableHeader}>Type</th>
-            <th className={styles.tableHeader}>Manage</th>
-          </tr>
-          {content}
+        <Table striped bordered condensed hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Item Name</th>
+              <th>Reason for Return</th>
+              <th>Store ID</th>
+              <th>Type</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {content}
+          </tbody>
         </Table>
       </div>
     );

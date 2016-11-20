@@ -26,6 +26,8 @@ import {
 
   MANAGE_RETURN,
   CANCEL_MANAGE_RETURN,
+  SET_RETURN_STATUS,
+  RESOLVE_RETURN,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -129,5 +131,18 @@ export function manageReturn(item) {
 export function cancelManageReturn() {
   return {
     type: CANCEL_MANAGE_RETURN,
+  };
+}
+
+export function setReturnStatus(status) {
+  return {
+    type: SET_RETURN_STATUS,
+    status,
+  };
+}
+
+export function resolveReturn() {
+  return {
+    type: RESOLVE_RETURN,
   };
 }
