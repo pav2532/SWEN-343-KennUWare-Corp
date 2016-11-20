@@ -6,17 +6,30 @@
 
 import React from 'react';
 
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row, Col, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 import styles from './styles.css';
 
 class ReturnTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      displayedReturns: [],
+      filter: '',
+    };
+  }
+
   componentWillMount() {
     this.props.getReturns();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ displayedReturns: nextProps.returns });
+  }
+
   getContent() {
-    return this.props.returns.map((item) =>
+    return this.state.displayedReturns.map((item) =>
       <tr key={item.id}>
         <td>{item.id}</td>
         <td>{item.itemID}</td>
@@ -28,10 +41,47 @@ class ReturnTable extends React.Component {
     );
   }
 
+  filterReturns(filterText) {
+    let newReturns = [];
+    console.log('filtering');
+
+    if (filterText !== '') {
+      for (let i = 0; i < this.props.returns.length; i++) {
+        const item = this.props.returns[i];
+        if (!isNaN(filterText)) {
+          if (item.id === parseInt(filterText, 10)) {
+            newReturns.push(item);
+          }
+        } else if (item.itemID.toLowerCase().includes(filterText.toLowerCase()) || item.type.toLowerCase().includes(filterText.toLowerCase()) || item.reason.toLowerCase().includes(filterText.toLowerCase())) {
+          newReturns.push(item);
+        }
+      }
+    } else {
+      newReturns = this.props.returns;
+    }
+
+    return newReturns;
+  }
+
+  updateFilter(evt) {
+    this.setState({ filter: evt.target.value });
+    this.setState({ displayedReturns: this.filterReturns(evt.target.value) });
+  }
+
   render() {
     const content = this.getContent();
     return (
       <div className={styles.returnTable}>
+        <Row style={{ marginBottom: '20px' }}>
+          <Col md={6}>
+            <Form inline>
+              <FormGroup controlId="formInlineName">
+                <ControlLabel>Filter Results:</ControlLabel>
+                <FormControl type="text" placeholder="filter" value={this.state.filter} onChange={(evt) => this.updateFilter(evt)}/>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
         <Table striped bordered condensed hover>
           <thead>
             <tr>
