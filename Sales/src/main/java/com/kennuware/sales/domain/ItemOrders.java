@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 
 @NamedQueries({
 	@NamedQuery(name = "findAllItemOrders", query = "FROM ItemOrders"),
-    @NamedQuery(name = "findItemById", query = "FROM ItemOrder i WHERE i.itemId = :id")
+    @NamedQuery(name = "findItemById", query = "select i from ItemOrders i where i.itemId = :itemId")
 })
 
 @Entity

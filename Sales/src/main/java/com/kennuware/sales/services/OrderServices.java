@@ -113,7 +113,7 @@ public class OrderServices {
 
         return gson.toJson(order);
     }
-    public static String getHishtestOrder(Session session){
+    public static String getHighestOrder(Session session){
         double result = 0;
         double tempResult = 0;
         String name = "";
@@ -121,12 +121,34 @@ public class OrderServices {
         int tempId = 0;
         ArrayList<Item> catalog;
         ;
-        for(Item c : (ArryList<Item>) session.getNamedQuery("findAllItems").list()) {
+        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             tempId = c.getId();
             for (ItemOrders iId : getItems(id, session)) {
                 tempResult += iId.getQuantity();
             }
-            if(result < tempResult){
+            if(result <= tempResult){
+                name = c.getName();
+                result = tempResult;
+                id = tempId;
+            }
+            tempResult = 0;
+        }
+        return name;
+    }
+    public static String getLowestOrder(Session session){
+        double result = 0;
+        double tempResult = 0;
+        String name = "";
+        int id = 0;
+        int tempId = 0;
+        ArrayList<Item> catalog;
+        ;
+        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+            tempId = c.getId();
+            for (ItemOrders iId : getItems(id, session)) {
+                tempResult += iId.getQuantity();
+            }
+            if(result >= tempResult){
                 name = c.getName();
                 result = tempResult;
                 id = tempId;
@@ -136,9 +158,8 @@ public class OrderServices {
         return name;
     }
     private static ArrayList<ItemOrders> getItems(int id, Session session){
-        ArrayList<ItemOrders> list;
-        list = session.getNamedQuery("findItemById")
-                .setString("itemId", id.toString()).list();
+        ArrayList<ItemOrders> list = (ArrayList<ItemOrders>) session.getNamedQuery("findItemById")
+                .setString("itemId", String.valueOf(id)).list();
         return list;
 
     }

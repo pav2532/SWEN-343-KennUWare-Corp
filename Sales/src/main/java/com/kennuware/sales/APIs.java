@@ -5,9 +5,7 @@
 package com.kennuware.sales;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.kennuware.sales.Utilities.HttpUtils;
-import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
@@ -15,7 +13,6 @@ import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
-import com.kennuware.sales.services.ItemService;
 import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,7 +33,7 @@ public class APIs {
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
-
+		System.out.println(OrderServices.getHighestOrder(session));
 		Gson gson = new Gson();
 
         post("/login", (req, res) -> {
@@ -167,7 +164,7 @@ public class APIs {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
 		get("/highestseller",(req, res) -> {
-			OrderServices.getHishtestOrder(session);
+			OrderServices.getHighestOrder(session);
 			return null;
 		}, gson::toJson);
 		get("/lowestseller",(req, res) -> {
