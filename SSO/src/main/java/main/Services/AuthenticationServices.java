@@ -30,15 +30,9 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import spark.Response;
+
 import java.util.UUID;
-
-import java.security.spec.KeySpec;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
-import org.apache.commons.codec.binary.Base64;
-
 
 public class AuthenticationServices {
 
@@ -93,21 +87,22 @@ public class AuthenticationServices {
         return null;
     }
 
-    public static Boolean verifySession(String username, String sessionID, Session dbSession){
+    public static String verifySession(String username, String sessionID, Session dbSession, Response res){
 
         Query query = dbSession.getNamedQuery("findUserByUsername").setString("userName", username);
         List<User> results = (List<User>)query.list();
         // Should only be one result
         for(User u: results) {
             if(sessionID.equals(u.getSessionID())) {
-                return true;
+                return "valid";
             }
         }
 
-        return false;
+        res.status(400);
+        return "localhost:3000/kennuware/sso/login";
     }
 
-    public static Boolean logout(String username, String sessionID, Session dbSession){
+    public static String logout(String username, String sessionID, Session dbSession, Response res){
 
         Query query = dbSession.getNamedQuery("findUserByUsername").setString("userName", username);
         List<User> results = (List<User>)query.list();
@@ -116,11 +111,12 @@ public class AuthenticationServices {
             if(sessionID.equals(u.getSessionID())) {
                 u.setSessionID("inactive");
                 dbSession.save(u);
-                return true;
+                return "localhost:3000/kennuware/sso/login";
             }
         }
 
-        return false;
+        res.status(400);
+        return "Logout Unsuccessful";
     }
 
     public static Boolean deleteUser(String username, String sessionID, Session dbSession){
