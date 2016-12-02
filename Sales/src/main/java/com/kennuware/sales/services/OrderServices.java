@@ -9,6 +9,7 @@ import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.domain.ItemOrders;
 import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
+import com.kennuware.sales.domain.Item;
 import java.util.ArrayList;
 
 
@@ -114,19 +115,29 @@ public class OrderServices {
     }
     public static String getHishtestOrder(Session session){
         double result = 0;
+        double tempResult = 0;
         String name = "";
         int id = 0;
-        ArrayList<Item> catalog = (ArrayList<Item>) session.getNamedQuery("findAllItems").list();
-        for(Item c: catalog) {
+        int tempId = 0;
+        ArrayList<Item> catalog;
+        ;
+        for(Item c : (ArryList<Item>) session.getNamedQuery("findAllItems").list()) {
+            tempId = c.getId();
             for (ItemOrders iId : getItems(id, session)) {
-                result += iId.getQuantity();
-
+                tempResult += iId.getQuantity();
             }
+            if(result < tempResult){
+                name = c.getName();
+                result = tempResult;
+                id = tempId;
+            }
+            tempResult = 0;
         }
         return name;
     }
-    public static ArrayList<ItemOrders> getItems(int id, Session session){
-        ArrayList<ItemOrders> list = (ArrayList<ItemOrders>) session.getNamedQuery("findItemById")
+    private static ArrayList<ItemOrders> getItems(int id, Session session){
+        ArrayList<ItemOrders> list;
+        list = session.getNamedQuery("findItemById")
                 .setString("itemId", id.toString()).list();
         return list;
 
