@@ -1,7 +1,6 @@
 package main;
 
 import main.Services.AuthenticationServices;
-import main.Utilities.HttpUtils;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,8 +16,6 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        HttpUtils utils = new HttpUtils();
-
         // Set the port
         // This must be done before any routes are defined
         port(8003);
@@ -30,11 +27,15 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
-            //username = username.substring(1,username.length()-1);
-            //password = password.replace("\"", "");
+            String toReturn = "localhost:3000/sales";           //TODO Update to dynamic URL later
             String sessionID = AuthenticationServices.login(username, password, session);
-            res.cookie(username, sessionID);
-            return req.cookie(username);
+            if(sessionID.equals("invalid")) {
+                res.status(400);
+                toReturn = "invalid";
+            } else {
+                res.cookie("sessionID", sessionID);
+            }
+            return toReturn;
         }, gson::toJson);
 
         post("/create-user", (req, res) -> {
@@ -42,8 +43,7 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
-            //username = username.substring(1,username.length()-1);
-            //password = password.replace("\"", "");
+
             return AuthenticationServices.createUser(username, password, session);
         }, gson::toJson);
 
@@ -65,7 +65,7 @@ public class APIs {
             String username = json.get("username").getAsString();
             String sessionID = json.get("sessionID").getAsString();
 
-            return AuthenticationServices.verifySession(username, sessionID, session);
+            return AuthenticationServices.verifySession(username, sessionID, session, res);
         }, gson::toJson);
 
         post("/signout", (req, res) -> {
@@ -76,7 +76,7 @@ public class APIs {
 
             res.removeCookie(username);
 
-            return AuthenticationServices.logout(username, sessionID, session);
+            return AuthenticationServices.logout(username, sessionID, session, res);
         }, gson::toJson);
 
         post("/delete-user", (req, res) -> {
@@ -90,5 +90,8 @@ public class APIs {
             return AuthenticationServices.deleteUser(username, sessionID, session);
         }, gson::toJson);
 
+        exception(Exception.class, (exception, request, response) -> {
+            exception.printStackTrace();
+        });
     }
 }

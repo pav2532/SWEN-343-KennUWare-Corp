@@ -13,8 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @NamedQueries({
-        @NamedQuery(name = "findReturn", query = "select r from Returns r where r.id = :id"),
-        @NamedQuery(name = "findAllReturns", query = "select r from Returns r")
+        @NamedQuery(name = "findReturn", query = "select r from Returns r "
+        		+ "where r.id = :id"),
+        @NamedQuery(name = "findAllReturns", query = "select r from Returns r"),
+        @NamedQuery(name = "findReturnsByItemID", query = "select r from Returns r "
+        		+ "where r.itemID = :itemID"),
+        @NamedQuery(name = "findReturnedGroupByItemID", query = "select r.itemID, count(r) "
+        		+ "from Returns r where r.type != 0 group by r.itemID"),
+        @NamedQuery(name = "findReturnedGroupByItemIDwDenied", query = "select r.itemID, count(r) "
+        		+ "from Returns r group by r.itemID"),
+        @NamedQuery(name = "findReturnedGroupByReason", query = "select r.reason, count(r) "
+        		+ "from Returns r group by r.reason"),
+        @NamedQuery(name = "findReturnedByType", query = "select r "
+        		+ "from Returns r where r.type = :type")
 })
 
 @Entity
