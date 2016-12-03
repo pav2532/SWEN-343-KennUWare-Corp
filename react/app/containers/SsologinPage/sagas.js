@@ -31,6 +31,7 @@ export function* login() {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify({
         username,
         password,
@@ -41,7 +42,7 @@ export function* login() {
   if (!auth.err) {
     // Should do a redirect
     console.log('auth response', auth);
-    window.location = auth.data;
+    window.location = 'http://127.0.0.1:3000/sales';
     console.log('setting window location');
   } else {
     yield put(loginError(auth.err.message));
