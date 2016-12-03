@@ -27,13 +27,15 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
-            String toReturn = "http://127.0.0.1:3000/sales";           //TODO Update to dynamic URL later
+            String toReturn = json.get("fromURL").getAsString();
+            System.out.println("toReturn: " + toReturn);
             String sessionID = AuthenticationServices.login(username, password, session);
             if(sessionID.equals("invalid")) {
                 res.status(400);
                 toReturn = "invalid";
             } else {
                 res.cookie("sessionID", sessionID);
+                toReturn += "?sessionID=" + sessionID;
             }
             return toReturn;
         }, gson::toJson);
