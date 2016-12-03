@@ -27,7 +27,7 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
-            String toReturn = "localhost:3000/sales";           //TODO Update to dynamic URL later
+            String toReturn = "http://localhost:3000/sales";           //TODO Update to dynamic URL later
             String sessionID = AuthenticationServices.login(username, password, session);
             if(sessionID.equals("invalid")) {
                 res.status(400);

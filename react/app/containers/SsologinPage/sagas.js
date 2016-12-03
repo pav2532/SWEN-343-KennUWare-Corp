@@ -3,7 +3,7 @@
  */
 
 import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOCATION_CHANGE, replace, push } from 'react-router-redux';
 import {
   LOGIN,
 } from './constants';
@@ -22,7 +22,6 @@ export function* login() {
   const password = yield select(selectPassword());
 
   const requestURL = '/api/sso/login';
-  console.log("Requesting: ", requestURL);
 
   // Call our request helper (see 'utils/request')
   const auth = yield call(request, requestURL,
@@ -41,6 +40,9 @@ export function* login() {
 
   if (!auth.err) {
     // Should do a redirect
+    console.log('auth response', auth);
+    window.location = auth.data;
+    console.log('setting window location');
   } else {
     yield put(loginError(auth.err.message));
   }
