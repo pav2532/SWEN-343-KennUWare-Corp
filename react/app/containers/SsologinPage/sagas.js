@@ -21,6 +21,13 @@ export function* login() {
   const username = yield select(selectUsername());
   const password = yield select(selectPassword());
 
+  let location = window.location.href;
+  console.log("location: ", location);
+
+  location = location.slice((location.indexOf('from=') + 5));
+
+  const fromURL = location;
+
   const requestURL = '/api/sso/login';
 
   // Call our request helper (see 'utils/request')
@@ -35,6 +42,7 @@ export function* login() {
       body: JSON.stringify({
         username,
         password,
+        fromURL,
       }),
     }
   );
@@ -42,7 +50,7 @@ export function* login() {
   if (!auth.err) {
     // Should do a redirect
     console.log('auth response', auth);
-    window.location = 'http://127.0.0.1:3000/sales';
+    window.location = auth.data;
     console.log('setting window location');
   } else {
     yield put(loginError(auth.err.message));

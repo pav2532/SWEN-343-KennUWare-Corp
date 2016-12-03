@@ -36,6 +36,7 @@ public class APIs {
             } else {
                 res.cookie("sessionID", sessionID);
                 toReturn += "?sessionID=" + sessionID;
+                toReturn += "&username=" + username;
             }
             return toReturn;
         }, gson::toJson);
