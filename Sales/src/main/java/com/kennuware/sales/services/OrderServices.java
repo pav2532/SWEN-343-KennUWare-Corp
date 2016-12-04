@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
 import com.kennuware.sales.domain.Item;
 import java.util.ArrayList;
+import com.kennuware.sales.domain.ItemMetrics;
 
 
 public class OrderServices {
@@ -115,9 +116,9 @@ public class OrderServices {
         return gson.toJson(order);
     }
 
-    public static String getHighestOrder(Session session) {
-        double result = 0;
-        double tempResult = 0;
+    public static ItemMetrics getHighestOrder(Session session) {
+        int result = 0;
+        int tempResult = 0;
         String name = "";
         int id = 0;
         int tempId = 0;
@@ -135,12 +136,12 @@ public class OrderServices {
             }
             tempResult = 0;
         }
-        return "Product: " + name + " Quantity: " + result;
+        return new ItemMetrics(name, result);
     }
 
-    public static String getLowestOrder(Session session) {
-        double result = 0;
-        double tempResult = 0;
+    public static ItemMetrics getLowestOrder(Session session) {
+        int result = 0;
+        int tempResult = 0;
         String name = "";
         int id = 0;
         int tempId = 0;
@@ -164,19 +165,18 @@ public class OrderServices {
             }
             tempResult = 0;
         }
-        return "Product: " + name + " Quantity: " + result;
+        return new ItemMetrics(name,result);
     }
 
-    public static ArrayList<String> getRevenueByModel(Session session) {
+    public static ArrayList<ItemMetrics> getRevenueByModel(Session session) {
         double result = 0;
         String string = "";
         int id = 0;
         double price = 0;
         double total = 0;
         int quantity = 0;
-        ArrayList<String> revenue = new ArrayList<String>();
+        ArrayList<ItemMetrics> revenue = new ArrayList<ItemMetrics>();
         ArrayList<Item> catalog;
-        ;
         for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             id = c.getId();
             price = c.getUnitPrice();
@@ -185,7 +185,8 @@ public class OrderServices {
                 quantity += iId.getQuantity();
             }
             total = quantity * price;
-            revenue.add(c.getName() + " Revenue: " + total);
+            ItemMetrics temp = new ItemMetrics(c.getName(), quantity, total);
+            revenue.add(temp);
         }
         quantity = 0;
         return revenue;
