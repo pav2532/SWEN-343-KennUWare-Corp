@@ -13,6 +13,16 @@ const selectReturn = () => createSelector(
   (state) => state.get('newReturn').toJS()
 );
 
+const selectManagedReturn = () => createSelector(
+  selectCustSupportAgentDomain(),
+  (state) => state.get('returnItem').toJS()
+);
+
+const selectNewStatus = () => createSelector(
+  selectCustSupportAgentDomain(),
+  (state) => state.get('newStatus')
+);
+
 /**
  * Default selector used by CustSupportAgent
  */
@@ -26,4 +36,6 @@ export default selectCustSupportAgent;
 export {
   selectCustSupportAgentDomain,
   selectReturn,
+  selectManagedReturn,
+  selectNewStatus,
 };

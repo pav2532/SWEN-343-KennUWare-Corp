@@ -10,6 +10,7 @@ import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.domain.Employees.*;
 import com.google.gson.Gson;
+import com.kennuware.sales.domain.StoreEmployee;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,6 +19,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.apache.http.util.EntityUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -97,6 +99,30 @@ public class EmployeeService {
     	return employees;
     }
 
+    ////Called when a list of employees is needed from a region
+    //Get all employees and return an Arraylist of them
+    public static ArrayList<Employee> getEmployeesfromStore(String store, Session session){
+        ArrayList<StoreEmployee> storeemployees;
+
+//        regionID = ((Region) session.createQuery("FROM Region r"
+//        		+ "WHERE r.name='" + region + "'").list().get(0)).getId();
+
+        storeemployees = (ArrayList<StoreEmployee>) session.getNamedQuery("findEmployeeByStoreId")
+                .setString("storeID", store).list();
+
+
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        for(StoreEmployee employee : storeemployees) {
+            String employeeID = String.valueOf(employee.getEmployeeID());
+            Query query = session.getNamedQuery("findEmployeeByEmployeeId").setString("eid", employeeID);
+            List<Employee> results = (List<Employee>)query.list();
+            employees.add(results.get(0));
+        }
+
+        return employees;
+    }
+
     ////Called when a list of employees is needed from a specific store
     //Get all employees and return an Arraylist of them
     public static ArrayList<Employee> getEmployees(String region, String store, Session session){
@@ -159,6 +185,14 @@ public class EmployeeService {
     		
     	}
     	return result;
+    }
+
+    public static double getStoreRevenue(String store, Session session){
+        double result = 0;
+        for(Employee eid: getEmployeesfromStore(store, session)){
+            result += getEmployeeRevenue(Integer.toString(eid.getEid()), session);
+        }
+        return result;
     }
     
     public static double getTotalRevenue(Session session){

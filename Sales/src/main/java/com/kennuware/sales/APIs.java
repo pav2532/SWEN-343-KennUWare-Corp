@@ -58,7 +58,15 @@ public class APIs {
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
-		
+
+		get("/revenue/store/:sid", (req, res) -> {
+			double revenue = 0;
+			String sid = req.params(":sid");
+			revenue = EmployeeService.getStoreRevenue(sid, session);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+
 		/* Gets revenue from a salesperson
 		 * HR gets revenue to calculate commissions weekly
 		 * GET
@@ -119,10 +127,11 @@ public class APIs {
 			String creditCardNumber = json.get("creditCardNumber").getAsString();
 			String expirationDate = json.get("expirationDate").getAsString();
 			String address = json.get("custAddress").getAsString();
+			String date = json.get("date").getAsString();
 			Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
 			JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
 			int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,
-					expirationDate, bulkDiscount, address, session);
+					expirationDate, bulkDiscount, address, date, session);
 
 			if (check != -1) {
 				JsonObject item;
