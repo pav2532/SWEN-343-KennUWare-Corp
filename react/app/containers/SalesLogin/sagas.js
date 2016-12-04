@@ -49,6 +49,7 @@ export function* login() {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify({
         username,
         sessionID,

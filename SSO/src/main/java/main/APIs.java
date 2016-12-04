@@ -37,10 +37,7 @@ public class APIs {
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
             String toReturn = json.get("fromURL").getAsString();
-            System.out.println("toReturn: " + toReturn);
             String sessionID = AuthenticationServices.login(username, password, req, session, sessionIDs);
-            System.out.println("Sesion ID: " + sessionID);
-            System.out.println("Session ID length: " + sessionIDs.size());
             if(sessionID.equals("invalid")) {
                 res.status(400);
                 toReturn = "invalid";
@@ -76,16 +73,20 @@ public class APIs {
         post("/verify-session", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").getAsString();
-            String sessionID = json.get("sessionID").getAsString();
-            System.out.println("Session ID length: " + sessionIDs.size());
-            System.out.println("Session ID: " + sessionIDs.get(0));
-            System.out.println("Swsession: " + sessionID);
-            if (sessionIDs.contains(sessionID)) {
-                return "valid";
+            String username = "";
+            String sessionID = "";
+            if(json.has("username")) {
+                username = json.get("username").getAsString();
             }
-
-            return AuthenticationServices.verifySession(username, sessionID, session, res);
+            if(json.has("sessionID")) {
+                sessionID = json.get("sessionID").getAsString();
+            }
+            if (sessionIDs.contains(sessionID)) {
+                System.out.println("Returning valid");
+                return "valid";
+            } else {
+                return "127.0.0.1:3000/kennuware/sso/login";
+            }
         }, gson::toJson);
 
         post("/signout", (req, res) -> {

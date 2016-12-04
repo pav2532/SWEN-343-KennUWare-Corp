@@ -42,6 +42,19 @@ public class APIs {
 
 		Gson gson = new Gson();
 
+		before((req, res) -> {
+			String user = req.cookie("user");
+			String sessionID = req.cookie("sessionID");
+			System.out.println("Authenticating user: " + user + "  with sessinID=" + sessionID);
+			String result = verifyUser(user, sessionID);
+			System.out.println("Result from verify: " + result);
+			System.out.println("Result equals valid: " + result.equals("valid"));
+			if (!result.equals("valid")) {
+				halt(401, result);
+			}
+			System.out.println("Authenticated");
+		});
+
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
@@ -49,7 +62,6 @@ public class APIs {
             String sessionID = req.cookie("sessionID");
             Map<String, String> map = req.cookies();
 			System.out.println("Verifying: " + verifyUser(username, sessionID));
-			System.out.println("Authenticating user: " + username + "  with sessinID=" + sessionID);
             return EmployeeService.login(username, session);
         }, gson::toJson);
         
@@ -184,11 +196,7 @@ public class APIs {
 		CredentialDTO cred = new CredentialDTO(username, sessionID);
 		HttpUtils util = new HttpUtils();
 		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
-//		if (result.equals("valid")) {
-//			return "valid";
-//		} else {
-//			return result;
-//		}
+		result = result.replaceAll("\"", "");
 		return result;
 	}
 }

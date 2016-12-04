@@ -51,6 +51,8 @@ export function* login() {
   if (!auth.err) {
     // Should do a redirect
     const newLocation = auth.data;
+    const user = newLocation.slice((newLocation.indexOf('username=') + 9));
+    cookie.save('user', user, { path: '/' });
     const sessionID = newLocation.slice((newLocation.indexOf('sessionID=') + 10), newLocation.indexOf('&username='));
     cookie.save('sessionID', sessionID, { path: '/' });
     window.location = newLocation;

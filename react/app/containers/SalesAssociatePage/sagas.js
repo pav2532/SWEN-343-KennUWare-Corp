@@ -48,11 +48,14 @@ export function* checkout() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(body),
   };
 
   // Call our request helper (see 'utils/request')
   const order = yield call(request, requestURL, options);
+
+  console.log("Checkout error: ", order);
 
   if (order.data !== -1) {
     yield put(checkoutSuccess());
