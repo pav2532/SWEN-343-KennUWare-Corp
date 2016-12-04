@@ -1,30 +1,28 @@
-.custSupportAgent { /* stylelint-disable */
-
-}
-
 .sideNav {
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 250px;
-  border: 1px solid black;
+  background-color: #1A242F;
 }
 
-.accountInfo {
+.header {
   position: fixed;
-  top: 0;
-  left: 250px;
-  right: 0;
-  height: 150px;
-  border: 1px solid black;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  color: white;
+  margin: 15px;
 }
 
 .content {
   position: fixed;
-  top: 150px;
+  top: 0;
   left: 250px;
   right: 0;
   bottom: 0;
-  border: 1px solid black;  
+  padding: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

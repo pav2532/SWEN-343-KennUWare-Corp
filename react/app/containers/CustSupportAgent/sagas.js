@@ -7,15 +7,24 @@ import request from 'utils/request';
 import {
   SUBMIT_RETURN,
   GET_RETURNS,
+  SET_RETURN_STATUS,
+  RESOLVE_RETURN,
 } from './constants';
 
 import {
   selectReturn,
+  selectManagedReturn,
+  selectNewStatus,
 } from './selectors';
 
 import {
   submitReturnSuccess,
   submitReturnError,
+
+  setRequestStatusError,
+  setRequestStatusSuccess,
+  resolveReturnError,
+  resolveReturnSuccess,
 
   getReturnsSuccess,
 } from './actions';
@@ -134,9 +143,101 @@ export function* getReturnData() {
 }
 
 
+export function* setStatus() {
+  // Fill in
+  const managedReturn = yield select(selectManagedReturn());
+  const newStatus = yield select(selectNewStatus());
+
+  console.log('set status saga', managedReturn, newStatus);
+  const requestURL = '/api/customer-support/requestStatus';
+
+  // Make the api call
+  const options = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const returnRequest = yield call(request, requestURL, options);
+
+  console.log("Return api result");
+  console.log(returnRequest);
+
+  if (!returnRequest.err) {
+    yield put(setRequestStatusSuccess(returnRequest.data));
+  } else {
+    yield put(setRequestStatusError());
+  }
+}
+
+export function* setStatusWatcher() {
+  while (yield take(SET_RETURN_STATUS)) {
+    yield call(setStatus);
+  }
+}
+
+export function* setStatusData() {
+  const watcher = yield fork(setStatusWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+export function* resolveReturn() {
+  // Fill in
+  const managedReturn = yield select(selectManagedReturn());
+
+  console.log('resolve saga', managedReturn);
+  const requestURL = '/api/customer-support/resolve';
+
+  // Make the api call
+  const options = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ returnID: managedReturn.id, itemID: managedReturn.itemID }),
+  };
+
+  // Call our request helper (see 'utils/request')
+  const returnRequest = yield call(request, requestURL, options);
+
+  console.log("Return api result");
+  console.log(returnRequest);
+
+  if (!returnRequest.err) {
+    yield put(resolveReturnSuccess(returnRequest.data));
+  } else {
+    yield put(resolveReturnError());
+  }
+}
+
+export function* resolveReturnWatcher() {
+  while (yield take(RESOLVE_RETURN)) {
+    yield call(resolveReturn);
+  }
+}
+
+export function* resolveData() {
+  const watcher = yield fork(resolveReturnWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+
 // All sagas to be loaded
 export default [
   signOutData,
   returnData,
   getReturnData,
+  setStatusData,
+  resolveData,
 ];

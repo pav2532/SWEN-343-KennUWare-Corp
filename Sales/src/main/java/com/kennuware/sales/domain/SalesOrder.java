@@ -25,6 +25,7 @@ public class SalesOrder {
     private String creditCardNumber;
     private String expirationDate;
     private Double bulkDiscount;
+    private String dateOfSale;
 
     public SalesOrder(){}
 
@@ -74,5 +75,13 @@ public class SalesOrder {
 
     public void setBulkDiscount(Double bulkDiscount) {
         this.bulkDiscount = bulkDiscount;
+    }
+
+    public String getDate() {
+        return dateOfSale;
+    }
+
+    public void setDate(String date) {
+        this.dateOfSale = date;
     }
 }
