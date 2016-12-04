@@ -56,7 +56,15 @@ public class APIs {
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
-		
+
+		get("/revenue/store/:sid", (req, res) -> {
+			double revenue = 0;
+			String sid = req.params(":sid");
+			revenue = EmployeeService.getStoreRevenue(sid, session);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+
 		/* Gets revenue from a salesperson
 		 * HR gets revenue to calculate commissions weekly
 		 * GET
