@@ -57,9 +57,9 @@ public class APIs {
 			System.out.println("Result from verify: " + result);
 			System.out.println("Result equals valid: " + result.equals("valid"));
 			if (!result.equals("valid")) {
+				result = "\"" + result + "\"";
 				halt(400, result);
 			}
-			System.out.println("Authenticated");
 		});
 
         post("/login", (req, res) -> {

@@ -93,7 +93,6 @@ export function* submitReturn() {
 }
 
 export function* getReturns() {
-
   console.log("Requesting total revenue");
 
   const requestURL = '/api/customer-support/getReturns';
@@ -165,6 +164,7 @@ export function* setStatus() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
   };
 
@@ -209,6 +209,7 @@ export function* resolveReturn() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify({ returnID: managedReturn.id, itemID: managedReturn.itemID }),
   };
 
