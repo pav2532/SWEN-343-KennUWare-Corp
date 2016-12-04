@@ -22,6 +22,8 @@ import Input from 'components/Input';
 
 import styles from './styles.css';
 
+import { Row, Col } from 'react-bootstrap';
+
 class PaymentForm extends React.Component {
   constructor(props) {
     super(props);

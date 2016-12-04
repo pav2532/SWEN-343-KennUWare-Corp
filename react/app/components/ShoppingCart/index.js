@@ -10,6 +10,8 @@ import ShoppingCartItem from 'components/ShoppingCartItem';
 
 import styles from './styles.css';
 
+import { Row, Col } from 'react-bootstrap';
+
 class ShoppingCart extends React.Component { // eslint-disable-line react/prefer-stateless-function
   calculateSubtotal() {
     let total = 0.0;

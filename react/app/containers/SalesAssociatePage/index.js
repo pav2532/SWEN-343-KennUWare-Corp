@@ -30,7 +30,7 @@ import {
   continueOrder,
 } from './actions.js';
 
-import { Button, Modal } from 'react-bootstrap';
+import {Grid, Row, Col, Button, Modal } from 'react-bootstrap';
 
 import AccountInfo from 'components/AccountInfo';
 import ItemOrderForm from 'components/ItemOrderForm';
@@ -78,42 +78,63 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     );
     return (
       <div className={styles.salesAssociatePage}>
-        {successModal}
-        {errorModal}
-        <div className={styles.title}>
-          <h1>KennUWare Sales</h1>
-        </div>
-        <div className={styles.accountInfo}>
-          <AccountInfo
-            name={this.props.employee.username}
-            employeeType={this.props.employee.type}
-            onSignOut={this.props.onSignOut}
-          />
-        </div>
-        <div className={styles.orderEntry} style={{ width: '50%', float: 'left', height: '600px' }}>
-          <div className={styles.itemEntry}>
-            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
-          </div>
-          <div className={styles.shoppingCart}>
-            <ShoppingCart items={this.props.sales.shoppingCart} />
-          </div>
-        </div>
-        <div className={styles.paymentForm}>
-          <PaymentForm
-            name={this.props.sales.paymentInfo.name}
-            ccNumber={this.props.sales.paymentInfo.ccNumber}
-            expiration={this.props.sales.paymentInfo.expiration}
+        <Grid>
+          {successModal}
+          {errorModal}
+          <Row>
+            <Col xs={6} md={16}>
+              <div className={styles.title}>
+                <h1>KennUWare Sales</h1>
+              </div>
+            </Col>
+            <Col xs={6} md={4}>
+              <div className={styles.accountInfo}>
+                <AccountInfo
+                  name={this.props.employee.username}
+                  employeeType={this.props.employee.type}
+                  onSignOut={this.props.onSignOut}
+                />
+              </div>
+            </Col>
+          </Row>
 
-            setName={this.props.setPaymentInfoName}
-            setCCNumber={this.props.setPaymentInfoCCNumber}
-            setExpiration={this.props.setPaymentInfoExpiration}
-          />
-        </div>
-        <div className={styles.checkoutButton}>
-          <Button bsStyle={buttonStyle} bsSize="lg" onClick={this.props.onCheckout}>
-            Checkout
-          </Button>
-        </div>
+          <Row>
+            <Col xs={6} md={4}>
+              <div className={styles.paymentForm}>
+                <PaymentForm
+                  name={this.props.sales.paymentInfo.name}
+                  ccNumber={this.props.sales.paymentInfo.ccNumber}
+                  expiration={this.props.sales.paymentInfo.expiration}
+                  setName={this.props.setPaymentInfoName}
+                  setCCNumber={this.props.setPaymentInfoCCNumber}
+                  setExpiration={this.props.setPaymentInfoExpiration}
+                />
+              </div>
+            </Col>
+            <Col xs={6} md={6}>
+              <div className={styles.orderEntry} style={{}}>
+                <div className={styles.itemEntry}>
+                  <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+                </div>
+              </div>
+            </Col>
+            <Col xs={6} md={4}>
+              <div className={styles.checkoutButton}>
+                <Button bsStyle={buttonStyle} bsSize="lg" onClick={this.props.onCheckout}>
+                Checkout
+                </Button>
+              </div>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={12} md={8}>
+              <div className={styles.shoppingCart}>
+                <ShoppingCart items={this.props.sales.shoppingCart} />
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
