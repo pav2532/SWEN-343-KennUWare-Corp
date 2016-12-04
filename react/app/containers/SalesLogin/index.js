@@ -13,19 +13,15 @@ import {
   login,
 } from './actions';
 
-import LoginForm from 'components/LoginForm';
-
 export class SalesLogin extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    this.props.onLogin();
+  }
+
   render() {
     return (
       <div className={styles.salesLogin}>
-        <div className={styles.loginFormContainer}>
-          <LoginForm
-            title="KennUWare Sales"
-            buttonClassName={styles.loginButton}
-            loginFunction={(credentials) => this.props.onLogin(credentials)}
-          />
-        </div>
+        <h1>KennUWare Sales</h1>
       </div>
     );
   }
@@ -39,7 +35,7 @@ const mapStateToProps = selectSalesLogin();
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLogin: (credentials) => dispatch(login(credentials)),
+    onLogin: () => dispatch(login()),
     dispatch,
   };
 }

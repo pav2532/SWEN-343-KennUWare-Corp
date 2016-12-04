@@ -41,11 +41,10 @@ public class APIs {
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").toString();
-            String password = json.get("password").toString();
-            username = username.substring(1,username.length()-1);
-            password = password.replace("\"", "");
-            return EmployeeService.login(username, password, session);
+            String username = json.get("username").getAsString();
+            String sessionID = json.get("sessionID").getAsString();
+			res.cookie("sessionID", sessionID);
+            return EmployeeService.login(username, session);
         }, gson::toJson);
         
         /* Gets revenue from a region

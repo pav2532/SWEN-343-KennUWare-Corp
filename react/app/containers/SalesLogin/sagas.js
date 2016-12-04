@@ -30,8 +30,9 @@ import { selectAuthenticated, selectEmployee } from 'containers/App/selectors';
  */
 export function* login() {
   // Select username from store
-  const username = yield select(selectUsername());
-  const password = yield select(selectPassword());
+  const location = window.location.href;
+  const username = location.slice((location.indexOf('username=') + 9));
+  const sessionID = location.slice((location.indexOf('sessionID=') + 10), location.indexOf('&username='));
 
   const requestURL = '/api/sales/login';
 
@@ -45,7 +46,7 @@ export function* login() {
       },
       body: JSON.stringify({
         username,
-        password,
+        sessionID,
       }),
     }
   );

@@ -1,8 +1,10 @@
 insert into User (username, password) values ("generalUser", 3556498);
 insert into User (username, password) values ("CEO", -2008465223);
-insert into User (username, password) values ("SalesAgent", 3556498);
-insert into User (username, password) values ("SalesRegionalManager", 835260333);
-insert into User (username, password) values ("SalesGeneralManager", 835260333);
+insert into User (username, password) values ("SalesRep1", 3556498);
+insert into User (username, password) values ("SalesRep2", 3556498);
+insert into User (username, password) values ("RegionalManager1", 835260333);
+insert into User (username, password) values ("RegionalManager2", 835260333);
+insert into User (username, password) values ("GeneralManager", 835260333);
 insert into User (username, password) values ("CSAgent", 3556498);
 insert into User (username, password) values ("CSManager", 835260333);
 insert into User (username, password) values ("AccountingManager", 835260333);
