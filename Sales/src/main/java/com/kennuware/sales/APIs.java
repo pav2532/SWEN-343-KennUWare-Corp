@@ -33,8 +33,6 @@ public class APIs {
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
-		System.out.println(OrderServices.getHighestOrder(session));
-		System.out.println(OrderServices.getLowestOrder(session));
 		Gson gson = new Gson();
 
         post("/login", (req, res) -> {
@@ -170,6 +168,9 @@ public class APIs {
 		}, gson::toJson);
 		get("/lowestseller",(req, res) -> {
 			return OrderServices.getLowestOrder(session);
+		}, gson::toJson);
+		get("/revenuByModel",(req, res) -> {
+			return OrderServices.getRevenueByModel(session);
 		}, gson::toJson);
 
     }

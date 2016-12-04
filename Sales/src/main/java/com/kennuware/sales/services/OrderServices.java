@@ -15,28 +15,27 @@ import java.util.ArrayList;
 
 public class OrderServices {
     public static int completeSaleOrder(String customerName, int employeeID, String creditCardNumber,
-                                            String expirationDate, Double bulkDiscount, String address,
-                                            String date, Session session){
-        if(creditCardNumber.length() != 16 ){
+                                        String expirationDate, Double bulkDiscount, String address,
+                                        String date, Session session) {
+        if (creditCardNumber.length() != 16) {
             return -1;
         }
 
         int sum = 0;
         boolean alternate = false;
 
-        for (int i = creditCardNumber.length() - 1; i >= 0; i--){
+        for (int i = creditCardNumber.length() - 1; i >= 0; i--) {
             int n = Integer.parseInt(creditCardNumber.substring(i, i + 1));
-            if (alternate){
-                n = n*2;
-                if (n > 9)
-                {
+            if (alternate) {
+                n = n * 2;
+                if (n > 9) {
                     n = (n % 10) + 1;
                 }
             }
             sum += n;
             alternate = !alternate;
         }
-        if(sum % 10 == 0) {
+        if (sum % 10 == 0) {
 
             SalesOrder newSO = new SalesOrder();
 
@@ -54,12 +53,12 @@ public class OrderServices {
             //orderItemsFromInventory(address, newSO, customerName, utils);
 
             return newSO.getOrderid();
-        }else{
+        } else {
             return -1;
         }
     }
 
-    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils){
+    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils) {
 
         InventoryCustomer customer = new InventoryCustomer();
         customer.setCustomerName(custName);
@@ -77,7 +76,7 @@ public class OrderServices {
 
     }
 
-    public static void addItemOrders(int orderId, int itemId, int quantity, Session session){
+    public static void addItemOrders(int orderId, int itemId, int quantity, Session session) {
 
         ItemOrders newIO = new ItemOrders();
 
@@ -88,7 +87,7 @@ public class OrderServices {
         session.save(newIO);
     }
 
-    public static String sendOrder(SalesOrder order, Session session){
+    public static String sendOrder(SalesOrder order, Session session) {
         Gson gson = new Gson();
 
         /*try {
@@ -115,7 +114,8 @@ public class OrderServices {
 
         return gson.toJson(order);
     }
-    public static String getHighestOrder(Session session){
+
+    public static String getHighestOrder(Session session) {
         double result = 0;
         double tempResult = 0;
         String name = "";
@@ -123,21 +123,22 @@ public class OrderServices {
         int tempId = 0;
         ArrayList<Item> catalog;
         ;
-        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             tempId = c.getId();
             for (ItemOrders iId : getItems(id, session)) {
                 tempResult += iId.getQuantity();
             }
-            if(result <= tempResult){
+            if (result <= tempResult) {
                 name = c.getName();
                 result = tempResult;
                 id = tempId;
             }
             tempResult = 0;
         }
-        return name;
+        return "Product: " + name + " Quantity: " + result;
     }
-    public static String getLowestOrder(Session session){
+
+    public static String getLowestOrder(Session session) {
         double result = 0;
         double tempResult = 0;
         String name = "";
@@ -145,19 +146,49 @@ public class OrderServices {
         int tempId = 0;
         ArrayList<Item> catalog;
         ;
-        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             tempId = c.getId();
             for (ItemOrders iId : getItems(id, session)) {
                 tempResult += iId.getQuantity();
             }
-            if(result >= tempResult){
+            if(result == 0){
                 name = c.getName();
                 result = tempResult;
                 id = tempId;
+            } else {
+                if (result >= tempResult) {
+                    name = c.getName();
+                    result = tempResult;
+                    id = tempId;
+                }
             }
             tempResult = 0;
         }
-        return name;
+        return "Product: " + name + " Quantity: " + result;
+    }
+
+    public static ArrayList<String> getRevenueByModel(Session session) {
+        double result = 0;
+        String string = "";
+        int id = 0;
+        double price = 0;
+        double total = 0;
+        int quantity = 0;
+        ArrayList<String> revenue = new ArrayList<String>();
+        ArrayList<Item> catalog;
+        ;
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+            id = c.getId();
+            price = c.getUnitPrice();
+
+            for (ItemOrders iId : getItems(id, session)) {
+                quantity += iId.getQuantity();
+            }
+            total = quantity * price;
+            revenue.add(c.getName() + " Revenue: " + total);
+        }
+        quantity = 0;
+        return revenue;
     }
     private static ArrayList<ItemOrders> getItems(int id, Session session){
         ArrayList<ItemOrders> list = (ArrayList<ItemOrders>) session.getNamedQuery("findItemById")
