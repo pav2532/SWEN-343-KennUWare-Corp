@@ -50,7 +50,7 @@ public class APIs {
 			System.out.println("Result from verify: " + result);
 			System.out.println("Result equals valid: " + result.equals("valid"));
 			if (!result.equals("valid")) {
-				halt(401, result);
+				halt(400, result);
 			}
 			System.out.println("Authenticated");
 		});

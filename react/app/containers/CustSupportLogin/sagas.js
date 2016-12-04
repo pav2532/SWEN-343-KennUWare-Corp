@@ -29,8 +29,15 @@ import { selectAuthenticated, selectEmployee } from 'containers/App/selectors';
  */
 export function* login() {
   // Select username from store
-  const username = yield select(selectUsername());
-  const password = yield select(selectPassword());
+  const location = window.location.href;
+
+  if (location.indexOf('username=') === -1 || location.indexOf('sessionID=') === -1) {
+    window.location = 'http://127.0.0.1:3000/kennuware/sso/login?from=http://127.0.0.1:3000/customer-support';
+  }
+
+  const username = location.slice((location.indexOf('username=') + 9));
+  const sessionID = location.slice((location.indexOf('sessionID=') + 10), location.indexOf('&username='));
+
 
   const requestURL = '/api/customer-support/login';
 
@@ -42,9 +49,10 @@ export function* login() {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify({
         username,
-        password,
+        sessionID,
       }),
     }
   );

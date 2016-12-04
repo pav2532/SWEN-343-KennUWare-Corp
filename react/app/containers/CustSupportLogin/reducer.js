@@ -9,17 +9,12 @@ import {
   LOGIN,
 } from './constants';
 
-const initialState = fromJS({
-  username: '',
-  password: '',
-});
+const initialState = fromJS({});
 
 function custSupportLoginReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN:
-      return state
-        .set('username', action.credentials.username)
-        .set('password', action.credentials.password);
+      return state;
     default:
       return state;
   }
