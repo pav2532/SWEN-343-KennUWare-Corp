@@ -13,6 +13,8 @@ import { loginError } from './actions';
 import request from 'utils/request';
 import { selectUsername, selectPassword } from './selectors';
 
+import cookie from 'react-cookie';
+
 /**
  * Github repos request/response handler
  */
@@ -22,7 +24,6 @@ export function* login() {
   const password = yield select(selectPassword());
 
   let location = window.location.href;
-  console.log("location: ", location);
 
   location = location.slice((location.indexOf('from=') + 5));
 
@@ -49,9 +50,10 @@ export function* login() {
 
   if (!auth.err) {
     // Should do a redirect
-    console.log('auth response', auth);
-    window.location = auth.data;
-    console.log('setting window location');
+    const newLocation = auth.data;
+    const sessionID = newLocation.slice((newLocation.indexOf('sessionID=') + 10), newLocation.indexOf('&username='));
+    cookie.save('sessionID', sessionID, { path: '/' });
+    window.location = newLocation;
   } else {
     yield put(loginError(auth.err.message));
   }

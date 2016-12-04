@@ -24,6 +24,7 @@ import org.hibernate.engine.transaction.synchronization.spi.ExceptionMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class APIs {
@@ -45,7 +46,8 @@ public class APIs {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
-            String sessionID = req.session().id();
+            String sessionID = req.cookie("sessionID");
+            Map<String, String> map = req.cookies();
 			System.out.println("Verifying: " + verifyUser(username, sessionID));
 			System.out.println("Authenticating user: " + username + "  with sessinID=" + sessionID);
             return EmployeeService.login(username, session);
