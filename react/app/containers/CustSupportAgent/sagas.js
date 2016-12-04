@@ -36,9 +36,9 @@ export function* signOut() {
   // redirect to login page
   // TODO: do some de-auth stuff 
   // Also clear stuff like the content route on this page from state
-  cookie.remove('user');
-  cookie.remove('sessionID');
-  cookie.remove('JSESSIONID');
+  cookie.remove('user', { path: '/' });
+  cookie.remove('sessionID', { path: '/' });
+  cookie.remove('JSESSIONID', { path: '/' });
   yield put(push('/customer-support'));
 }
 
