@@ -4,6 +4,8 @@ import { SIGN_OUT } from 'containers/App/constants';
 
 import request from 'utils/request';
 
+import cookie from 'react-cookie';
+
 import {
   SUBMIT_RETURN,
   GET_RETURNS,
@@ -34,6 +36,9 @@ export function* signOut() {
   // redirect to login page
   // TODO: do some de-auth stuff 
   // Also clear stuff like the content route on this page from state
+  cookie.remove('user');
+  cookie.remove('sessionID');
+  cookie.remove('JSESSIONID');
   yield put(push('/customer-support'));
 }
 
@@ -100,6 +105,7 @@ export function* getReturns() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')
