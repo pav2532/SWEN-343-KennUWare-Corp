@@ -93,8 +93,10 @@ public class HttpUtils {
                     }
                 };
 
-               result = httpClient.execute(request, responseHandler);
+                result = httpClient.execute(request, responseHandler);
 
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 httpClient.close();
             }

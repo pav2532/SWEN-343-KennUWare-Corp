@@ -12,6 +12,7 @@ import com.kennuware.sales.data.HibernateUtil;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.sales.domain.Employees.CredentialDTO;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
@@ -19,6 +20,7 @@ import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.transaction.synchronization.spi.ExceptionMapper;
 
 import java.util.List;
 
@@ -43,6 +45,8 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String sessionID = json.get("sessionID").getAsString();
+			System.out.println("Verifying: " + verifyUser(username, sessionID));
+			System.out.println("Authenticating user: " + username + "  with sessinID=" + sessionID);
 			res.cookie("sessionID", sessionID);
             return EmployeeService.login(username, session);
         }, gson::toJson);
@@ -165,5 +169,23 @@ public class APIs {
 		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
+
+		exception(Exception.class, (exception, request, response) -> {
+			exception.printStackTrace();
+
+			return ;
+		});
     }
+
+    private static String verifyUser(String username, String sessionID) {
+
+		CredentialDTO cred = new CredentialDTO(username, sessionID);
+		HttpUtils util = new HttpUtils();
+		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
+		if (result.equals("valid")) {
+			return "valid";
+		} else {
+			return result;
+		}
+	}
 }
