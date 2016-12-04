@@ -15,8 +15,7 @@
         <!-- This property tells it to create all new tables every time the program is run -->
         <!-- We can set up scripts that will initialize some data into the database to make it easier for testing -->
         <property name="hibernate.hbm2ddl.auto">create</property>
-        <property name="hibernate.hbm2ddl.import_files">import.sql
-        </property>
+        <property name="hibernate.hbm2ddl.import_files">import.sql</property>
         <property name="hibernate.format_sql">true</property>
        
 
@@ -29,19 +28,6 @@
         <mapping class="com.kennuware.sales.domain.SalesOrder"></mapping>
         <mapping class="com.kennuware.sales.domain.Store"></mapping>
         <mapping class="com.kennuware.sales.domain.StoreEmployee"></mapping>
-
-
-        <!--<mapping resource ="com.kennuware.sales.domain.Order.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.domain.OrderHistory.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.domain.ShoppingCart.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.domain.Employees.Employees.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.domain.Employees.RegionalManager.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.domain.Employees.SalesRep.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.Wearable.Active.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.Wearable.Comfort.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.Wearable.Fahsion.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.Wearable.Healthy.hbm.xml"/>-->
-        <!--<mapping resource ="com.kennuware.sales.Wearable.Wearable.hbm.xml"/>-->
 
     </session-factory>
 </hibernate-configuration>

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,6 +23,8 @@ public class APIs {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        List<String> sessionIDs = new ArrayList<>();
+
         // Set the port
         // This must be done before any routes are defined
         port(8003);
@@ -35,7 +38,9 @@ public class APIs {
             String password = json.get("password").getAsString();
             String toReturn = json.get("fromURL").getAsString();
             System.out.println("toReturn: " + toReturn);
-            String sessionID = AuthenticationServices.login(username, password, session);
+            String sessionID = AuthenticationServices.login(username, password, req, session, sessionIDs);
+            System.out.println("Sesion ID: " + sessionID);
+            System.out.println("Session ID length: " + sessionIDs.size());
             if(sessionID.equals("invalid")) {
                 res.status(400);
                 toReturn = "invalid";
@@ -73,6 +78,12 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String sessionID = json.get("sessionID").getAsString();
+            System.out.println("Session ID length: " + sessionIDs.size());
+            System.out.println("Session ID: " + sessionIDs.get(0));
+            System.out.println("Swsession: " + sessionID);
+            if (sessionIDs.contains(sessionID)) {
+                return "valid";
+            }
 
             return AuthenticationServices.verifySession(username, sessionID, session, res);
         }, gson::toJson);

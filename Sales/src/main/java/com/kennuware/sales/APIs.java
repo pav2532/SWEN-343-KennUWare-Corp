@@ -22,6 +22,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.transaction.synchronization.spi.ExceptionMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,10 +45,9 @@ public class APIs {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
-            String sessionID = json.get("sessionID").getAsString();
+            String sessionID = req.session().id();
 			System.out.println("Verifying: " + verifyUser(username, sessionID));
 			System.out.println("Authenticating user: " + username + "  with sessinID=" + sessionID);
-			res.cookie("sessionID", sessionID);
             return EmployeeService.login(username, session);
         }, gson::toJson);
         
@@ -182,10 +182,11 @@ public class APIs {
 		CredentialDTO cred = new CredentialDTO(username, sessionID);
 		HttpUtils util = new HttpUtils();
 		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
-		if (result.equals("valid")) {
-			return "valid";
-		} else {
-			return result;
-		}
+//		if (result.equals("valid")) {
+//			return "valid";
+//		} else {
+//			return result;
+//		}
+		return result;
 	}
 }
