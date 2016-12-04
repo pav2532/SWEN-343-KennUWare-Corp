@@ -173,10 +173,10 @@ public class APIs {
 		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
-		get("/highestseller",(req, res) -> {
+		get("/highestSeller",(req, res) -> {
 			return OrderServices.getHighestOrder(session);
 		}, gson::toJson);
-		get("/lowestseller",(req, res) -> {
+		get("/lowestSeller",(req, res) -> {
 			return OrderServices.getLowestOrder(session);
 		}, gson::toJson);
 
