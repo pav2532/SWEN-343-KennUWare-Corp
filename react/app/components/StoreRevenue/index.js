@@ -21,7 +21,6 @@ class StoreRevenue extends React.Component {
   }
 
   render() {
-    console.log("Store revenue data", this.props.revenue);
     const barData = [{ values: this.convertData(this.props.revenue) }];
     return (
       <div className={styles.storeRevenue}>

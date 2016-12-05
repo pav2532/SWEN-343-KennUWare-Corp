@@ -118,10 +118,9 @@ export function* getTotalRevenue() {
 }
 
 export function* getHighestSeller() {
-
   console.log("Requesting highest seller");
 
-  const requestURL = '/api/sales/highestseller';
+  const requestURL = '/api/sales/highestSeller';
 
 
   const options = {
@@ -208,9 +207,6 @@ export function* getRevenueStore(){
   };
   // Call our request helper (see 'utils/request')
   const revenue = yield call(request, requestURL, options);
-
-  console.log("Got revenue by store");
-  console.log(revenue);
 
   if (!revenue.err) {
     yield put(getRevenueStoreSuccess(revenue.data));
