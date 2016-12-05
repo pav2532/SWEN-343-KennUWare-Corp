@@ -166,13 +166,14 @@ public class EmployeeService {
         		while(iterator.hasNext()){
         			Item item = (Item)iterator.next();
         			if( item.getId() == itemid){
+                        System.out.println(quantity);
         				unitPrice = item.getUnitPrice();
         				result += quantity * unitPrice;
         			}
         		}
         	}
         }
-        
+        //System.out.println(result);
     	return result;
     }
     
