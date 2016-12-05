@@ -6,12 +6,11 @@ package com.kennuware.sales.services;
 
 import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.data.HibernateUtil;
-import com.kennuware.sales.domain.Item;
-import com.kennuware.sales.domain.ItemOrders;
+import com.kennuware.sales.domain.*;
 import com.kennuware.sales.domain.Employees.*;
 import com.google.gson.Gson;
-import com.kennuware.sales.domain.StoreEmployee;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -193,6 +192,15 @@ public class EmployeeService {
             result += getEmployeeRevenue(Integer.toString(eid.getEid()), session);
         }
         return result;
+    }
+
+    public static ArrayList<StoreRev> getStoreRevenues(Session session){
+        ArrayList<Store> stores = (ArrayList<Store>) session.getNamedQuery("getAllStores").list();
+        ArrayList<StoreRev> storeRevs = new ArrayList<>();
+        for(Store s: stores){
+            storeRevs.add(new StoreRev(s, getStoreRevenue(String.valueOf(s.getStoreID()), session)));
+        }
+        return storeRevs;
     }
     
     public static double getTotalRevenue(Session session){

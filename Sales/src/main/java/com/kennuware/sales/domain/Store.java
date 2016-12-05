@@ -14,7 +14,8 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQueries({
 	@NamedQuery(name = "findStoreByRegionIdAndName", query = "FROM Store s "
     		+ "WHERE s.regionID = :regionID "
-			+ "AND s.name = :store")
+			+ "AND s.name = :store"),
+    @NamedQuery(name = "getAllStores", query = "select s from Store s")
 })
 
 @Entity

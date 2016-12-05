@@ -17,6 +17,7 @@ import SideNav from 'components/SideNav';
 import TotalRevenue from 'components/TotalRevenue';
 import ShoppingCart from 'components/ShoppingCart';
 import GenericModal from 'components/GenericModal';
+import StoreRevenue from 'components/StoreRevenue';
 
 import {
   goToDashboard,
@@ -36,6 +37,7 @@ import {
 
   getRevenue,
   getRevenueRegion,
+  getRevenueStore,
 } from './actions.js';
 
 import {
@@ -48,11 +50,14 @@ import {
   signOut,
 } from 'containers/App/actions';
 
-import { Button } from 'react-bootstrap';
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 
 import styles from './styles.css';
+
+require('react-d3');
+import { BarChart, PieChart } from 'react-d3';
 
 export class SalesManagerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -93,21 +98,49 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       if (this.props.employee.type === GENERALMANAGER) {
         revenueContent = (
           <div>
-            <h2>Revenue across all regions</h2>
-            <TotalRevenue
-              loadRevenue={this.props.onLoadRevenue}
-              revenue={this.props.sales.revenue.total}
-            />
+            <Grid>
+              <Row>
+                <div>
+                  <h2>Revenue across all regions</h2>
+                  <TotalRevenue
+                    loadRevenue={this.props.onLoadRevenue}
+                    revenue={this.props.sales.revenue.total}
+                  />
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <StoreRevenue
+                    loadRevenue={this.props.onLoadRevenueStore}
+                    revenue={this.props.sales.revenue.store}
+                  />
+                </div>
+              </Row>
+            </Grid>
           </div>
         );
       } else {
         revenueContent = (
           <div>
-            <h2>Revenue for region: {this.props.employee.regionId}</h2>
-            <TotalRevenue
-              loadRevenue={this.props.onLoadRevenueRegion}
-              revenue={this.props.sales.revenue.region}
-            />
+            <Grid>
+              <Row>
+                <div>
+                  <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                  <TotalRevenue
+                    loadRevenue={this.props.onLoadRevenueRegion}
+                    revenue={this.props.sales.revenue.region}
+                  />
+                </div>
+              </Row>
+              <Row>
+                <div>
+                  <StoreRevenue
+                    loadRevenue={this.props.onLoadRevenueStore}
+                    revenue={this.props.sales.revenue.store}
+                  />
+                </div>
+              </Row>
+            </Grid>
           </div>
         );
       }
@@ -161,17 +194,23 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
     return (
       <div>
-        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
-        <AccountInfo
-          className={styles.accountInfo}
-          name={this.props.employee.username}
-          employeeType={this.props.employee.type}
+        <Grid>
+          <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
+          <Row>
+            <Col xs={6} xsOffset={8}>
+              <AccountInfo
+                className={styles.accountInfo}
+                name={this.props.employee.username}
+                employeeType={this.props.employee.type}
 
-          onSignOut={this.props.onSignOut}
-        />
-        <div className={styles.content}>
-          {content}
-        </div>
+                onSignOut={this.props.onSignOut}
+              />
+            </Col>
+          </Row>
+          <div className={styles.content}>
+            {content}
+          </div>
+        </Grid>
       </div>
     );
   }
@@ -199,6 +238,8 @@ SalesManagerPage.propTypes = {
   onLoadRevenue: React.PropTypes.func,
   onLoadRevenueRegion: React.PropTypes.func,
 
+  onLoadRevenueStore: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -225,6 +266,8 @@ function mapDispatchToProps(dispatch) {
 
     onLoadRevenue: () => dispatch(getRevenue()),
     onLoadRevenueRegion: () => dispatch(getRevenueRegion()),
+
+    onLoadRevenueStore: () => dispatch(getRevenueStore()),
 
     onSignOut: () => dispatch(signOut()),
 

@@ -30,6 +30,10 @@ import {
   GET_REVENUE_TOTAL,
   GET_REVENUE_TOTAL_ERROR,
   GET_REVENUE_TOTAL_SUCCESS,
+
+  GET_REVENUE_STORE,
+  GET_REVENUE_STORE_ERROR,
+  GET_REVENUE_STORE_SUCCESS,
 } from './constants';
 
 export function goToDashboard() {
@@ -138,6 +142,26 @@ export function getRevenueRegionSuccess(data) {
 export function getRevenueRegionError(err) {
   return {
     type: GET_REVENUE_REGION_ERROR,
+    err,
+  };
+}
+
+export function getRevenueStore() {
+  return {
+    type: GET_REVENUE_STORE,
+  };
+}
+
+export function getRevenueStoreSuccess(data) {
+  return {
+    type: GET_REVENUE_STORE_SUCCESS,
+    data,
+  };
+}
+
+export function getRevenueStoreError(err) {
+  return {
+    type: GET_REVENUE_STORE_ERROR,
     err,
   };
 }

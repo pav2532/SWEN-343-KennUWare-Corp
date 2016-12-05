@@ -8,6 +8,7 @@ import {
   CHECKOUT,
   GET_REVENUE_TOTAL,
   GET_REVENUE_REGION,
+  GET_REVENUE_STORE,
 } from './constants';
 
 import {
@@ -19,6 +20,9 @@ import {
 
   getRevenueRegionError,
   getRevenueRegionSuccess,
+
+  getRevenueStoreError,
+  getRevenueStoreSuccess
 } from './actions';
 
 import { selectShoppingCart, selectPaymentInfo } from './selectors';
@@ -145,10 +149,46 @@ export function* revenueTotalWatcher() {
   }
 }
 
+export function* getRevenueStore(){
+  const requestURL = '/api/sales/revenue/stores';
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  // Call our request helper (see 'utils/request')
+  const revenue = yield call(request, requestURL, options);
+
+  console.log("Got revenue by store");
+  console.log(revenue);
+
+  if (!revenue.err) {
+    yield put(getRevenueStoreSuccess(revenue.data));
+  }
+  // Do error flow
+}
+
+export function* revenueStoreWatcher() {
+  while (yield take(GET_REVENUE_STORE)) {
+    yield call(getRevenueStore);
+  }
+}
+
 export function* revenueRegionWatcher() {
   while (yield take(GET_REVENUE_REGION)) {
     yield call(getRegionRevenue);
   }
+}
+
+export function* getRevenueStoreData() {
+  const watcher = yield fork(revenueStoreWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
 }
 
 // Individual exports for testing
@@ -190,4 +230,5 @@ export default [
   checkoutData,
   revenueTotalData,
   revenueRegionData,
+  getRevenueStoreData,
 ];
