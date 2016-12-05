@@ -3,6 +3,8 @@ import { LOCATION_CHANGE, push } from 'react-router-redux';
 
 import request from 'utils/request';
 
+import cookie from 'react-cookie';
+
 import {
   CHECKOUT,
 } from './constants';
@@ -68,7 +70,9 @@ export function* checkout() {
 
 export function* signOut() {
   // redirect to login page
-  // TODO: do some de-auth stuff here
+  cookie.remove('user', { path: '/' });
+  cookie.remove('sessionID', { path: '/' });
+  cookie.remove('JSESSIONID', { path: '/' });
   yield put(push('/sales'));
 }
 
