@@ -49,6 +49,7 @@ public class EmployeeService {
     }
 
     public static Returns changeStatus(String returnID, String status, Session session){
+        System.out.println("change status: " + returnID + status);
         Query query = session.getNamedQuery("findReturn").setString("id", returnID);
         List<Returns> returns = (List<Returns>)query.list();
 

@@ -17,6 +17,8 @@ import {
   LOGIN_SUCCESS,
 } from 'containers/App/constants';
 
+import cookie from 'react-cookie';
+
 import { loginSuccess, loginError } from './actions';
 
 
@@ -32,12 +34,18 @@ export function* login() {
   // Select username from store
   const location = window.location.href;
 
-  if (location.indexOf('username=') === -1 || location.indexOf('sessionID=') === -1) {
+  const userCookie = cookie.select(/user/);
+  const username = userCookie.user;
+  console.log('userCookie', userCookie);
+  const sessionCookie = cookie.select(/sessionID/);
+  const sessionID = sessionCookie.sessionID;
+  console.log('session cookie', sessionCookie);
+
+  if (username === undefined || sessionID === undefined) {
     window.location = 'http://127.0.0.1:3000/kennuware/sso/login?from=http://127.0.0.1:3000/sales';
   }
 
-  const username = location.slice((location.indexOf('username=') + 9));
-  const sessionID = location.slice((location.indexOf('sessionID=') + 10), location.indexOf('&username='));
+  cookie.save('using', 'true', { path: '/' });
 
   const requestURL = '/api/sales/login';
 

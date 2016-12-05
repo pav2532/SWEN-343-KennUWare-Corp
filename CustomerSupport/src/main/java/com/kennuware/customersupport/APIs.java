@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
+import com.kennuware.customersupport.domain.Employees.CredentialDTO;
 import com.kennuware.customersupport.services.EmployeeService;
 import com.kennuware.customersupport.services.ItemService;
 import com.kennuware.customersupport.services.OrderService;
@@ -47,13 +48,26 @@ public class APIs {
 
         Gson gson = new Gson();
 
+		before((req, res) -> {
+			String user = req.cookie("user");
+			String sessionID = req.cookie("sessionID");
+			String useAuth = req.cookie("using");
+			System.out.println("Authenticating user: " + user + "  with sessinID=" + sessionID);
+			String result = verifyUser(user, sessionID);
+			System.out.println("Result from verify: " + result);
+			System.out.println("Result equals valid: " + result.equals("valid"));
+			System.out.println("Using auth: " + useAuth);
+			if (useAuth != null && !result.equals("valid")) {
+				result = "\"" + result + "\"";
+				halt(400, result);
+			}
+		});
+
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").toString();
-            String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
-            password = password.replace("\"", "");
             return EmployeeService.login(username, session);
         }, gson::toJson);
         
@@ -77,10 +91,8 @@ public class APIs {
         post("/requestStatus", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            String status = json.get("status").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
-            status = status.substring(1,status.length()-1);
+            String returnID = json.get("returnID").getAsString();
+            String status = json.get("status").getAsString();
             return EmployeeService.changeStatus(returnID, status, session);
         }, gson::toJson);
 
@@ -127,17 +139,15 @@ public class APIs {
         post("/markReceived", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
+            String returnID = json.get("returnID").getAsString();
             return EmployeeService.markReceived(returnID, session);
         }, gson::toJson);
 
         post("/resolve", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            String itemID = json.get("itemID").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
+            String returnID = json.get("returnID").getAsString();
+            String itemID = json.get("itemID").getAsString();
             return EmployeeService.resolve(returnID, itemID, session);
         }, gson::toJson);
 
@@ -145,5 +155,14 @@ public class APIs {
            return ReturnTicketService.getTickets(session);
         }, gson::toJson);
     }
+
+	private static String verifyUser(String username, String sessionID) {
+
+		CredentialDTO cred = new CredentialDTO(username, sessionID);
+		HttpUtils util = new HttpUtils();
+		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
+		result = result.replaceAll("\"", "");
+		return result;
+	}
 }
 

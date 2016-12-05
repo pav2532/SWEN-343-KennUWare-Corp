@@ -17,6 +17,10 @@ import {
   CHECKOUT,
   CHECKOUT_SUCCESS,
   CHECKOUT_ERROR,
+
+  GET_ITEM_CATALOG_SUCCESS,
+
+  SET_ITEM,
 } from './constants';
 
 const initialState = fromJS({
@@ -29,6 +33,12 @@ const initialState = fromJS({
     ccNumber: '',
     expiration: '',
   },
+  orderItem: {
+    name: '',
+    id: '',
+    unitPrice: '',
+  },
+  itemCatalog: [],
 });
 
 function salesAssociatePageReducer(state = initialState, action) {
@@ -68,6 +78,12 @@ function salesAssociatePageReducer(state = initialState, action) {
       return state
         .set('loading', false)
         .set('errorModal', true);
+    case GET_ITEM_CATALOG_SUCCESS:
+      return state
+        .set('itemCatalog', action.data);
+    case SET_ITEM:
+      return state
+        .set('orderItem', action.item);
     default:
       return state;
   }
