@@ -39,6 +39,8 @@ export function* checkout() {
     creditCardNumber: paymentInfo.ccNumber,
     expirationDate: paymentInfo.expiration,
     bulkDiscount: 1,
+    custAddress: 'somewhere',
+    date: 'todays date',
     requestedProducts,
   };
 

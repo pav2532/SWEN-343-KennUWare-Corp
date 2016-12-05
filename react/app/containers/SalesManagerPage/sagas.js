@@ -53,6 +53,7 @@ export function* checkout() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(body),
   };
 
@@ -86,6 +87,7 @@ export function* getTotalRevenue() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')
@@ -113,6 +115,7 @@ export function* getRegionRevenue() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')
