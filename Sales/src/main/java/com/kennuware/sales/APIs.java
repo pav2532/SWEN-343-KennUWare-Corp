@@ -145,8 +145,8 @@ public class APIs {
 			String customerName = json.get("custName").getAsString();
 			String creditCardNumber = json.get("creditCardNumber").getAsString();
 			String expirationDate = json.get("expirationDate").getAsString();
-			String address = json.get("custAddress").getAsString();
-			String date = json.get("date").getAsString();
+			String address = "somewhere";
+			String date = "5/17/2016";
 			Double bulkDiscount = json.get("bulkDiscount").getAsDouble();
 			JsonArray requestedProducts = json.get("requestedProducts").getAsJsonArray();
 			int check = OrderServices.completeSaleOrder(customerName, employeeID, creditCardNumber,

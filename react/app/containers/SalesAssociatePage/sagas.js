@@ -145,6 +145,7 @@ export function* getItemCatalog() {
   // Call our request helper (see 'utils/request')
   const catalog = yield call(request, requestURL, options);
 
+  console.log("Requested items: ", catalog);
   if (!catalog.err) {
     yield put(getItemCatalogSuccess(catalog.data));
   } else {
