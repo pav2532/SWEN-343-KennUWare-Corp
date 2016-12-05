@@ -8,11 +8,14 @@ import cookie from 'react-cookie';
 import {
   CHECKOUT,
   ENTER_PAGE,
+  GET_ITEM_CATALOG,
 } from './constants';
 
 import {
   checkoutSuccess,
   checkoutError,
+  getItemCatalogSuccess,
+  getItemCatalogError,
 } from './actions';
 
 import {
@@ -127,8 +130,38 @@ export function* enteringSaga() {
   return;
 }
 
+export function* getItemCatalog() {
+  const requestURL = '/api/sales/getAllItems';
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  };
+
+  // Call our request helper (see 'utils/request')
+  const catalog = yield call(request, requestURL, options);
+
+  if (!catalog.err) {
+    yield put(getItemCatalogSuccess(catalog.data));
+  } else {
+    yield put(getItemCatalogError(catalog.err));
+  }
+  // Do error flow
+}
+
+export function* getItemCatalogWatcher() {
+  while (yield take(GET_ITEM_CATALOG)) {
+    yield call(getItemCatalog);
+  }
+}
+
 // All sagas to be loaded
 export default [
   checkoutData,
   enteringSaga,
+  getItemCatalog,
 ];

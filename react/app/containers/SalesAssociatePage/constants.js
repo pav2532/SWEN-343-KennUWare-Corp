@@ -19,3 +19,8 @@ export const CHECKOUT_SUCCESS = 'app/SalesAssociatePage/CHECKOUT_SUCCESS';
 export const CHECKOUT_ERROR = 'app/SalesAssociatePage/CHECKOUT_ERROR';
 
 export const ENTER_PAGE = 'app/SalesAssociatePage/ENTER_PAGE';
+export const SET_ITEM = 'app/SalesAssociatePage/SET_ITEM';
+
+export const GET_ITEM_CATALOG = 'app/Sales/GET_ITEM_CATALOG';
+export const GET_ITEM_CATALOG_SUCCESS = 'app/Sales/GET_ITEM_CATALOG_SUCCESS';
+export const GET_ITEM_CATALOG_ERROR = 'app/Sales/GET_ITEM_CATALOG_ERROR';

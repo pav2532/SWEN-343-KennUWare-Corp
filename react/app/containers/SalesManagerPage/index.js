@@ -229,6 +229,8 @@ SalesManagerPage.propTypes = {
 
   selectItem: React.PropTypes.func,
 
+  getItemCatalog: React.PropTypes.func,
+
   onEnter: React.PropTypes.func,
   onSignOut: React.PropTypes.func,
 };

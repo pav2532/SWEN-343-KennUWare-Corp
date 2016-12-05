@@ -19,7 +19,20 @@ import {
   CHECKOUT_SUCCESS,
   CHECKOUT_ERROR,
   ENTER_PAGE,
+
+  GET_ITEM_CATALOG,
+  GET_ITEM_CATALOG_SUCCESS,
+  GET_ITEM_CATALOG_ERROR,
+
+  SET_ITEM,
 } from './constants';
+
+export function setItem(item) {
+  return {
+    type: SET_ITEM,
+    item,
+  };
+}
 
 export function enterPage() {
   return {
@@ -96,5 +109,25 @@ export function checkoutError() {
 export function restart() {
   return {
     type: START_ORDER,
+  };
+}
+
+export function getItemCatalog() {
+  return {
+    type: GET_ITEM_CATALOG,
+  };
+}
+
+export function getItemCatalogSuccess(data) {
+  return {
+    type: GET_ITEM_CATALOG_SUCCESS,
+    data,
+  };
+}
+
+export function getItemCatalogError(err) {
+  return {
+    type: GET_ITEM_CATALOG_ERROR,
+    err,
   };
 }

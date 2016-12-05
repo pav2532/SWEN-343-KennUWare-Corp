@@ -22,6 +22,7 @@ class ItemModal extends React.Component { // eslint-disable-line react/prefer-st
   }
 
   render() {
+    console.log("Modal props", this.props);
     return (
       <Modal show={this.props.show} onHide={this.close}>
         <Modal.Header>

@@ -12,6 +12,7 @@ import selectSalesAssociatePage from './selectors';
 import { selectEmployee } from 'containers/App/selectors';
 import styles from './styles.css';
 
+import ItemModal from 'components/ItemModal';
 
 import {
   signOut,
@@ -29,6 +30,8 @@ import {
   newOrder,
   continueOrder,
   enterPage,
+  getItemCatalog,
+  setItem,
 } from './actions.js';
 
 import { Button, Modal } from 'react-bootstrap';
@@ -48,16 +51,31 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     super(props);
 
     this.state = {
-      itemName: '',
       itemQuantity: 0,
-      itemUnitPrice: 0.0,
+      selectingItem: false,
     };
+
+    this.selectItem = this.selectItem.bind(this);
   }
 
   componentDidMount() {
     this.props.onEnterPage();
+    this.props.getItemCatalog();
   }
+
+  selectItem() {
+    this.setState({ selectingItem: true });
+  }
+
   render() {
+    const itemModal = (
+      <ItemModal
+        show={this.state.selectingItem}
+        cancel={() => this.setState({ selectingItem: false })}
+        onSelect={this.props.selectItem}
+        items={this.props.sales.itemCatalog}
+      />
+    );
     let buttonStyle = 'primary';
     if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
       buttonStyle += ' disabled';
@@ -84,6 +102,7 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
       <div className={styles.salesAssociatePage}>
         {successModal}
         {errorModal}
+        {itemModal}
         <div className={styles.title}>
           <h1>KennUWare Sales</h1>
         </div>
@@ -96,7 +115,11 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
         </div>
         <div className={styles.orderEntry} style={{ width: '50%', float: 'left', height: '600px' }}>
           <div className={styles.itemEntry}>
-            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+            <ItemOrderForm
+              onAddItem={this.props.onAddItemToCart}
+              selectItem={this.selectItem}
+              orderItem={this.props.sales.orderItem}
+            />
           </div>
           <div className={styles.shoppingCart}>
             <ShoppingCart items={this.props.sales.shoppingCart} />
@@ -135,7 +158,9 @@ SalesAssociatePage.propTypes = {
   onCheckout: React.PropTypes.func,
   onNewOrder: React.PropTypes.func,
   onContinueOrder: React.PropTypes.func,
+  getItemCatalog: React.PropTypes.func,
 
+  selectItem: React.PropTypes.func,
   onEnterPage: React.PropTypes.func,
   onSignOut: React.PropTypes.func,
 };
@@ -156,10 +181,12 @@ function mapDispatchToProps(dispatch) {
     onCheckout: () => dispatch(checkout()),
     onNewOrder: () => dispatch(newOrder()),
     onContinueOrder: () => dispatch(continueOrder()),
+    getItemCatalog: () => dispatch(getItemCatalog()),
 
     onEnterPage: () => dispatch(enterPage()),
     onSignOut: () => dispatch(signOut()),
 
+    selectItem: (item) => dispatch(setItem(item)),
     dispatch,
   };
 }
