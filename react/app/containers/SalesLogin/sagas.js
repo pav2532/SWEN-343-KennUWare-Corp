@@ -42,7 +42,7 @@ export function* login() {
   console.log('session cookie', sessionCookie);
 
   if (username === undefined || sessionID === undefined) {
-    window.location = 'http://127.0.0.1:3000/kennuware/sso/login?from=http://127.0.0.1:3000/sales';
+    window.location = 'http://vm343c.se.rit.edu:3000/kennuware/sso/login?from=http://vm343c.se.rit.edu:3000/sales';
   }
 
   cookie.save('using', 'true', { path: '/' });
