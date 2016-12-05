@@ -7,12 +7,12 @@ import java.util.List;
  * Created by Ryan on 10/31/2016.
  */
 public class WearableList {
-    private List<WearableItem> wearables;
+    private ArrayList<WearableItem> wearables;
     public WearableList() {
         wearables = new ArrayList<WearableItem>();
     }
 
-    public List<WearableItem> getList(){
+    public ArrayList<WearableItem> getList(){
         return wearables;
     }
 
