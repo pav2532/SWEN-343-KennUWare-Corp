@@ -18,6 +18,7 @@ import TotalRevenue from 'components/TotalRevenue';
 import ShoppingCart from 'components/ShoppingCart';
 import GenericModal from 'components/GenericModal';
 import StoreRevenue from 'components/StoreRevenue';
+import HighestSeller from 'components/HighestSeller';
 
 import {
   goToDashboard,
@@ -38,6 +39,8 @@ import {
   getRevenue,
   getRevenueRegion,
   getRevenueStore,
+
+  getHighestSeller,
 } from './actions.js';
 
 import {
@@ -100,13 +103,21 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           <div>
             <Grid>
               <Row>
-                <div>
-                  <h2>Revenue across all regions</h2>
-                  <TotalRevenue
-                    loadRevenue={this.props.onLoadRevenue}
-                    revenue={this.props.sales.revenue.total}
+                <Col xs={6} md={6}>
+                  <div>
+                    <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                    <TotalRevenue
+                      loadRevenue={this.props.onLoadRevenueRegion}
+                      revenue={this.props.sales.revenue.region}
+                    />
+                  </div>
+                </Col>
+                <Col xs={6} md={6}>
+                  <HighestSeller
+                    highestSeller={this.props.sales.highestSeller}
+                    loadHighestSeller={this.props.onLoadHighestSeller}
                   />
-                </div>
+                </Col>
               </Row>
               <Row>
                 <div>
@@ -124,13 +135,21 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           <div>
             <Grid>
               <Row>
-                <div>
-                  <h2>Revenue for region: {this.props.employee.regionId}</h2>
-                  <TotalRevenue
-                    loadRevenue={this.props.onLoadRevenueRegion}
-                    revenue={this.props.sales.revenue.region}
+                <Col xs={6} md={6}>
+                  <div>
+                    <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                    <TotalRevenue
+                      loadRevenue={this.props.onLoadRevenueRegion}
+                      revenue={this.props.sales.revenue.region}
+                    />
+                  </div>
+                </Col>
+                <Col xs={6} md={6}>
+                  <HighestSeller
+                    highestSeller={this.props.sales.highestSeller}
+                    loadHighestSeller={this.props.onLoadHighestSeller}
                   />
-                </div>
+                </Col>
               </Row>
               <Row>
                 <div>
@@ -240,6 +259,8 @@ SalesManagerPage.propTypes = {
 
   onLoadRevenueStore: React.PropTypes.func,
 
+  onLoadHighestSeller: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -270,6 +291,8 @@ function mapDispatchToProps(dispatch) {
     onLoadRevenueStore: () => dispatch(getRevenueStore()),
 
     onSignOut: () => dispatch(signOut()),
+
+    onLoadHighestSeller: () => dispatch(getHighestSeller()),
 
     dispatch,
   };

@@ -27,6 +27,7 @@ import {
   RESOLVE_RETURN_SUCCESS,
 
   GET_RETURNS_SUCCESS,
+  GET_REFUND_TOTAL_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
@@ -120,6 +121,9 @@ function custSupportAgentReducer(state = initialState, action) {
       console.log('resolve return success', action.data);
       return state
         .setIn(['returnItem', 'type'], 'RESOLVED');
+    case GET_REFUND_TOTAL_SUCCESS:
+      return state
+        .setIn(['refund', 'total'], action.data.refund);
 
     default:
       return state;

@@ -32,4 +32,8 @@ export const RESOLVE_RETURN = 'app/CustSupportAgent/RESOLVE_RETURN';
 export const RESOLVE_RETURN_SUCCESS = 'app/CustSupportAgent/RESOLVE_RETURN_SUCCESS';
 export const RESOLVE_RETURN_ERROR = 'app/CustSupportAgent/RESOLVE_RETURN_ERROR';
 
+export const GET_REFUND_TOTAL = 'app/Sales/GET_REFUND_TOTAL';
+export const GET_REFUND_TOTAL_SUCCESS = 'app/Sales/GET_REFUND_TOTAL_SUCCESS';
+export const GET_REFUND_TOTAL_ERROR = 'app/Sales/GET_REFUND_TOTAL_ERROR';
+
 export const AGENT = 'AGENT';

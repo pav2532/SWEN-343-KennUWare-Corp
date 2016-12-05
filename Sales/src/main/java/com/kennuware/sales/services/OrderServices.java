@@ -135,7 +135,7 @@ public class OrderServices {
             }
             tempResult = 0;
         }
-        return name;
+        return "Model " + name + " is the highest seller with " + result + " units sold.";
     }
     public static String getLowestOrder(Session session){
         double result = 0;

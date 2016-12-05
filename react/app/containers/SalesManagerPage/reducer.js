@@ -27,6 +27,8 @@ import {
   GET_REVENUE_TOTAL_SUCCESS,
   GET_REVENUE_REGION_SUCCESS,
   GET_REVENUE_STORE_SUCCESS,
+
+  GET_HIGHEST_SELLER_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
@@ -44,6 +46,7 @@ const initialState = fromJS({
     region: '0.0',
     store: [],
   },
+  highestSeller: '',
 });
 
 function salesReducer(state = initialState, action) {
@@ -101,6 +104,9 @@ function salesReducer(state = initialState, action) {
       return state
         .setIn(['revenue', 'region'], action.data.revenue);
     case GET_REVENUE_STORE_SUCCESS:
+      return state
+        .setIn(['revenue', 'store'], action.data);
+    case GET_HIGHEST_SELLER_SUCCESS:
       return state
         .setIn(['revenue', 'store'], action.data);
 
