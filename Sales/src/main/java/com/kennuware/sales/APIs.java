@@ -196,7 +196,7 @@ public class APIs {
 		get("/lowestSeller",(req, res) -> {
 			return OrderServices.getLowestOrder(session);
 		}, gson::toJson);
-		get("/revenuByModel",(req, res) -> {
+		get("/revenueByModel",(req, res) -> {
 			return OrderServices.getRevenueByModel(session);
 		}, gson::toJson);
 
