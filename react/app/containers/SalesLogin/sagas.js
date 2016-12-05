@@ -45,6 +45,8 @@ export function* login() {
     window.location = 'http://127.0.0.1:3000/kennuware/sso/login?from=http://127.0.0.1:3000/sales';
   }
 
+  cookie.save('using', 'true', { path: '/' });
+
   const requestURL = '/api/sales/login';
 
   // Call our request helper (see 'utils/request')
