@@ -30,7 +30,28 @@ import {
   GET_REVENUE_TOTAL,
   GET_REVENUE_TOTAL_ERROR,
   GET_REVENUE_TOTAL_SUCCESS,
+
+  GET_ITEM_CATALOG,
+  GET_ITEM_CATALOG_ERROR,
+  GET_ITEM_CATALOG_SUCCESS,
+
+  SET_ITEM,
+
+  ENTER_PAGE,
 } from './constants';
+
+export function setItem(item) {
+  return {
+    type: SET_ITEM,
+    item,
+  };
+}
+
+export function enterPage() {
+  return {
+    type: ENTER_PAGE,
+  };
+}
 
 export function goToDashboard() {
   return {
@@ -158,6 +179,26 @@ export function getRevenueSuccess(data) {
 export function getRevenueError(err) {
   return {
     type: GET_REVENUE_TOTAL_ERROR,
+    err,
+  };
+}
+
+export function getItemCatalog() {
+  return {
+    type: GET_ITEM_CATALOG,
+  };
+}
+
+export function getItemCatalogSuccess(data) {
+  return {
+    type: GET_ITEM_CATALOG_SUCCESS,
+    data,
+  };
+}
+
+export function getItemCatalogError(err) {
+  return {
+    type: GET_ITEM_CATALOG_ERROR,
     err,
   };
 }

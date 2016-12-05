@@ -44,11 +44,13 @@ public class APIs {
 		before((req, res) -> {
 			String user = req.cookie("user");
 			String sessionID = req.cookie("sessionID");
+			String useAuth = req.cookie("using");
 			System.out.println("Authenticating user: " + user + "  with sessinID=" + sessionID);
 			String result = verifyUser(user, sessionID);
 			System.out.println("Result from verify: " + result);
 			System.out.println("Result equals valid: " + result.equals("valid"));
-			if (!result.equals("valid")) {
+			System.out.println("Using auth: " + useAuth);
+			if (useAuth != null && !result.equals("valid")) {
 				halt(400, result);
 			}
 			System.out.println("Authenticated");

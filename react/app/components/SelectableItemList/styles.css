@@ -1,0 +1,12 @@
+.selectableItemList { /* stylelint-disable */
+
+}
+
+.item {
+  font-weight: bold;
+}
+
+.price {
+  margin-left: 15px;
+  color: green;
+}

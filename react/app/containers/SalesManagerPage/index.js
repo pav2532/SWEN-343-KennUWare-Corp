@@ -12,16 +12,22 @@ import { createStructuredSelector } from 'reselect';
 import selectSales from './selectors';
 import { selectEmployee } from 'containers/App/selectors';
 
+
 import AccountInfo from 'components/AccountInfo';
 import SideNav from 'components/SideNav';
 import TotalRevenue from 'components/TotalRevenue';
 import ShoppingCart from 'components/ShoppingCart';
 import GenericModal from 'components/GenericModal';
+import ItemModal from 'components/ItemModal';
 
 import {
   goToDashboard,
   goToOrderEditor,
   goToUserManagement,
+
+  getItemCatalog,
+
+  setItem,
 
   addToCart,
   removeFromCart,
@@ -36,6 +42,8 @@ import {
 
   getRevenue,
   getRevenueRegion,
+
+  enterPage,
 } from './actions.js';
 
 import {
@@ -62,7 +70,19 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       itemName: '',
       itemQuantity: 0,
       itemUnitPrice: 0.0,
+      selectingItem: false,
     };
+
+    this.selectItem = this.selectItem.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.onEnter();
+    this.props.getItemCatalog();
+  }
+
+  selectItem() {
+    this.setState({ selectingItem: true });
   }
 
   render() {
@@ -82,6 +102,14 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         body="There was an error with the payment information."
         buttonLabel="Edit Order"
         onButtonClick={this.props.onContinueOrder}
+      />
+    );
+    const itemModal = (
+      <ItemModal
+        show={this.state.selectingItem}
+        cancel={() => this.setState({ selectingItem: false })}
+        onSelect={this.props.selectItem}
+        items={this.props.sales.itemCatalog}
       />
     );
     // Determine the content to show
@@ -118,8 +146,13 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         <div>
           {successModal}
           {errorModal}
+          {itemModal}
           <div style={{ width: '50%', float: 'left', height: '600px' }}>
-            <ItemOrderForm onAddItem={this.props.onAddItemToCart} />
+            <ItemOrderForm
+              onAddItem={this.props.onAddItemToCart}
+              selectItem={this.selectItem}
+              orderItem={this.props.sales.orderItem}
+            />
             <ShoppingCart items={this.props.sales.shoppingCart} />
           </div>
           <div className={styles.paymentForm}>
@@ -140,13 +173,6 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           </div>
         </div>
       );
-    } else if (this.props.sales.content === 'userManagement') {
-      activeRoute = 'User Management';
-      content = (
-        <div>
-          <h2>User Management</h2>
-        </div>
-      );
     }
 
     const navRoutes = [
@@ -161,7 +187,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
     return (
       <div>
-        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
+        <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} title="Sales" />
         <div className={styles.header}>
           <AccountInfo
             className={styles.accountInfo}
@@ -201,6 +227,11 @@ SalesManagerPage.propTypes = {
   onLoadRevenue: React.PropTypes.func,
   onLoadRevenueRegion: React.PropTypes.func,
 
+  selectItem: React.PropTypes.func,
+
+  getItemCatalog: React.PropTypes.func,
+
+  onEnter: React.PropTypes.func,
   onSignOut: React.PropTypes.func,
 };
 
@@ -228,6 +259,11 @@ function mapDispatchToProps(dispatch) {
     onLoadRevenue: () => dispatch(getRevenue()),
     onLoadRevenueRegion: () => dispatch(getRevenueRegion()),
 
+    getItemCatalog: () => dispatch(getItemCatalog()),
+
+    selectItem: (item) => dispatch(setItem(item)),
+
+    onEnter: () => dispatch(enterPage()),
     onSignOut: () => dispatch(signOut()),
 
     dispatch,
