@@ -14,6 +14,7 @@ import com.kennuware.sales.domain.Employees.CredentialDTO;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
+import com.kennuware.sales.services.ItemService;
 import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,11 +37,10 @@ public class APIs {
 
 		// Set the port
 		// This must be done before any routes are defined
-		port(8000);
-		System.out.println(OrderServices.getHighestOrder(session));
-		System.out.println(OrderServices.getLowestOrder(session));
-		Gson gson = new Gson();
 
+		port(8000);
+		Gson gson = new Gson();
+		/*
 		before((req, res) -> {
 			String user = req.cookie("user");
 			String sessionID = req.cookie("sessionID");
@@ -55,7 +55,7 @@ public class APIs {
 			}
 			System.out.println("Authenticated");
 		});
-
+		*/
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
@@ -192,14 +192,17 @@ public class APIs {
 		}, gson::toJson);
 
 		get("/getAllItems", (req, res) -> {
+			ArrayList items = ItemService.getItems(new HttpUtils(),session).getList();
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
-
-		get("/highestseller",(req, res) -> {
+		get("/highestSeller",(req, res) -> {
 			return OrderServices.getHighestOrder(session);
 		}, gson::toJson);
-		get("/lowestseller",(req, res) -> {
+		get("/lowestSeller",(req, res) -> {
 			return OrderServices.getLowestOrder(session);
+		}, gson::toJson);
+		get("/revenueByModel",(req, res) -> {
+			return OrderServices.getRevenueByModel(session);
 		}, gson::toJson);
 
 		exception(Exception.class, (exception, request, response) -> {
