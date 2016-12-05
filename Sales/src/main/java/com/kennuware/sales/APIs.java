@@ -161,9 +161,9 @@ public class APIs {
 
 					ItemOrders order = new ItemOrders();
 					order.setQuantity(item.get("quantity").getAsInt());
-					order.setOrderId(item.get("itemID").getAsInt());
+					order.setItemId(item.get("itemID").getAsInt());
 					// TODO: This value should be retrieved from the database, not the request
-					order.setOrderId(item.get("orderID").getAsInt());
+					//order.setOrderId(item.get("orderID").getAsInt());
 
 
 					os.orderItemsFromInventory(address, order, customerName, utils);
