@@ -31,6 +31,8 @@ export function* login() {
 
   const requestURL = '/api/sso/login';
 
+  console.log("Requesting sso: ", username, password, fromURL);
+
   // Call our request helper (see 'utils/request')
   const auth = yield call(request, requestURL,
     {
