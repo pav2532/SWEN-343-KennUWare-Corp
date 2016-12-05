@@ -21,6 +21,7 @@ public class ItemService {
         WearableList result = gson.fromJson(stringResult, WearableList.class);
         ArrayList<WearableItem> temp = result.getList();
         for (WearableItem i : temp) {
+            System.out.println(i.getId());
             if (session.getNamedQuery("ItemById").setString("id", String.valueOf(i.getId())).list().isEmpty()) {
                 double price = 0;
                 if (i.getType().equals("F"))
@@ -30,7 +31,7 @@ public class ItemService {
                 if (i.getType().equals("H"))
                     price = 70;
                 if (i.getType().equals("A"))
-                    price = 10;
+                    price = 60;
                 Random rn = new Random();
                 price += rn.nextInt(35);
                 Item a = new Item(i.getId(), i.getName(), price);
