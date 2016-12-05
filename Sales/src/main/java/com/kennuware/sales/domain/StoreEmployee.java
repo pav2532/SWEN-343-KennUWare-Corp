@@ -3,10 +3,17 @@
  */
 package com.kennuware.sales.domain;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+@NamedQueries({
+        @NamedQuery(name = "findEmployeeByStoreId", query = "FROM StoreEmployee e WHERE e.storeID = :storeID")
+})
 
 @Entity
 @Table

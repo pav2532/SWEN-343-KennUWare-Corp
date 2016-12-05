@@ -5,9 +5,7 @@
 package com.kennuware.sales;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.kennuware.sales.Utilities.HttpUtils;
-import com.kennuware.sales.data.HibernateUtil;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
@@ -39,7 +37,8 @@ public class APIs {
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
-
+		System.out.println(OrderServices.getHighestOrder(session));
+		System.out.println(OrderServices.getLowestOrder(session));
 		Gson gson = new Gson();
 
 		before((req, res) -> {
@@ -76,7 +75,15 @@ public class APIs {
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
-		
+
+		get("/revenue/store/:sid", (req, res) -> {
+			double revenue = 0;
+			String sid = req.params(":sid");
+			revenue = EmployeeService.getStoreRevenue(sid, session);
+			res.type("text/json");
+			return "{\"revenue\":\"" + revenue + "\"}";
+		});
+
 		/* Gets revenue from a salesperson
 		 * HR gets revenue to calculate commissions weekly
 		 * GET
@@ -184,6 +191,13 @@ public class APIs {
 
 		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
+		}, gson::toJson);
+
+		get("/highestseller",(req, res) -> {
+			return OrderServices.getHighestOrder(session);
+		}, gson::toJson);
+		get("/lowestseller",(req, res) -> {
+			return OrderServices.getLowestOrder(session);
 		}, gson::toJson);
 
 		exception(Exception.class, (exception, request, response) -> {
