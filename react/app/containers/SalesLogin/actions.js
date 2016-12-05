@@ -13,10 +13,9 @@ import {
   LOGIN_SUCCESS,
 } from 'containers/App/constants';
 
-export function login(credentials) {
+export function login() {
   return {
     type: LOGIN,
-    credentials,
   };
 }
 

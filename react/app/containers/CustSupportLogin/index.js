@@ -13,19 +13,16 @@ import {
   login,
 } from './actions';
 
-import LoginForm from 'components/LoginForm';
 
 export class CustSupportLogin extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    this.props.onLogin();
+  }
+
   render() {
     return (
       <div className={styles.custSupportLogin}>
-        <div className={styles.loginFormContainer}>
-          <LoginForm
-            title="KennUWare Customer Support"
-            buttonClassName={styles.loginButton}
-            loginFunction={(credentials) => this.props.onLogin(credentials)}
-          />
-        </div>
+        <h1>KennUWare Customer Support</h1>
       </div>
     );
   }

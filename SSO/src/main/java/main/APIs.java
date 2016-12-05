@@ -8,6 +8,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 public class APIs {
 
     public static void main(String[] args) {
@@ -15,6 +22,8 @@ public class APIs {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
+        List<String> sessionIDs = new ArrayList<>();
 
         // Set the port
         // This must be done before any routes are defined
@@ -27,13 +36,15 @@ public class APIs {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
-            String toReturn = "localhost:3000/sales";           //TODO Update to dynamic URL later
-            String sessionID = AuthenticationServices.login(username, password, session);
+            String toReturn = json.get("fromURL").getAsString();
+            String sessionID = AuthenticationServices.login(username, password, req, session, sessionIDs);
             if(sessionID.equals("invalid")) {
                 res.status(400);
                 toReturn = "invalid";
             } else {
                 res.cookie("sessionID", sessionID);
+                toReturn += "?sessionID=" + sessionID;
+                toReturn += "&username=" + username;
             }
             return toReturn;
         }, gson::toJson);
@@ -62,10 +73,20 @@ public class APIs {
         post("/verify-session", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").getAsString();
-            String sessionID = json.get("sessionID").getAsString();
-
-            return AuthenticationServices.verifySession(username, sessionID, session, res);
+            String username = "";
+            String sessionID = "";
+            if(json.has("username")) {
+                username = json.get("username").getAsString();
+            }
+            if(json.has("sessionID")) {
+                sessionID = json.get("sessionID").getAsString();
+            }
+            if (sessionIDs.contains(sessionID)) {
+                System.out.println("Returning valid");
+                return "valid";
+            } else {
+                return "127.0.0.1:3000/kennuware/sso/login";
+            }
         }, gson::toJson);
 
         post("/signout", (req, res) -> {

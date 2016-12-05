@@ -4,6 +4,8 @@ import { SIGN_OUT } from 'containers/App/constants';
 
 import request from 'utils/request';
 
+import cookie from 'react-cookie';
+
 import {
   SUBMIT_RETURN,
   GET_RETURNS,
@@ -34,6 +36,9 @@ export function* signOut() {
   // redirect to login page
   // TODO: do some de-auth stuff 
   // Also clear stuff like the content route on this page from state
+  cookie.remove('user', { path: '/' });
+  cookie.remove('sessionID', { path: '/' });
+  cookie.remove('JSESSIONID', { path: '/' });
   yield put(push('/customer-support'));
 }
 
@@ -68,6 +73,7 @@ export function* submitReturn() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(newReturn),
   };
 
@@ -87,7 +93,6 @@ export function* submitReturn() {
 }
 
 export function* getReturns() {
-
   console.log("Requesting total revenue");
 
   const requestURL = '/api/customer-support/getReturns';
@@ -99,6 +104,7 @@ export function* getReturns() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')
@@ -158,6 +164,7 @@ export function* setStatus() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
   };
 
@@ -202,6 +209,7 @@ export function* resolveReturn() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify({ returnID: managedReturn.id, itemID: managedReturn.itemID }),
   };
 

@@ -26,7 +26,6 @@ public class Employee {
 
     private String name;
     private EmployeeType type;
-    private String password;
 
     private Integer regionId;
 
@@ -56,14 +55,6 @@ public class Employee {
         this.type = type;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Integer getRegionId() {
         return regionId;
     }
@@ -74,10 +65,6 @@ public class Employee {
 
     public Integer getId() {
         return eid;
-    }
-
-    public boolean authenticate(String password) {
-        return this.password.equals(password);
     }
 
 
