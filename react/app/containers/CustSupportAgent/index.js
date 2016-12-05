@@ -37,6 +37,7 @@ import {
 
 import styles from './styles.css';
 
+import TotalRefund from 'components/TotalRefund';
 import SideNav from 'components/SideNav';
 import AccountInfo from 'components/AccountInfo';
 import NewReturnForm from 'components/NewReturnForm';
@@ -159,6 +160,8 @@ CustSupportAgent.propTypes = {
   onResolveReturn: React.PropTypes.func,
 
   onSignOut: React.PropTypes.func,
+
+  onLoadRefund: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
