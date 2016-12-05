@@ -37,6 +37,7 @@ public class APIs {
             String username = json.get("username").getAsString();
             String password = json.get("password").getAsString();
             String toReturn = json.get("fromURL").getAsString();
+            System.out.println(toReturn);
             String sessionID = AuthenticationServices.login(username, password, req, session, sessionIDs);
             if(sessionID.equals("invalid")) {
                 res.status(400);
