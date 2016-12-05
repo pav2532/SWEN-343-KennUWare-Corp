@@ -25,6 +25,8 @@ import {
   goToOrderEditor,
   goToUserManagement,
 
+  getItemCatalog,
+
   addToCart,
   removeFromCart,
 
@@ -74,6 +76,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
 
   componentDidMount() {
     this.props.onEnter();
+    this.props.getItemCatalog();
   }
 
   selectItem() {
@@ -100,7 +103,11 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       />
     );
     const itemModal = (
-      <ItemModal show={this.state.selectingItem} cancel={() => this.setState({ selectingItem: false })} />
+      <ItemModal
+        show={this.state.selectingItem}
+        cancel={() => this.setState({ selectingItem: false })}
+        items={this.props.sales.itemCatalog}
+      />
     );
     // Determine the content to show
     let activeRoute = 'Dashboard';
@@ -240,6 +247,8 @@ function mapDispatchToProps(dispatch) {
 
     onLoadRevenue: () => dispatch(getRevenue()),
     onLoadRevenueRegion: () => dispatch(getRevenueRegion()),
+
+    getItemCatalog: () => dispatch(getItemCatalog()),
 
     onEnter: () => dispatch(enterPage()),
     onSignOut: () => dispatch(signOut()),

@@ -11,6 +11,7 @@ import {
   ENTER_PAGE,
   GET_REVENUE_TOTAL,
   GET_REVENUE_REGION,
+  GET_ITEM_CATALOG,
 } from './constants';
 
 import {
@@ -22,6 +23,9 @@ import {
 
   getRevenueRegionError,
   getRevenueRegionSuccess,
+
+  getItemCatalogSuccess,
+  getItemCatalogError,
 } from './actions';
 
 import { selectShoppingCart, selectPaymentInfo } from './selectors';
@@ -82,7 +86,7 @@ export function* getTotalRevenue() {
 
   console.log("Requesting total revenue");
 
-  const requestURL = '/api/sales/revenue';
+  const requestURL = '/api/sales/totalSales';
 
 
   const options = {
@@ -191,6 +195,43 @@ export function* revenueRegionData() {
   return;
 }
 
+export function* getItemCatalog() {
+  const requestURL = '/api/sales/getAllItems';
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  };
+
+  // Call our request helper (see 'utils/request')
+  const catalog = yield call(request, requestURL, options);
+
+  if (!catalog.err) {
+    yield put(getItemCatalogSuccess(catalog.data));
+  } else {
+    yield put(getItemCatalogError(catalog.err));
+  }
+  // Do error flow
+}
+
+export function* getItemCatalogWatcher() {
+  while (yield take(GET_ITEM_CATALOG)) {
+    yield call(getItemCatalog);
+  }
+}
+
+export function* getItemsSaga() {
+  const watcher = yield fork(getItemCatalogWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
 export function* enterPage() {
   const userCookie = cookie.select(/user/);
   const username = userCookie.user;
@@ -223,4 +264,5 @@ export default [
   revenueTotalData,
   revenueRegionData,
   enteringSaga,
+  getItemsSaga,
 ];

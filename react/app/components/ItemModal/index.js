@@ -8,6 +8,8 @@ import React from 'react';
 
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 
+import SelectableItemList from 'components/SelectableItemList';
+
 import styles from './styles.css';
 
 class ItemModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -28,7 +30,7 @@ class ItemModal extends React.Component { // eslint-disable-line react/prefer-st
         <Modal.Body>
           <Row>
             <Col md={12}>
-              Item modal
+              <SelectableItemList items={this.props.items} onSelect={this.props.onSelect} />
             </Col>
           </Row>
         </Modal.Body>
@@ -43,6 +45,8 @@ class ItemModal extends React.Component { // eslint-disable-line react/prefer-st
 ItemModal.propTypes = {
   show: React.PropTypes.bool,
   cancel: React.PropTypes.func,
+  onSelect: React.PropTypes.func,
+  items: React.PropTypes.array,
 };
 
 export default ItemModal;

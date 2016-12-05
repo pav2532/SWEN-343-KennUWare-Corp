@@ -31,6 +31,10 @@ import {
   GET_REVENUE_TOTAL_ERROR,
   GET_REVENUE_TOTAL_SUCCESS,
 
+  GET_ITEM_CATALOG,
+  GET_ITEM_CATALOG_ERROR,
+  GET_ITEM_CATALOG_SUCCESS,
+
   ENTER_PAGE,
 } from './constants';
 
@@ -166,6 +170,26 @@ export function getRevenueSuccess(data) {
 export function getRevenueError(err) {
   return {
     type: GET_REVENUE_TOTAL_ERROR,
+    err,
+  };
+}
+
+export function getItemCatalog() {
+  return {
+    type: GET_ITEM_CATALOG,
+  };
+}
+
+export function getItemCatalogSuccess(data) {
+  return {
+    type: GET_ITEM_CATALOG_SUCCESS,
+    data,
+  };
+}
+
+export function getItemCatalogError(err) {
+  return {
+    type: GET_ITEM_CATALOG_ERROR,
     err,
   };
 }
