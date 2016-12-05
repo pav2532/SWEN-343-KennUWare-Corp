@@ -21,7 +21,14 @@ export function* login() {
   const username = yield select(selectUsername());
   const password = yield select(selectPassword());
 
+  let location = window.location.href;
+
+  location = location.slice((location.indexOf('from=') + 5));
+
+  const fromURL = location;
+
   const requestURL = '/api/sso/login';
+
 
   // Call our request helper (see 'utils/request')
   const auth = yield call(request, requestURL,
@@ -34,6 +41,7 @@ export function* login() {
       body: JSON.stringify({
         username,
         password,
+        fromURL,
       }),
     }
   );
