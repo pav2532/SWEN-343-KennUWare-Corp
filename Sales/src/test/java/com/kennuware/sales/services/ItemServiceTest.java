@@ -41,11 +41,7 @@ public class ItemServiceTest {
         when(mockedItemsIdQuery2.setString(Mockito.eq("id"),Mockito.eq("2"))).thenReturn(mockedItemsIdQuery2);
         when(mockedItemsIdQuery2.list()).thenReturn(item);
 
-
         WearableList items = service.getItems(util, mockedSession);
-        System.out.println(items);
-
-
 
         WearableItem item3 = items.getList().get(1);
         assertEquals(2, item3.getId());
