@@ -30,7 +30,11 @@ class ItemModal extends React.Component { // eslint-disable-line react/prefer-st
         <Modal.Body>
           <Row>
             <Col md={12}>
-              <SelectableItemList items={this.props.items} onSelect={this.props.onSelect} />
+              <SelectableItemList
+                items={this.props.items}
+                onSelect={this.props.onSelect}
+                cancel={this.props.cancel}
+              />
             </Col>
           </Row>
         </Modal.Body>

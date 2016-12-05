@@ -17,10 +17,7 @@ class ItemOrderForm extends React.Component {
     super(props);
 
     this.state = {
-      itemID: '',
-      itemName: '',
       itemQuantity: '',
-      itemUnitPrice: '',
     };
   }
 
@@ -35,18 +32,17 @@ class ItemOrderForm extends React.Component {
         <Input
           label="Item ID"
           labelStyle={labelStyle}
-          value={this.state.itemID}
-          onChange={(itemID) => {
-            this.setState({ itemID });
-          }}
+          value={this.props.orderItem.id}
         />
         <Input
           label="Item Name"
           labelStyle={labelStyle}
-          value={this.state.itemName}
-          onChange={(itemName) => {
-            this.setState({ itemName });
-          }}
+          value={this.props.orderItem.name}
+        />
+        <Input
+          label="Unit Price"
+          labelStyle={labelStyle}
+          value={this.props.orderItem.unitPrice}
         />
         <Input
           label="Quantity"
@@ -56,20 +52,12 @@ class ItemOrderForm extends React.Component {
             this.setState({ itemQuantity });
           }}
         />
-        <Input
-          label="Unit Price"
-          labelStyle={labelStyle}
-          value={this.state.itemUnitPrice}
-          onChange={(itemUnitPrice) => {
-            this.setState({ itemUnitPrice });
-          }}
-        />
         <div>
           <Button
             className={styles.button}
             bsStyle="primary"
             bsSize="small"
-            onClick={() => this.props.onAddItem({ name: this.state.itemName, unitPrice: this.state.itemUnitPrice, id: this.state.itemID }, this.state.itemQuantity)}
+            onClick={() => this.props.onAddItem({ name: this.props.orderItem.name, unitPrice: this.props.orderItem.unitPrice, id: this.props.orderItem.id }, this.state.itemQuantity)}
           >
             Add item
           </Button>
@@ -88,6 +76,7 @@ class ItemOrderForm extends React.Component {
 }
 
 ItemOrderForm.propTypes = {
+  orderItem: React.PropTypes.object,
   onAddItem: React.PropTypes.func,
   selectItem: React.PropTypes.func,
 };

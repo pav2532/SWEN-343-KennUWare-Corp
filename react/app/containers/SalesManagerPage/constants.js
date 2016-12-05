@@ -34,4 +34,6 @@ export const GET_ITEM_CATALOG = 'app/Sales/GET_ITEM_CATALOG';
 export const GET_ITEM_CATALOG_SUCCESS = 'app/Sales/GET_ITEM_CATALOG_SUCCESS';
 export const GET_ITEM_CATALOG_ERROR = 'app/Sales/GET_ITEM_CATALOG_ERROR';
 
+export const SET_ITEM = 'app/Sales/SET_ITEM';
+
 export const ENTER_PAGE = 'app/Sales/ENTER_PAGE';

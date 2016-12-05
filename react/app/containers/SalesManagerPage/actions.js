@@ -35,8 +35,17 @@ import {
   GET_ITEM_CATALOG_ERROR,
   GET_ITEM_CATALOG_SUCCESS,
 
+  SET_ITEM,
+
   ENTER_PAGE,
 } from './constants';
+
+export function setItem(item) {
+  return {
+    type: SET_ITEM,
+    item,
+  };
+}
 
 export function enterPage() {
   return {

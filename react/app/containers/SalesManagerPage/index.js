@@ -27,6 +27,8 @@ import {
 
   getItemCatalog,
 
+  setItem,
+
   addToCart,
   removeFromCart,
 
@@ -106,6 +108,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       <ItemModal
         show={this.state.selectingItem}
         cancel={() => this.setState({ selectingItem: false })}
+        onSelect={this.props.selectItem}
         items={this.props.sales.itemCatalog}
       />
     );
@@ -145,7 +148,11 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           {errorModal}
           {itemModal}
           <div style={{ width: '50%', float: 'left', height: '600px' }}>
-            <ItemOrderForm onAddItem={this.props.onAddItemToCart} selectItem={this.selectItem} />
+            <ItemOrderForm
+              onAddItem={this.props.onAddItemToCart}
+              selectItem={this.selectItem}
+              orderItem={this.props.sales.orderItem}
+            />
             <ShoppingCart items={this.props.sales.shoppingCart} />
           </div>
           <div className={styles.paymentForm}>
@@ -220,6 +227,8 @@ SalesManagerPage.propTypes = {
   onLoadRevenue: React.PropTypes.func,
   onLoadRevenueRegion: React.PropTypes.func,
 
+  selectItem: React.PropTypes.func,
+
   onEnter: React.PropTypes.func,
   onSignOut: React.PropTypes.func,
 };
@@ -249,6 +258,8 @@ function mapDispatchToProps(dispatch) {
     onLoadRevenueRegion: () => dispatch(getRevenueRegion()),
 
     getItemCatalog: () => dispatch(getItemCatalog()),
+
+    selectItem: (item) => dispatch(setItem(item)),
 
     onEnter: () => dispatch(enterPage()),
     onSignOut: () => dispatch(signOut()),
