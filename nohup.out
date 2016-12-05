@@ -1,0 +1,607 @@
+Oct 11, 2016 11:51:08 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 11, 2016 11:51:08 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 11, 2016 11:51:08 PM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 11, 2016 11:51:08 PM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 11, 2016 11:51:08 PM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/sales/resource/hibernate.cfg.xml
+Oct 11, 2016 11:51:08 PM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/sales/resource/hibernate.cfg.xml
+Oct 11, 2016 11:51:09 PM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 11, 2016 11:51:09 PM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 11, 2016 11:51:09 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 11, 2016 11:51:10 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/sales]
+Oct 11, 2016 11:51:10 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 11, 2016 11:51:10 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 11, 2016 11:51:10 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 11, 2016 11:51:10 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 11, 2016 11:51:10 PM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 11, 2016 11:51:11 PM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 11, 2016 11:51:11 PM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 11, 2016 11:51:11 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Item
+Hibernate: drop table if exists ItemOrders
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists SalesOrder
+Hibernate: drop table if exists Store
+Hibernate: drop table if exists StoreEmployee
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Item (id integer not null auto_increment, name varchar(255), unitPrice double precision not null, primary key (id))
+Hibernate: create table ItemOrders (id integer not null auto_increment, itemId integer not null, orderId integer not null, quantity integer not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table SalesOrder (orderid integer not null auto_increment, bulkDiscount double precision, creditCardNumber varchar(255), customerName varchar(255), employeeID integer not null, expirationDate varchar(255), primary key (orderid))
+Hibernate: create table Store (storeID integer not null auto_increment, address varchar(255), name varchar(255), regionID integer not null, primary key (storeID))
+Hibernate: create table StoreEmployee (id integer not null auto_increment, employeeID integer not null, storeID integer not null, primary key (id))
+Oct 11, 2016 11:51:11 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Oct 11, 2016 11:51:41 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 11, 2016 11:51:41 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 11, 2016 11:51:41 PM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 11, 2016 11:51:41 PM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 11, 2016 11:51:41 PM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/sales/resource/hibernate.cfg.xml
+Oct 11, 2016 11:51:41 PM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/sales/resource/hibernate.cfg.xml
+Oct 11, 2016 11:51:42 PM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 11, 2016 11:51:42 PM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 11, 2016 11:51:42 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 11, 2016 11:51:42 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/sales]
+Oct 11, 2016 11:51:42 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 11, 2016 11:51:42 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 11, 2016 11:51:42 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 11, 2016 11:51:43 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 11, 2016 11:51:43 PM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 11, 2016 11:51:44 PM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 11, 2016 11:51:44 PM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 11, 2016 11:51:44 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Item
+Hibernate: drop table if exists ItemOrders
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists SalesOrder
+Hibernate: drop table if exists Store
+Hibernate: drop table if exists StoreEmployee
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Item (id integer not null auto_increment, name varchar(255), unitPrice double precision not null, primary key (id))
+Hibernate: create table ItemOrders (id integer not null auto_increment, itemId integer not null, orderId integer not null, quantity integer not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table SalesOrder (orderid integer not null auto_increment, bulkDiscount double precision, creditCardNumber varchar(255), customerName varchar(255), employeeID integer not null, expirationDate varchar(255), primary key (orderid))
+Hibernate: create table Store (storeID integer not null auto_increment, address varchar(255), name varchar(255), regionID integer not null, primary key (storeID))
+Hibernate: create table StoreEmployee (id integer not null auto_increment, employeeID integer not null, storeID integer not null, primary key (id))
+Oct 11, 2016 11:51:44 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Oct 11, 2016 11:52:19 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 11, 2016 11:52:19 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 11, 2016 11:52:19 PM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 11, 2016 11:52:19 PM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 11, 2016 11:52:19 PM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 11, 2016 11:52:19 PM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 11, 2016 11:52:20 PM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 11, 2016 11:52:20 PM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/customersupport]
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 11, 2016 11:52:21 PM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 11, 2016 11:52:21 PM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 11, 2016 11:52:22 PM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 11, 2016 11:52:22 PM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Customer
+Hibernate: drop table if exists DateTrail
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Refund
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists Returns
+Hibernate: create table Customer (id integer not null auto_increment, address varchar(255), name varchar(255), primary key (id))
+Hibernate: create table DateTrail (id integer not null auto_increment, approveDenyDate varchar(255), receiveDate varchar(255), requestDate varchar(255), resolveDate varchar(255), returnsID integer not null, primary key (id))
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Refund (id integer not null auto_increment, RMA varchar(255), refund double precision not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table Returns (id integer not null auto_increment, itemID varchar(255), reason varchar(255), storeID integer not null, type integer, primary key (id))
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0)
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1)
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0)
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 11, 2016 11:52:22 PM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_
+Name: SalesRep1  Eid: 1
+Name: RegionalManager1  Eid: 2
+Name: TheGeneral  Eid: 3
+Name: SalesRep2  Eid: 4
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select itemorders0_.id as id1_2_0_, itemorders0_.itemId as itemId2_2_0_, itemorders0_.orderId as orderId3_2_0_, itemorders0_.quantity as quantity4_2_0_ from ItemOrders itemorders0_ where itemorders0_.id=?
+Hibernate: select itemorders0_.id as id1_2_0_, itemorders0_.itemId as itemId2_2_0_, itemorders0_.orderId as orderId3_2_0_, itemorders0_.quantity as quantity4_2_0_ from ItemOrders itemorders0_ where itemorders0_.id=?
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Oct 12, 2016 12:53:29 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 12, 2016 12:53:29 AM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 12, 2016 12:53:29 AM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 12, 2016 12:53:29 AM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 12, 2016 12:53:29 AM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:53:29 AM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:53:29 AM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 12, 2016 12:53:30 AM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 12, 2016 12:53:30 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 12, 2016 12:53:30 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/customersupport]
+Oct 12, 2016 12:53:30 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 12, 2016 12:53:30 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 12, 2016 12:53:30 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 12, 2016 12:53:31 AM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 12, 2016 12:53:31 AM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 12, 2016 12:53:31 AM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 12, 2016 12:53:31 AM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Customer
+Hibernate: drop table if exists DateTrail
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Refund
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists Returns
+Hibernate: create table Customer (id integer not null auto_increment, address varchar(255), name varchar(255), primary key (id))
+Hibernate: create table DateTrail (id integer not null auto_increment, approveDenyDate varchar(255), receiveDate varchar(255), requestDate varchar(255), resolveDate varchar(255), returnsID integer not null, primary key (id))
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Refund (id integer not null auto_increment, RMA varchar(255), refund double precision not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table Returns (id integer not null auto_increment, itemID varchar(255), reason varchar(255), storeID integer not null, type integer, primary key (id))
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0)
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1)
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0)
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:32 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Oct 12, 2016 12:53:42 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 12, 2016 12:53:42 AM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 12, 2016 12:53:43 AM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 12, 2016 12:53:43 AM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 12, 2016 12:53:43 AM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:53:43 AM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:53:43 AM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 12, 2016 12:53:43 AM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/customersupport]
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 12, 2016 12:53:44 AM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 12, 2016 12:53:44 AM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 12, 2016 12:53:45 AM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 12, 2016 12:53:45 AM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Customer
+Hibernate: drop table if exists DateTrail
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Refund
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists Returns
+Hibernate: create table Customer (id integer not null auto_increment, address varchar(255), name varchar(255), primary key (id))
+Hibernate: create table DateTrail (id integer not null auto_increment, approveDenyDate varchar(255), receiveDate varchar(255), requestDate varchar(255), resolveDate varchar(255), returnsID integer not null, primary key (id))
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Refund (id integer not null auto_increment, RMA varchar(255), refund double precision not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table Returns (id integer not null auto_increment, itemID varchar(255), reason varchar(255), storeID integer not null, type integer, primary key (id))
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0)
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1)
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0)
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:53:45 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Oct 12, 2016 12:54:20 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+Oct 12, 2016 12:54:20 AM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {4.3.5.Final}
+Oct 12, 2016 12:54:21 AM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+Oct 12, 2016 12:54:21 AM org.hibernate.cfg.Environment buildBytecodeProvider
+INFO: HHH000021: Bytecode provider name : javassist
+Oct 12, 2016 12:54:21 AM org.hibernate.cfg.Configuration configure
+INFO: HHH000043: Configuring from resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:54:21 AM org.hibernate.cfg.Configuration getConfigurationInputStream
+INFO: HHH000040: Configuration resource: /com/kennuware/customersupport/resources/hibernate.cfg.xml
+Oct 12, 2016 12:54:21 AM org.hibernate.internal.util.xml.DTDEntityResolver resolveEntity
+WARN: HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+Oct 12, 2016 12:54:21 AM org.hibernate.cfg.Configuration doConfigure
+INFO: HHH000041: Configured SessionFactory: null
+Oct 12, 2016 12:54:22 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH000402: Using Hibernate built-in connection pool (not for production use!)
+Oct 12, 2016 12:54:22 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/customersupport]
+Oct 12, 2016 12:54:22 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000046: Connection properties: {user=root, password=****}
+Oct 12, 2016 12:54:22 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH000006: Autocommit mode: false
+Oct 12, 2016 12:54:22 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+INFO: HHH000115: Hibernate connection pool size: 1 (min=1)
+Oct 12, 2016 12:54:23 AM org.hibernate.dialect.Dialect <init>
+INFO: HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Oct 12, 2016 12:54:23 AM org.hibernate.engine.jdbc.internal.LobCreatorBuilder useContextualLobCreation
+INFO: HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+Oct 12, 2016 12:54:24 AM org.hibernate.engine.transaction.internal.TransactionFactoryInitiator initiateService
+INFO: HHH000399: Using default transaction strategy (direct JDBC transactions)
+Oct 12, 2016 12:54:24 AM org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory <init>
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000227: Running hbm2ddl schema export
+Hibernate: drop table if exists Customer
+Hibernate: drop table if exists DateTrail
+Hibernate: drop table if exists Employee
+Hibernate: drop table if exists Refund
+Hibernate: drop table if exists Region
+Hibernate: drop table if exists Returns
+Hibernate: create table Customer (id integer not null auto_increment, address varchar(255), name varchar(255), primary key (id))
+Hibernate: create table DateTrail (id integer not null auto_increment, approveDenyDate varchar(255), receiveDate varchar(255), requestDate varchar(255), resolveDate varchar(255), returnsID integer not null, primary key (id))
+Hibernate: create table Employee (eid integer not null auto_increment, name varchar(255), password varchar(255), regionId integer, type integer, primary key (eid))
+Hibernate: create table Refund (id integer not null auto_increment, RMA varchar(255), refund double precision not null, primary key (id))
+Hibernate: create table Region (id integer not null auto_increment, name varchar(255), primary key (id))
+Hibernate: create table Returns (id integer not null auto_increment, itemID varchar(255), reason varchar(255), storeID integer not null, type integer, primary key (id))
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("B35426", "It broke", 1, 0)
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("MGDS3523", "Screen fell off", 1, 1)
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: HHH000388: Unsuccessful: insert into Returns (RMA, reason, storeID, type) values ("G43753", "Hated it", 1, 0)
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport importScript
+ERROR: Unknown column 'RMA' in 'field list'
+Oct 12, 2016 12:54:24 AM org.hibernate.tool.hbm2ddl.SchemaExport execute
+INFO: HHH000230: Schema export complete
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+npm ERR! Linux 4.4.0-38-generic
+npm ERR! argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
+npm ERR! node v6.7.0
+npm ERR! npm  v3.10.3
+npm ERR! path /root/enterprise/SWEN-343-KennUWare-Corp/package.json
+npm ERR! code ENOENT
+npm ERR! errno -2
+npm ERR! syscall open
+
+npm ERR! enoent ENOENT: no such file or directory, open '/root/enterprise/SWEN-343-KennUWare-Corp/package.json'
+npm ERR! enoent ENOENT: no such file or directory, open '/root/enterprise/SWEN-343-KennUWare-Corp/package.json'
+npm ERR! enoent This is most likely not a problem with npm itself
+npm ERR! enoent and is related to npm not being able to find a file.
+npm ERR! enoent 
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /root/enterprise/SWEN-343-KennUWare-Corp/npm-debug.log
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_
+Name: SalesRep1  Eid: 1
+Name: RegionalManager1  Eid: 2
+Name: TheGeneral  Eid: 3
+Name: SalesRep2  Eid: 4
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: insert into SalesOrder (bulkDiscount, creditCardNumber, customerName, employeeID, expirationDate) values (?, ?, ?, ?, ?)
+Hibernate: insert into ItemOrders (itemId, orderId, quantity) values (?, ?, ?)
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_
+Name: SalesRep1  Eid: 1
+Name: RegionalManager1  Eid: 2
+Name: TheGeneral  Eid: 3
+Name: SalesRep2  Eid: 4
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as id1_1_0_, item0_.name as name2_1_0_, item0_.unitPrice as unitPric3_1_0_ from Item item0_ where item0_.id=?
+Hibernate: select item0_.id as id1_1_0_, item0_.name as name2_1_0_, item0_.unitPrice as unitPric3_1_0_ from Item item0_ where item0_.id=?
+Hibernate: select item0_.id as id1_1_0_, item0_.name as name2_1_0_, item0_.unitPrice as unitPric3_1_0_ from Item item0_ where item0_.id=?
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.regionId=?
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: insert into SalesOrder (bulkDiscount, creditCardNumber, customerName, employeeID, expirationDate) values (?, ?, ?, ?, ?)
+Hibernate: insert into ItemOrders (itemId, orderId, quantity) values (?, ?, ?)
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select returns0_.id as id1_5_, returns0_.itemID as itemID2_5_, returns0_.reason as reason3_5_, returns0_.storeID as storeID4_5_, returns0_.type as type5_5_ from Returns returns0_
+Hibernate: select returns0_.id as id1_5_, returns0_.itemID as itemID2_5_, returns0_.reason as reason3_5_, returns0_.storeID as storeID4_5_, returns0_.type as type5_5_ from Returns returns0_
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: insert into SalesOrder (bulkDiscount, creditCardNumber, customerName, employeeID, expirationDate) values (?, ?, ?, ?, ?)
+Hibernate: insert into ItemOrders (itemId, orderId, quantity) values (?, ?, ?)
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.regionId=?
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_
+Name: SalesRep1  Eid: 1
+Name: RegionalManager1  Eid: 2
+Name: TheGeneral  Eid: 3
+Name: SalesRep2  Eid: 4
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: insert into SalesOrder (bulkDiscount, creditCardNumber, customerName, employeeID, expirationDate) values (?, ?, ?, ?, ?)
+Hibernate: insert into ItemOrders (itemId, orderId, quantity) values (?, ?, ?)
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.regionId=?
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_
+Name: SalesRep1  Eid: 1
+Name: RegionalManager1  Eid: 2
+Name: TheGeneral  Eid: 3
+Name: SalesRep2  Eid: 4
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select item0_.id as col_0_0_ from Item item0_
+Hibernate: select salesorder0_.orderid as col_0_0_ from SalesOrder salesorder0_ where salesorder0_.employeeID=?
+Hibernate: select itemorders0_.id as col_0_0_ from ItemOrders itemorders0_
+Hibernate: select employee0_.eid as eid1_2_, employee0_.name as name2_2_, employee0_.password as password3_2_, employee0_.regionId as regionId4_2_, employee0_.type as type5_2_ from Employee employee0_ where employee0_.name=?
+Calling service
+Hibernate: insert into Returns (itemID, reason, storeID, type) values (?, ?, ?, ?)
+Hibernate: insert into Customer (address, name) values (?, ?)
+Hibernate: insert into DateTrail (approveDenyDate, receiveDate, requestDate, resolveDate, returnsID) values (?, ?, ?, ?, ?)
+Hibernate: select returns0_.id as id1_5_, returns0_.itemID as itemID2_5_, returns0_.reason as reason3_5_, returns0_.storeID as storeID4_5_, returns0_.type as type5_5_ from Returns returns0_
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Oct 12, 2016 10:35:41 AM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+WARN: SQL Error: 0, SQLState: 08S01
+Oct 12, 2016 10:35:41 AM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+ERROR: Communications link failure
+
+Last packet sent to the server was 76 ms ago.
+Hibernate: select employee0_.eid as eid1_0_, employee0_.name as name2_0_, employee0_.password as password3_0_, employee0_.regionId as regionId4_0_, employee0_.type as type5_0_ from Employee employee0_ where employee0_.name=?
+Oct 12, 2016 10:35:58 AM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+WARN: SQL Error: 0, SQLState: 08003
+Oct 12, 2016 10:35:58 AM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+ERROR: No operations allowed after connection closed.Connection was implicitly closed due to underlying exception/error:
+
+
+** BEGIN NESTED EXCEPTION ** 
+
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
+MESSAGE: Communications link failure
+
+Last packet sent to the server was 76 ms ago.
+
+STACKTRACE:
+
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+Last packet sent to the server was 76 ms ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1074)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:2985)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:2871)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3414)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1936)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2060)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2542)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1734)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:1885)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.extract(ResultSetReturnImpl.java:80)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:2065)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1862)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1838)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:909)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:354)
+	at org.hibernate.loader.Loader.doList(Loader.java:2553)
+	at org.hibernate.loader.Loader.doList(Loader.java:2539)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2369)
+	at org.hibernate.loader.Loader.list(Loader.java:2364)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:496)
+	at org.hibernate.hql.internal.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:387)
+	at org.hibernate.engine.query.spi.HQLQueryPlan.performList(HQLQueryPlan.java:231)
+	at org.hibernate.internal.SessionImpl.list(SessionImpl.java:1264)
+	at org.hibernate.internal.QueryImpl.list(QueryImpl.java:103)
+	at com.kennuware.sales.services.EmployeeServices.login(EmployeeServices.java:41)
+	at com.kennuware.sales.APIs.lambda$0(APIs.java:81)
+	at spark.ResponseTransformerRouteImpl$1.handle(ResponseTransformerRouteImpl.java:47)
+	at spark.http.matching.Routes.execute(Routes.java:61)
+	at spark.http.matching.MatcherFilter.doFilter(MatcherFilter.java:126)
+	at spark.embeddedserver.jetty.JettyHandler.doHandle(JettyHandler.java:50)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:189)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:119)
+	at org.eclipse.jetty.server.Server.handle(Server.java:517)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:242)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:261)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:75)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:213)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:147)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:2431)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:2882)
+	... 42 more
+
+
+** END NESTED EXCEPTION **
+
+

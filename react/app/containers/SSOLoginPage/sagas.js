@@ -13,8 +13,6 @@ import { loginError } from './actions';
 import request from 'utils/request';
 import { selectUsername, selectPassword } from './selectors';
 
-import cookie from 'react-cookie';
-
 /**
  * Github repos request/response handler
  */
@@ -23,15 +21,7 @@ export function* login() {
   const username = yield select(selectUsername());
   const password = yield select(selectPassword());
 
-  let location = window.location.href;
-
-  location = location.slice((location.indexOf('from=') + 5));
-
-  const fromURL = location;
-
   const requestURL = '/api/sso/login';
-
-  console.log("Requesting sso: ", username, password, fromURL);
 
   // Call our request helper (see 'utils/request')
   const auth = yield call(request, requestURL,
@@ -41,23 +31,18 @@ export function* login() {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      credentials: 'same-origin',
       body: JSON.stringify({
         username,
         password,
-        fromURL,
       }),
     }
   );
 
   if (!auth.err) {
     // Should do a redirect
-    const newLocation = auth.data;
-    const user = newLocation.slice((newLocation.indexOf('username=') + 9));
-    cookie.save('user', user, { path: '/' });
-    const sessionID = newLocation.slice((newLocation.indexOf('sessionID=') + 10), newLocation.indexOf('&username='));
-    cookie.save('sessionID', sessionID, { path: '/' });
-    window.location = newLocation;
+    console.log('auth response', auth);
+    window.location = auth.data;
+    console.log('setting window location');
   } else {
     yield put(loginError(auth.err.message));
   }
