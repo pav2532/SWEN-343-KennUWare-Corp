@@ -196,15 +196,17 @@ export function getHighestSeller() {
   };
 }
 
-export function getHighestSellerSuccess() {
+export function getHighestSellerSuccess(data) {
   return {
     type: GET_HIGHEST_SELLER_SUCCESS,
+    data,
   };
 }
 
-export function getHighestSellerError() {
+export function getHighestSellerError(err) {
   return {
     type: GET_HIGHEST_SELLER_ERROR,
+    err,
   };
 }
 

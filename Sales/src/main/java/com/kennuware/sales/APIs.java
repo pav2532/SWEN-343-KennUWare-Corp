@@ -60,7 +60,7 @@ public class APIs {
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").getAsString();
+            String username = req.cookie("user");
             String sessionID = req.cookie("sessionID");
             Map<String, String> map = req.cookies();
 			System.out.println("Verifying: " + verifyUser(username, sessionID));

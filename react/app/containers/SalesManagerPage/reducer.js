@@ -125,7 +125,7 @@ function salesReducer(state = initialState, action) {
         .setIn(['revenue', 'store'], action.data);
     case GET_HIGHEST_SELLER_SUCCESS:
       return state
-        .setIn(['revenue', 'store'], action.data);
+        .set('highestSeller', action.data);
 
     default:
       return state;

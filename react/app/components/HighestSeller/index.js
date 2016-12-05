@@ -16,11 +16,10 @@ class HighestSeller extends React.Component {
   }
 
   render() {
-    console.log("Highest Seller Data", this.props.highestSeller);
     return (
       <div className={styles.storeRevenue}>
-        <div>Total Revenue</div>
-        <div>${this.props.highestSeller}</div>
+        <h2>Highest Seller</h2>
+        <div>{this.props.highestSeller}</div>
       </div>
     );
   }

@@ -123,6 +123,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
     // Determine the content to show
     let activeRoute = 'Dashboard';
     let content = (<div></div>);
+    console.log("Manager props: ", this.props);
     if (this.props.sales.content === 'dashboard') {
       activeRoute = 'Dashboard';
       let revenueContent = (<div></div>);
@@ -133,10 +134,10 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
               <Row>
                 <Col xs={6} md={6}>
                   <div>
-                    <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                    <h2>Total Revenue</h2>
                     <TotalRevenue
-                      loadRevenue={this.props.onLoadRevenueRegion}
-                      revenue={this.props.sales.revenue.region}
+                      loadRevenue={this.props.onLoadRevenue}
+                      revenue={this.props.sales.revenue.total}
                     />
                   </div>
                 </Col>
