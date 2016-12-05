@@ -110,7 +110,7 @@ public class OrderServicesTest {
         when(mockedItemsQuery.list()).thenReturn(items);
         //when(mockedItemOrdersQuery.iterate()).thenReturn(itemOrders.iterator());
 
-        assertEquals(orderService.getHighestOrder(mockedSession),new ItemMetrics("F",5));
+        assertEquals(orderService.getHighestOrder(mockedSession),"Model F is the highest seller with 5 units sold.");
 
 
     }

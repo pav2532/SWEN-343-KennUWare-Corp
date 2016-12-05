@@ -253,18 +253,16 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
           {content}
         </div>
         <Grid>
-          <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
-          <Row>
-            <Col xs={6} xsOffset={8}>
-              <AccountInfo
-                className={styles.accountInfo}
-                name={this.props.employee.username}
-                employeeType={this.props.employee.type}
+          <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} title="Sales" />
+          <div className={styles.header}>
+            <AccountInfo
+              className={styles.accountInfo}
+              name={this.props.employee.username}
+              employeeType={this.props.employee.type}
 
-                onSignOut={this.props.onSignOut}
-              />
-            </Col>
-          </Row>
+              onSignOut={this.props.onSignOut}
+            />
+          </div>
           <div className={styles.content}>
             {content}
           </div>

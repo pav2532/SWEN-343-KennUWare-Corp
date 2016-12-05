@@ -26,8 +26,6 @@ import {
   completeReturnRequest,
   editReturnRequest,
 
-  getTotalRefunds,
-
   getReturns,
   manageReturn,
   cancelManageReturn,
@@ -184,8 +182,6 @@ function mapDispatchToProps(dispatch) {
     onSubmitReturn: () => dispatch(submitReturn()),
     onNewRequest: () => dispatch(completeReturnRequest()),
     onEditRequest: () => dispatch(editReturnRequest()),
-
-    onGetTotalRefunds: () => dispatch(getTotalRefunds),
 
     onGetReturns: () => dispatch(getReturns()),
     onManageReturn: (item) => dispatch(manageReturn(item)),
