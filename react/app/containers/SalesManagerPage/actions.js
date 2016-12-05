@@ -38,6 +38,13 @@ import {
   SET_ITEM,
 
   ENTER_PAGE,
+  GET_REVENUE_STORE,
+  GET_REVENUE_STORE_ERROR,
+  GET_REVENUE_STORE_SUCCESS,
+
+  GET_HIGHEST_SELLER,
+  GET_HIGHEST_SELLER_ERROR,
+  GET_HIGHEST_SELLER_SUCCESS,
 } from './constants';
 
 export function setItem(item) {
@@ -160,6 +167,44 @@ export function getRevenueRegionError(err) {
   return {
     type: GET_REVENUE_REGION_ERROR,
     err,
+  };
+}
+
+export function getRevenueStore() {
+  return {
+    type: GET_REVENUE_STORE,
+  };
+}
+
+export function getRevenueStoreSuccess(data) {
+  return {
+    type: GET_REVENUE_STORE_SUCCESS,
+    data,
+  };
+}
+
+export function getRevenueStoreError(err) {
+  return {
+    type: GET_REVENUE_STORE_ERROR,
+    err,
+  };
+}
+
+export function getHighestSeller() {
+  return {
+    type: GET_HIGHEST_SELLER,
+  };
+}
+
+export function getHighestSellerSuccess() {
+  return {
+    type: GET_HIGHEST_SELLER_SUCCESS,
+  };
+}
+
+export function getHighestSellerError() {
+  return {
+    type: GET_HIGHEST_SELLER_ERROR,
   };
 }
 

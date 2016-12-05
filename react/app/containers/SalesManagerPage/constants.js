@@ -37,3 +37,10 @@ export const GET_ITEM_CATALOG_ERROR = 'app/Sales/GET_ITEM_CATALOG_ERROR';
 export const SET_ITEM = 'app/Sales/SET_ITEM';
 
 export const ENTER_PAGE = 'app/Sales/ENTER_PAGE';
+export const GET_REVENUE_STORE = 'app/Sales/GET_REVENUE_STORE';
+export const GET_REVENUE_STORE_SUCCESS = 'app/Sales/GET_REVENUE_STORE_SUCCESS';
+export const GET_REVENUE_STORE_ERROR = 'app/Sales/GET_REVENUE_STORE_ERROR';
+
+export const GET_HIGHEST_SELLER = 'app/Sales/GET_HIGHEST_SELLER';
+export const GET_HIGHEST_SELLER_SUCCESS = 'app/Sales/GET_HIGHEST_SELLER_SUCCESS';
+export const GET_HIGHEST_SELLER_ERROR = 'app/Sales/GET_HIGHEST_SELLER_ERROR';

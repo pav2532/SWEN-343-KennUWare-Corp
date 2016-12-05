@@ -120,7 +120,7 @@ public class OrderServices {
         return gson.toJson(order);
     }
 
-    public static ItemMetrics getHighestOrder(Session session) {
+    public static String getHighestOrder(Session session) {
         int result = 0;
         int tempResult = 0;
         String name = "";
@@ -142,8 +142,7 @@ public class OrderServices {
             }
             tempResult = 0;
         }
-        //System.out.println(name);
-        return new ItemMetrics(name, result);
+        return "Model " + name + " is the highest seller with " + result + " units sold.";
     }
 
     public static ItemMetrics getLowestOrder(Session session) {

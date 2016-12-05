@@ -32,6 +32,9 @@ import {
   RESOLVE_RETURN,
   RESOLVE_RETURN_ERROR,
   RESOLVE_RETURN_SUCCESS,
+  GET_REFUND_TOTAL,
+  GET_REFUND_TOTAL_ERROR,
+  GET_REFUND_TOTAL_SUCCESS,
 } from './constants';
 
 export function gotoNewReturn() {
@@ -84,6 +87,26 @@ export function submitReturnSuccess(data) {
   return {
     type: SUBMIT_RETURN_SUCCESS,
     data,
+  };
+}
+
+export function getRefund() {
+  return {
+    type: GET_REFUND_TOTAL,
+  };
+}
+
+export function getRefundSuccess(data) {
+  return {
+    type: GET_REFUND_TOTAL_SUCCESS,
+    data,
+  };
+}
+
+export function getRefundError(err) {
+  return {
+    type: GET_REFUND_TOTAL_ERROR,
+    err,
   };
 }
 

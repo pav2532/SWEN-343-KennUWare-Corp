@@ -13,6 +13,7 @@ import {
   RESOLVE_RETURN,
   SET_RETURN_STATUS_SUCCESS,
   RESOLVE_RETURN_SUCCESS,
+  GET_REFUND_TOTAL,
 } from './constants';
 
 import {
@@ -29,6 +30,7 @@ import {
   setRequestStatusSuccess,
   resolveReturnError,
   resolveReturnSuccess,
+  getRefundSuccess,
 
   getReturnsSuccess,
 } from './actions';
@@ -48,6 +50,47 @@ export function* signOutWatcher() {
   while (yield take(SIGN_OUT)) {
     yield call(signOut);
   }
+}
+
+export function* getTotalRefund() {
+
+  console.log("Requesting total refund");
+
+  const requestURL = '/api/sales/refund';
+
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Call our request helper (see 'utils/request')
+  const refund = yield call(request, requestURL, options);
+
+  console.log("Got refunds");
+  console.log(refund);
+
+  if (!refund.err) {
+    yield put(getRefundSuccess(refund.data));
+  }
+  // Put the error flow here
+}
+
+export function* refundTotalWatcher() {
+  while (yield take(GET_REFUND_TOTAL)) {
+    yield call(getTotalRefund);
+  }
+}
+
+export function* refundTotalData() {
+  const watcher = yield fork(refundTotalWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
 }
 
 // Individual exports for testing
@@ -95,7 +138,6 @@ export function* submitReturn() {
 }
 
 export function* getReturns() {
-  console.log("Requesting total revenue");
 
   const requestURL = '/api/customer-support/getReturns';
 

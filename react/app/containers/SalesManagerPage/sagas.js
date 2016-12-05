@@ -12,6 +12,8 @@ import {
   GET_REVENUE_TOTAL,
   GET_REVENUE_REGION,
   GET_ITEM_CATALOG,
+  GET_REVENUE_STORE,
+  GET_HIGHEST_SELLER,
 } from './constants';
 
 import {
@@ -26,6 +28,11 @@ import {
 
   getItemCatalogSuccess,
   getItemCatalogError,
+  getRevenueStoreError,
+  getRevenueStoreSuccess,
+
+  getHighestSellerSuccess,
+  getHighestSellerError,
 } from './actions';
 
 import { selectShoppingCart, selectPaymentInfo } from './selectors';
@@ -110,6 +117,33 @@ export function* getTotalRevenue() {
   // Put the error flow here
 }
 
+export function* getHighestSeller() {
+
+  console.log("Requesting highest seller");
+
+  const requestURL = '/api/sales/highestseller';
+
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Call our request helper (see 'utils/request')
+  const highestSeller = yield call(request, requestURL, options);
+
+  console.log("Got highest seller");
+  console.log(highestSeller);
+
+  if (!highestSeller.err) {
+    yield put(getHighestSellerSuccess(highestSeller.data));
+  }
+  // Put the error flow here
+}
+
 export function* getRegionRevenue() {
   console.log("Requesting region revenue");
   const employee = yield select(selectEmployee());
@@ -156,10 +190,52 @@ export function* revenueTotalWatcher() {
   }
 }
 
+export function* highestSellerWatcher() {
+  while (yield take(GET_HIGHEST_SELLER)) {
+    yield call(getHighestSeller);
+  }
+}
+
+export function* getRevenueStore(){
+  const requestURL = '/api/sales/revenue/stores';
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  // Call our request helper (see 'utils/request')
+  const revenue = yield call(request, requestURL, options);
+
+  console.log("Got revenue by store");
+  console.log(revenue);
+
+  if (!revenue.err) {
+    yield put(getRevenueStoreSuccess(revenue.data));
+  }
+  // Do error flow
+}
+
+export function* revenueStoreWatcher() {
+  while (yield take(GET_REVENUE_STORE)) {
+    yield call(getRevenueStore);
+  }
+}
+
 export function* revenueRegionWatcher() {
   while (yield take(GET_REVENUE_REGION)) {
     yield call(getRegionRevenue);
   }
+}
+
+export function* getRevenueStoreData() {
+  const watcher = yield fork(revenueStoreWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
 }
 
 // Individual exports for testing
@@ -181,6 +257,14 @@ export function* checkoutData() {
 
 export function* revenueTotalData() {
   const watcher = yield fork(revenueTotalWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+export function* highestSellerData() {
+  const watcher = yield fork(highestSellerWatcher);
 
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
@@ -265,4 +349,6 @@ export default [
   revenueRegionData,
   enteringSaga,
   getItemsSaga,
+  getRevenueStoreData,
+  getHighestSeller,
 ];
