@@ -173,5 +173,78 @@ public class ReturnTicketServiceTest {
         assertEquals(expectedResult, result);
     }
 
+	@Test
+	public void ReturnsWithType0Test() {
+        
+		String expectedResult = "{\"count\": 10}"; 
+        List queryResult = new ArrayList<Object>();
+
+
+        for(int i = 0; i < 10; i++){
+        	queryResult.add(new String(""));
+        }
+        
+    	
+    	
+        Session session= mock(Session.class);
+        Query query = mock(Query.class);
+        when(session.getNamedQuery(Mockito.anyString())).thenReturn(query);
+        when(session.getNamedQuery(Mockito.anyString()).setInteger(Mockito.anyString(), 
+        		Mockito.anyInt())).thenReturn(query);
+        when(query.list()).thenReturn(queryResult);
+
+        String result = ReturnTicketService.getReturnsWith(session, 0);
+        
+        assertEquals(expectedResult, result);
+    }
 	
+	@Test
+	public void ReturnsWithType1Test() {
+        
+		String expectedResult = "{\"count\": 10}"; 
+        List queryResult = new ArrayList<Object>();
+
+
+        for(int i = 0; i < 10; i++){
+        	queryResult.add(new String(""));
+        }
+        
+    	
+    	
+        Session session= mock(Session.class);
+        Query query = mock(Query.class);
+        when(session.getNamedQuery(Mockito.anyString())).thenReturn(query);
+        when(session.getNamedQuery(Mockito.anyString()).setInteger(Mockito.anyString(), 
+        		Mockito.anyInt())).thenReturn(query);
+        when(query.list()).thenReturn(queryResult);
+
+        String result = ReturnTicketService.getReturnsWith(session, 1);
+        
+        assertEquals(expectedResult, result);
+    }
+	
+	@Test
+	public void ReturnsWithType2Test() {
+        
+		String expectedResult = "{\"count\": 10}"; 
+        List queryResult = new ArrayList<Object>();
+
+
+        for(int i = 0; i < 10; i++){
+        	queryResult.add(new String(""));
+        }
+        
+    	
+    	
+        Session session= mock(Session.class);
+        Query query = mock(Query.class);
+        when(session.getNamedQuery(Mockito.anyString())).thenReturn(query);
+        when(session.getNamedQuery(Mockito.anyString()).setInteger(Mockito.anyString(), 
+        		Mockito.anyInt())).thenReturn(query);
+        when(query.list()).thenReturn(queryResult);
+
+        String result = ReturnTicketService.getReturnsWith(session, 2);
+        
+        assertEquals(expectedResult, result);
+    }
 }
