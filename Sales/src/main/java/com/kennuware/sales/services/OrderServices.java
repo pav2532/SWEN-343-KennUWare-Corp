@@ -59,22 +59,26 @@ public class OrderServices {
         }
     }
 
-    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils) {
+    public String orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils) {
 
         InventoryCustomer customer = new InventoryCustomer();
         customer.setCustomerName(custName);
         customer.setAddress(address);
 
         InventoryOrder iOrder = new InventoryOrder();
+
         iOrder.setOrderDetails(customer);
         iOrder.setType("new");
         iOrder.setWearableID(order.getItemId());
         iOrder.setQuantity(order.getQuantity());
+
         String responseBody = utils.post(iOrder, "http://localhost:8002/productOrderInv");
         System.out.println("----------------------------------------");
         System.out.println(responseBody);
 
-
+        return "{\"wearableID\":" + Integer.toString( order.getItemId() ) + ",\"type\":\"" + iOrder.getType() +
+                "\",\"quantity\":" + Integer.toString(order.getQuantity()) + ",\"orderDetails\":{\"customerName\":\"" + custName +
+                "\",\"address\":\"" + address + "\"}}";
     }
 
     public static void addItemOrders(int orderId, int itemId, int quantity, Session session) {
@@ -218,6 +222,10 @@ public class OrderServices {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public String getType() {
+            return type;
         }
 
         public void setQuantity(int quantity){this.quantity = quantity;}

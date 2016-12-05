@@ -21,7 +21,7 @@ public class ItemService {
         WearableList result = gson.fromJson(stringResult, WearableList.class);
         ArrayList<WearableItem> temp = result.getList();
         for (WearableItem i : temp) {
-            System.out.println(i.getId());
+
             if (session.getNamedQuery("ItemById").setString("id", String.valueOf(i.getId())).list().isEmpty()) {
                 double price = 0;
                 if (i.getType().equals("F"))

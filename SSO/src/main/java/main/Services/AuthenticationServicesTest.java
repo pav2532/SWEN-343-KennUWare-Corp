@@ -68,7 +68,8 @@ public class AuthenticationServicesTest {
         AuthenticationServices.createUser("testUser", "123", session);
 
         assertEquals("1212345", AuthenticationServices.login("testUser","123", req, session, uids));
-
+        session.close();
+        sessionFactory.close();
     }
 
     @Test
@@ -92,7 +93,8 @@ public class AuthenticationServicesTest {
 
         assertEquals("edit", testUser.getUserName());
         assertEquals("321".hashCode(), testUser.getPassword());
-
+        session.close();
+        sessionFactory.close();
     }
 
     @Test
@@ -114,7 +116,8 @@ public class AuthenticationServicesTest {
         String sessionID = AuthenticationServices.login("testUser", "123", req, session, uids);
 
         assertEquals("valid", AuthenticationServices.verifySession("testUser", sessionID, session, res));
-
+        session.close();
+        sessionFactory.close();
     }
 
     @Test
@@ -136,7 +139,8 @@ public class AuthenticationServicesTest {
         String sessionID = AuthenticationServices.login("testUser", "123", req, session, uids);
 
         assertEquals("localhost:3000/kennuware/sso/login", AuthenticationServices.logout("testUser", sessionID, session, res));
-
+        session.close();
+        sessionFactory.close();
     }
 
     @Test
@@ -157,7 +161,10 @@ public class AuthenticationServicesTest {
         String sessionID = AuthenticationServices.login("testUser", "123", req, session, uids);
         Boolean test = true;
 
-       assertEquals(test, AuthenticationServices.deleteUser("testUser", sessionID, session));
-
+        assertEquals(test, AuthenticationServices.deleteUser("testUser", sessionID, session));
+        session.close();
+        sessionFactory.close();
     }
+
+
 }

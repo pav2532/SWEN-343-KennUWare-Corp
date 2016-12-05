@@ -54,27 +54,18 @@ public class OrderServicesTest {
         Gson gson = new Gson();
         OrderServices orderService = new OrderServices();
         ItemOrders order = new ItemOrders();
-        HttpPost mockedRequest = new HttpPost();
+        HttpPost httpPost = new HttpPost();
         order.setQuantity(33);
         order.setOrderId(12321);
 
         HttpUtils utils = new HttpUtils();
 
-        orderService.orderItemsFromInventory("123 Whatever", order, "Ben", utils);
+        String inputLine = orderService.orderItemsFromInventory("123 Whatever", order, "Ben", utils);
 
-        String inputLine ;
+        assertEquals(gson.toJson(
+                "{\"wearableID\":0,\"type\":\"new\",\"quantity\":33,\"orderDetails\":{\"customerName\":\"Ben\",\"address\":\"123 Whatever\"}}"),
+                gson.toJson(inputLine));
 
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(mockedRequest.getEntity().getContent()));
-            inputLine = br.readLine();
-            br.close();
-
-            assertEquals(gson.toJson(
-                    "{\"wearableID\":0,\"type\":\"new\",\"quantity\":33,\"orderDetails\":{\"customerName\":\"Ben\",\"address\":\"123 Whatever\"}}"),
-                    gson.toJson(inputLine));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -223,5 +214,7 @@ public class OrderServicesTest {
 
 
     }
+
+
 
 }
