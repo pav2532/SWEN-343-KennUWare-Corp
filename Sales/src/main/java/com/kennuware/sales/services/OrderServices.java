@@ -125,8 +125,10 @@ public class OrderServices {
         ArrayList<Item> catalog;
         ;
         for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+            //System.out.println(c.getName());
             tempId = c.getId();
-            for (ItemOrders iId : getItems(id, session)) {
+            for (ItemOrders iId : getItems(tempId, session)) {
+                //System.out.println(iId.getQuantity());
                 tempResult += iId.getQuantity();
             }
             if (result <= tempResult) {
@@ -136,6 +138,7 @@ public class OrderServices {
             }
             tempResult = 0;
         }
+        //System.out.println(name);
         return new ItemMetrics(name, result);
     }
 
@@ -149,7 +152,7 @@ public class OrderServices {
         ;
         for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             tempId = c.getId();
-            for (ItemOrders iId : getItems(id, session)) {
+            for (ItemOrders iId : getItems(tempId, session)) {
                 tempResult += iId.getQuantity();
             }
             if(result == 0){
@@ -180,13 +183,15 @@ public class OrderServices {
         for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             id = c.getId();
             price = c.getUnitPrice();
-
+            //System.out.println(id);
+            //System.out.println(getItems(id, session).size());
             for (ItemOrders iId : getItems(id, session)) {
                 quantity += iId.getQuantity();
             }
             total = quantity * price;
             ItemMetrics temp = new ItemMetrics(c.getName(), quantity, total);
             revenue.add(temp);
+            quantity = 0;
         }
         quantity = 0;
         return revenue;
@@ -194,6 +199,7 @@ public class OrderServices {
     private static ArrayList<ItemOrders> getItems(int id, Session session){
         ArrayList<ItemOrders> list = (ArrayList<ItemOrders>) session.getNamedQuery("findItemById")
                 .setString("itemId", String.valueOf(id)).list();
+        //System.out.println(list.size());
         return list;
 
     }
