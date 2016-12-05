@@ -196,8 +196,9 @@ export function* enterPage() {
   const username = userCookie.user;
   const sessionCookie = cookie.select(/sessionID/);
   const sessionID = sessionCookie.sessionID;
+  const employee = yield select(selectEmployee());
 
-  if (username === undefined || sessionID === undefined) {
+  if (username === undefined || sessionID === undefined || employee.type === undefined || employee.type === '') {
     yield put(push('/sales'));
   }
 }

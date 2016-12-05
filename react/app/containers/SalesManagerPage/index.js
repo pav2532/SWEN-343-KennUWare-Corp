@@ -69,15 +69,15 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       selectingItem: false,
     };
 
-    this.selectItem.bind(this);
+    this.selectItem = this.selectItem.bind(this);
   }
 
   componentDidMount() {
     this.props.onEnter();
   }
 
-  selectItem(selectingItem) {
-    this.setState({ selectingItem });
+  selectItem() {
+    this.setState({ selectingItem: true });
   }
 
   render() {
@@ -100,7 +100,7 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       />
     );
     const itemModal = (
-      <ItemModal show={this.state.selectingItem} />
+      <ItemModal show={this.state.selectingItem} cancel={() => this.setState({ selectingItem: false })} />
     );
     // Determine the content to show
     let activeRoute = 'Dashboard';

@@ -7,6 +7,7 @@ import cookie from 'react-cookie';
 
 import {
   CHECKOUT,
+  ENTER_PAGE,
 } from './constants';
 
 import {
@@ -100,7 +101,34 @@ export function* checkoutData() {
   return;
 }
 
+export function* enterPage() {
+  const userCookie = cookie.select(/user/);
+  const username = userCookie.user;
+  const sessionCookie = cookie.select(/sessionID/);
+  const sessionID = sessionCookie.sessionID;
+  const employee = yield select(selectEmployee());
+
+  if (username === undefined || sessionID === undefined || employee.type === undefined || employee.type === '') {
+    yield put(push('/sales'));
+  }
+}
+
+export function* enterPageWatcher() {
+  while (yield take(ENTER_PAGE)) {
+    yield call(enterPage);
+  }
+}
+
+export function* enteringSaga() {
+  const watcher = yield fork(enterPageWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
 // All sagas to be loaded
 export default [
   checkoutData,
+  enteringSaga,
 ];

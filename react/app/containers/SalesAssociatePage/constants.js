@@ -17,3 +17,5 @@ export const SET_PAYMENT_INFO_EXPIRATION = 'app/SalesAssociatePage/SET_PAYMENT_I
 export const CHECKOUT = 'app/SalesAssociatePage/CHECKOUT';
 export const CHECKOUT_SUCCESS = 'app/SalesAssociatePage/CHECKOUT_SUCCESS';
 export const CHECKOUT_ERROR = 'app/SalesAssociatePage/CHECKOUT_ERROR';
+
+export const ENTER_PAGE = 'app/SalesAssociatePage/ENTER_PAGE';

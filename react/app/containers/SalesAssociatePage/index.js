@@ -28,6 +28,7 @@ import {
   checkout,
   newOrder,
   continueOrder,
+  enterPage,
 } from './actions.js';
 
 import { Button, Modal } from 'react-bootstrap';
@@ -53,6 +54,9 @@ export class SalesAssociatePage extends React.Component { // eslint-disable-line
     };
   }
 
+  componentDidMount() {
+    this.props.onEnterPage();
+  }
   render() {
     let buttonStyle = 'primary';
     if (this.props.sales.shoppingCart.length === 0 || !paymentInfoComplete(this.props.sales.paymentInfo)) {
@@ -132,6 +136,7 @@ SalesAssociatePage.propTypes = {
   onNewOrder: React.PropTypes.func,
   onContinueOrder: React.PropTypes.func,
 
+  onEnterPage: React.PropTypes.func,
   onSignOut: React.PropTypes.func,
 };
 
@@ -152,6 +157,7 @@ function mapDispatchToProps(dispatch) {
     onNewOrder: () => dispatch(newOrder()),
     onContinueOrder: () => dispatch(continueOrder()),
 
+    onEnterPage: () => dispatch(enterPage()),
     onSignOut: () => dispatch(signOut()),
 
     dispatch,

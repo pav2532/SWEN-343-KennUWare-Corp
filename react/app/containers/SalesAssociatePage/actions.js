@@ -18,7 +18,14 @@ import {
   CHECKOUT,
   CHECKOUT_SUCCESS,
   CHECKOUT_ERROR,
+  ENTER_PAGE,
 } from './constants';
+
+export function enterPage() {
+  return {
+    type: ENTER_PAGE,
+  };
+}
 
 export function addToCart(item, quantity) {
   return {
