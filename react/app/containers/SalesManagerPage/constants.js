@@ -29,3 +29,5 @@ export const GET_REVENUE_REGION_ERROR = 'app/Sales/GET_REVENUE_REGION_ERROR';
 export const GET_REVENUE_TOTAL = 'app/Sales/GET_REVENUE_TOTAL';
 export const GET_REVENUE_TOTAL_SUCCESS = 'app/Sales/GET_REVENUE_TOTAL_SUCCESS';
 export const GET_REVENUE_TOTAL_ERROR = 'app/Sales/GET_REVENUE_TOTAL_ERROR';
+
+export const ENTER_PAGE = 'app/Sales/ENTER_PAGE';

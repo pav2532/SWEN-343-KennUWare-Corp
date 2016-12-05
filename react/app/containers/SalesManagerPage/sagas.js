@@ -8,6 +8,7 @@ import cookie from 'react-cookie';
 
 import {
   CHECKOUT,
+  ENTER_PAGE,
   GET_REVENUE_TOTAL,
   GET_REVENUE_REGION,
 } from './constants';
@@ -190,10 +191,35 @@ export function* revenueRegionData() {
   return;
 }
 
+export function* enterPage() {
+  const userCookie = cookie.select(/user/);
+  const username = userCookie.user;
+  const sessionCookie = cookie.select(/sessionID/);
+  const sessionID = sessionCookie.sessionID;
+
+  if (username === undefined || sessionID === undefined) {
+    yield put(push('/sales'));
+  }
+}
+
+export function* enterPageWatcher() {
+  while (yield take(ENTER_PAGE)) {
+    yield call(enterPage);
+  }
+}
+
+export function* enteringSaga() {
+  const watcher = yield fork(enterPageWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
 // All sagas to be loaded
 export default [
   signOutData,
   checkoutData,
   revenueTotalData,
   revenueRegionData,
+  enteringSaga,
 ];

@@ -31,6 +31,7 @@ class ItemOrderForm extends React.Component {
     return (
       <div className={styles.itemOrderForm}>
         <h2>Add Item</h2>
+        <Button onClick={() => this.props.selectItem(true)}>Choose Item</Button>
         <Input
           label="Item ID"
           labelStyle={labelStyle}
@@ -88,6 +89,7 @@ class ItemOrderForm extends React.Component {
 
 ItemOrderForm.propTypes = {
   onAddItem: React.PropTypes.func,
+  selectItem: React.PropTypes.func,
 };
 
 

@@ -30,7 +30,15 @@ import {
   GET_REVENUE_TOTAL,
   GET_REVENUE_TOTAL_ERROR,
   GET_REVENUE_TOTAL_SUCCESS,
+
+  ENTER_PAGE,
 } from './constants';
+
+export function enterPage() {
+  return {
+    type: ENTER_PAGE,
+  };
+}
 
 export function goToDashboard() {
   return {
