@@ -19,6 +19,8 @@ import TotalRevenue from 'components/TotalRevenue';
 import ShoppingCart from 'components/ShoppingCart';
 import GenericModal from 'components/GenericModal';
 import ItemModal from 'components/ItemModal';
+import StoreRevenue from 'components/StoreRevenue';
+import HighestSeller from 'components/HighestSeller';
 
 import {
   goToDashboard,
@@ -44,6 +46,9 @@ import {
   getRevenueRegion,
 
   enterPage,
+  getRevenueStore,
+
+  getHighestSeller,
 } from './actions.js';
 
 import {
@@ -56,11 +61,14 @@ import {
   signOut,
 } from 'containers/App/actions';
 
-import { Button } from 'react-bootstrap';
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 import ItemOrderForm from 'components/ItemOrderForm';
 import PaymentForm from 'components/PaymentForm';
 
 import styles from './styles.css';
+
+require('react-d3');
+import { BarChart, PieChart } from 'react-d3';
 
 export class SalesManagerPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -121,21 +129,65 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
       if (this.props.employee.type === GENERALMANAGER) {
         revenueContent = (
           <div>
-            <h2>Revenue across all regions</h2>
-            <TotalRevenue
-              loadRevenue={this.props.onLoadRevenue}
-              revenue={this.props.sales.revenue.total}
-            />
+            <Grid>
+              <Row>
+                <Col xs={6} md={6}>
+                  <div>
+                    <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                    <TotalRevenue
+                      loadRevenue={this.props.onLoadRevenueRegion}
+                      revenue={this.props.sales.revenue.region}
+                    />
+                  </div>
+                </Col>
+                <Col xs={6} md={6}>
+                  <HighestSeller
+                    highestSeller={this.props.sales.highestSeller}
+                    loadHighestSeller={this.props.onLoadHighestSeller}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <div>
+                  <StoreRevenue
+                    loadRevenue={this.props.onLoadRevenueStore}
+                    revenue={this.props.sales.revenue.store}
+                  />
+                </div>
+              </Row>
+            </Grid>
           </div>
         );
       } else {
         revenueContent = (
           <div>
-            <h2>Revenue for region: {this.props.employee.regionId}</h2>
-            <TotalRevenue
-              loadRevenue={this.props.onLoadRevenueRegion}
-              revenue={this.props.sales.revenue.region}
-            />
+            <Grid>
+              <Row>
+                <Col xs={6} md={6}>
+                  <div>
+                    <h2>Revenue for region: {this.props.employee.regionId}</h2>
+                    <TotalRevenue
+                      loadRevenue={this.props.onLoadRevenueRegion}
+                      revenue={this.props.sales.revenue.region}
+                    />
+                  </div>
+                </Col>
+                <Col xs={6} md={6}>
+                  <HighestSeller
+                    highestSeller={this.props.sales.highestSeller}
+                    loadHighestSeller={this.props.onLoadHighestSeller}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <div>
+                  <StoreRevenue
+                    loadRevenue={this.props.onLoadRevenueStore}
+                    revenue={this.props.sales.revenue.store}
+                  />
+                </div>
+              </Row>
+            </Grid>
           </div>
         );
       }
@@ -200,6 +252,23 @@ export class SalesManagerPage extends React.Component { // eslint-disable-line r
         <div className={styles.content}>
           {content}
         </div>
+        <Grid>
+          <SideNav className={styles.sideNav} routes={navRoutes} active={activeRoute} />
+          <Row>
+            <Col xs={6} xsOffset={8}>
+              <AccountInfo
+                className={styles.accountInfo}
+                name={this.props.employee.username}
+                employeeType={this.props.employee.type}
+
+                onSignOut={this.props.onSignOut}
+              />
+            </Col>
+          </Row>
+          <div className={styles.content}>
+            {content}
+          </div>
+        </Grid>
       </div>
     );
   }
@@ -232,6 +301,10 @@ SalesManagerPage.propTypes = {
   getItemCatalog: React.PropTypes.func,
 
   onEnter: React.PropTypes.func,
+  onLoadRevenueStore: React.PropTypes.func,
+
+  onLoadHighestSeller: React.PropTypes.func,
+
   onSignOut: React.PropTypes.func,
 };
 
@@ -264,7 +337,11 @@ function mapDispatchToProps(dispatch) {
     selectItem: (item) => dispatch(setItem(item)),
 
     onEnter: () => dispatch(enterPage()),
+    onLoadRevenueStore: () => dispatch(getRevenueStore()),
+
     onSignOut: () => dispatch(signOut()),
+
+    onLoadHighestSeller: () => dispatch(getHighestSeller()),
 
     dispatch,
   };

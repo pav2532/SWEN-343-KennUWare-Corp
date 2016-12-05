@@ -8,7 +8,7 @@ import React from 'react';
 
 import Input from 'components/Input';
 
-import { Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
 import styles from './styles.css';
 

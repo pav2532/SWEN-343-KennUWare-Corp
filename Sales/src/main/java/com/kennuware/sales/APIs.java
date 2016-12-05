@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.kennuware.sales.domain.Employees.CredentialDTO;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
+import com.kennuware.sales.domain.StoreRev;
 import com.kennuware.sales.services.EmployeeService;
 import com.kennuware.sales.services.ItemService;
 import com.kennuware.sales.services.OrderServices;
@@ -85,6 +86,19 @@ public class APIs {
 			res.type("text/json");
 			return "{\"revenue\":\"" + revenue + "\"}";
 		});
+
+		get("/revenue/stores", (req, res) -> {
+			ArrayList<StoreRev> storeRevs;
+			storeRevs = EmployeeService.getStoreRevenues(session);
+			res.type("text/json");
+			String result = "{\"Stores\":\"";
+			for(StoreRev storeRev : storeRevs){
+				result += "{ StoreName: " + storeRev.getStore().getName() + ", Revenue: " + storeRev.getRevenue() + " }, ";
+			}
+			result = result.substring(0, result.length()-2);
+			result += "\"}";
+			return storeRevs;
+		}, gson::toJson);
 
 		/* Gets revenue from a salesperson
 		 * HR gets revenue to calculate commissions weekly
