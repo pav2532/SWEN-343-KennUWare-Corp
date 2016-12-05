@@ -168,6 +168,8 @@ export function* setStatus() {
     body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
   };
 
+  console.log("options", options);
+
   // Call our request helper (see 'utils/request')
   const returnRequest = yield call(request, requestURL, options);
 

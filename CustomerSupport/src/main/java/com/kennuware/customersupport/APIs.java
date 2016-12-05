@@ -67,9 +67,7 @@ public class APIs {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
             String username = json.get("username").toString();
-            String password = json.get("password").toString();
             username = username.substring(1,username.length()-1);
-            password = password.replace("\"", "");
             return EmployeeService.login(username, session);
         }, gson::toJson);
         
@@ -93,10 +91,8 @@ public class APIs {
         post("/requestStatus", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            String status = json.get("status").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
-            status = status.substring(1,status.length()-1);
+            String returnID = json.get("returnID").getAsString();
+            String status = json.get("status").getAsString();
             return EmployeeService.changeStatus(returnID, status, session);
         }, gson::toJson);
 
@@ -143,17 +139,15 @@ public class APIs {
         post("/markReceived", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
+            String returnID = json.get("returnID").getAsString();
             return EmployeeService.markReceived(returnID, session);
         }, gson::toJson);
 
         post("/resolve", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String returnID = json.get("returnID").toString();
-            String itemID = json.get("itemID").toString();
-            returnID = returnID.substring(1,returnID.length()-1);
+            String returnID = json.get("returnID").getAsString();
+            String itemID = json.get("itemID").getAsString();
             return EmployeeService.resolve(returnID, itemID, session);
         }, gson::toJson);
 
