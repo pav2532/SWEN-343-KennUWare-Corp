@@ -6,19 +6,6 @@ import { createSelector } from 'reselect';
 const selectSalesLoginDomain = () => (state) => state.get('salesLogin');
 
 /**
- * Other specific selectors
- */
-const selectUsername = () => createSelector(
-  selectSalesLoginDomain(),
-  (state) => state.get('username')
-);
-
-const selectPassword = () => createSelector(
-  selectSalesLoginDomain(),
-  (state) => state.get('password')
-);
-
-/**
  * Default selector used by SalesLogin
  */
 
@@ -30,6 +17,4 @@ const selectSalesLogin = () => createSelector(
 export default selectSalesLogin;
 export {
   selectSalesLoginDomain,
-  selectUsername,
-  selectPassword,
 };

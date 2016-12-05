@@ -10,6 +10,7 @@ import com.kennuware.sales.Utilities.HttpUtils;
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.kennuware.sales.domain.Employees.CredentialDTO;
 import com.kennuware.sales.domain.Item;
 import com.kennuware.sales.domain.ItemOrders;
 import com.kennuware.sales.services.EmployeeService;
@@ -17,8 +18,11 @@ import com.kennuware.sales.services.OrderServices;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.transaction.synchronization.spi.ExceptionMapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class APIs {
@@ -35,14 +39,27 @@ public class APIs {
 		port(8000);
 		Gson gson = new Gson();
 
+		before((req, res) -> {
+			String user = req.cookie("user");
+			String sessionID = req.cookie("sessionID");
+			System.out.println("Authenticating user: " + user + "  with sessinID=" + sessionID);
+			String result = verifyUser(user, sessionID);
+			System.out.println("Result from verify: " + result);
+			System.out.println("Result equals valid: " + result.equals("valid"));
+			if (!result.equals("valid")) {
+				halt(400, result);
+			}
+			System.out.println("Authenticated");
+		});
+
         post("/login", (req, res) -> {
             String body = req.body();
             JsonObject json = gson.fromJson(body, JsonObject.class);
-            String username = json.get("username").toString();
-            String password = json.get("password").toString();
-            username = username.substring(1,username.length()-1);
-            password = password.replace("\"", "");
-            return EmployeeService.login(username, password, session);
+            String username = json.get("username").getAsString();
+            String sessionID = req.cookie("sessionID");
+            Map<String, String> map = req.cookies();
+			System.out.println("Verifying: " + verifyUser(username, sessionID));
+            return EmployeeService.login(username, session);
         }, gson::toJson);
         
         /* Gets revenue from a region
@@ -143,7 +160,9 @@ public class APIs {
 					ItemOrders order = new ItemOrders();
 					order.setQuantity(item.get("quantity").getAsInt());
 					order.setOrderId(item.get("itemID").getAsInt());
+					// TODO: This value should be retrieved from the database, not the request
 					order.setOrderId(item.get("orderID").getAsInt());
+
 
 					os.orderItemsFromInventory(address, order, customerName, utils);
 				}
@@ -181,5 +200,19 @@ public class APIs {
 			return OrderServices.getRevenueByModel(session);
 		}, gson::toJson);
 
+		exception(Exception.class, (exception, request, response) -> {
+			exception.printStackTrace();
+
+			return ;
+		});
     }
+
+    private static String verifyUser(String username, String sessionID) {
+
+		CredentialDTO cred = new CredentialDTO(username, sessionID);
+		HttpUtils util = new HttpUtils();
+		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
+		result = result.replaceAll("\"", "");
+		return result;
+	}
 }

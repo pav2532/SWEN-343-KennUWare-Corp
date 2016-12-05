@@ -30,13 +30,14 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import spark.Request;
 import spark.Response;
 
 import java.util.UUID;
 
 public class AuthenticationServices {
 
-    public static String login(String username, String password, Session dbSession){
+    public static String login(String username, String password, Request req, Session dbSession, List<String> sessionIDs){
         User user = new User();
         Gson gson = new Gson();
 
@@ -45,7 +46,8 @@ public class AuthenticationServices {
         // Should only be one result
         for(User u: results) {
             if(u.authenticate(password.hashCode())) {
-                String uniqueID = UUID.randomUUID().toString();
+                String uniqueID = req.session(true).id();
+                sessionIDs.add(uniqueID);
                 u.setSessionID(uniqueID);
                 dbSession.save(u);
 
@@ -98,6 +100,7 @@ public class AuthenticationServices {
             }
         }
 
+        System.out.println("Session verify failed");
         res.status(400);
         return "localhost:3000/kennuware/sso/login";
     }

@@ -154,6 +154,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/kennuware/sso/login',
+      name: 'ssologinPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/SSOLoginPage/reducer'),
+          System.import('containers/SSOLoginPage/sagas'),
+          System.import('containers/SSOLoginPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('ssologinPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

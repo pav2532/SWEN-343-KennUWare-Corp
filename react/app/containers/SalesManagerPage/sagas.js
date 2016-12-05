@@ -4,6 +4,8 @@ import { SIGN_OUT } from 'containers/App/constants';
 
 import request from 'utils/request';
 
+import cookie from 'react-cookie';
+
 import {
   CHECKOUT,
   GET_REVENUE_TOTAL,
@@ -53,6 +55,7 @@ export function* checkout() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(body),
   };
 
@@ -68,8 +71,9 @@ export function* checkout() {
 
 export function* signOut() {
   // redirect to login page
-  // TODO: do some de-auth stuff 
-  // Also clear stuff like the content route on this page from state
+  cookie.remove('user', { path: '/' });
+  cookie.remove('sessionID', { path: '/' });
+  cookie.remove('JSESSIONID', { path: '/' });
   yield put(push('/sales'));
 }
 
@@ -86,6 +90,7 @@ export function* getTotalRevenue() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')
@@ -113,6 +118,7 @@ export function* getRegionRevenue() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
   };
 
   // Call our request helper (see 'utils/request')

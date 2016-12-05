@@ -3,6 +3,8 @@ import { LOCATION_CHANGE, push } from 'react-router-redux';
 
 import request from 'utils/request';
 
+import cookie from 'react-cookie';
+
 import {
   CHECKOUT,
 } from './constants';
@@ -39,6 +41,8 @@ export function* checkout() {
     creditCardNumber: paymentInfo.ccNumber,
     expirationDate: paymentInfo.expiration,
     bulkDiscount: 1,
+    custAddress: 'somewhere',
+    date: 'todays date',
     requestedProducts,
   };
 
@@ -48,11 +52,14 @@ export function* checkout() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(body),
   };
 
   // Call our request helper (see 'utils/request')
   const order = yield call(request, requestURL, options);
+
+  console.log("Checkout error: ", order);
 
   if (order.data !== -1) {
     yield put(checkoutSuccess());
@@ -63,7 +70,9 @@ export function* checkout() {
 
 export function* signOut() {
   // redirect to login page
-  // TODO: do some de-auth stuff here
+  cookie.remove('user', { path: '/' });
+  cookie.remove('sessionID', { path: '/' });
+  cookie.remove('JSESSIONID', { path: '/' });
   yield put(push('/sales'));
 }
 

@@ -32,7 +32,7 @@ import java.util.List;
 public class EmployeeService {
     //Called when someone logs in
     //Search through database for employee, check if password is right
-    public static Employee login(String username, String password, Session dbSession){
+    public static Employee login(String username, Session dbSession){
         Employee employee = new Employee();
         Gson gson = new Gson();
 
@@ -40,10 +40,8 @@ public class EmployeeService {
         List<Employee> results = (List<Employee>)query.list();
 
         // Should only be one result
-        for(Employee e: results) {
-            if(e.authenticate(password)) {
-                return e;
-            }
+        if(results.size() > 0) {
+            return results.get(0);
         }
 
         // Fine for now, but should eventually use http status codes instead

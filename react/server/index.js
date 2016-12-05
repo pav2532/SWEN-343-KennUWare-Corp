@@ -6,8 +6,6 @@ const proxy = require('express-http-proxy');
 
 const argv = require('minimist')(process.argv.slice(2));
 const setup = require('./middlewares/frontendMiddleware');
-const isDev = process.env.NODE_ENV !== 'production';
-const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
 
@@ -15,6 +13,7 @@ const app = express();
 // This is to be able to hit the Java Spark server with /api
 app.use('/api/sales', proxy('localhost:8000'));
 app.use('/api/customer-support', proxy('localhost:8001'));
+app.use('/api/sso', proxy('localhost:8003'));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
@@ -29,18 +28,5 @@ const port = argv.port || process.env.PORT || 3000;
 app.listen(port, (err) => {
   if (err) {
     return logger.error(err.message);
-  }
-
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    ngrok.connect(port, (innerErr, url) => {
-      if (innerErr) {
-        return logger.error(innerErr);
-      }
-
-      logger.appStarted(port, url);
-    });
-  } else {
-    logger.appStarted(port);
   }
 });
