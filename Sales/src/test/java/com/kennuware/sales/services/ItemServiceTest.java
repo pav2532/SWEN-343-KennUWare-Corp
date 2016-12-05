@@ -3,6 +3,7 @@ package com.kennuware.sales.services;
 import com.kennuware.sales.Utilities.HttpUtils;
 import com.kennuware.sales.domain.external.WearableItem;
 import com.kennuware.sales.domain.external.WearableList;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -18,6 +19,7 @@ public class ItemServiceTest {
     @Test
     public void testGetItems() {
         ItemService service = new ItemService();
+        Session mockedSession = mock(Session.class);
         HttpUtils util = mock(HttpUtils.class);
 
         String jsonObject = "{\"wearables\":[" +
@@ -28,7 +30,7 @@ public class ItemServiceTest {
 
         when(util.get(Mockito.anyString())).thenReturn(jsonObject);
 
-        WearableList items = service.getItems(util);
+        WearableList items = service.getItems(util, mockedSession);
 
         int expectedLength = 3;
         assertEquals(expectedLength, items.getList().size());
