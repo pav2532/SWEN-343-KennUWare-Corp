@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kennuware.customersupport.Utilities.HttpUtils;
 import com.kennuware.customersupport.domain.*;
-import com.kennuware.customersupport.domain.Employees.CredentialDTO;
 import com.kennuware.customersupport.services.EmployeeService;
 import com.kennuware.customersupport.services.ItemService;
 import com.kennuware.customersupport.services.OrderService;
@@ -31,7 +30,6 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class APIs {
     public static void main(String[] args) {
@@ -49,25 +47,13 @@ public class APIs {
 
         Gson gson = new Gson();
 
-		before((req, res) -> {
-			String user = req.cookie("user");
-			String sessionID = req.cookie("sessionID");
-			System.out.println("Authenticating user: " + user + "  with sessinID=" + sessionID);
-			String result = verifyUser(user, sessionID);
-			System.out.println("Result from verify: " + result);
-			System.out.println("Result equals valid: " + result.equals("valid"));
-			if (!result.equals("valid")) {
-				result = "\"" + result + "\"";
-				halt(400, result);
-			}
-		});
-
         post("/login", (req, res) -> {
-			String body = req.body();
-			JsonObject json = gson.fromJson(body, JsonObject.class);
-			String username = json.get("username").getAsString();
-			String sessionID = req.cookie("sessionID");
-			System.out.println("Verifying: " + verifyUser(username, sessionID));
+            String body = req.body();
+            JsonObject json = gson.fromJson(body, JsonObject.class);
+            String username = json.get("username").toString();
+            String password = json.get("password").toString();
+            username = username.substring(1,username.length()-1);
+            password = password.replace("\"", "");
             return EmployeeService.login(username, session);
         }, gson::toJson);
         
@@ -250,21 +236,6 @@ public class APIs {
         get("/getReturns", (req, res) -> {
            return ReturnTicketService.getTickets(session);
         }, gson::toJson);
-
-		exception(Exception.class, (exception, request, response) -> {
-			exception.printStackTrace();
-
-			return ;
-		});
     }
-
-	private static String verifyUser(String username, String sessionID) {
-
-		CredentialDTO cred = new CredentialDTO(username, sessionID);
-		HttpUtils util = new HttpUtils();
-		String result = util.post(cred, "http://127.0.0.1:8003/verify-session");
-		result = result.replaceAll("\"", "");
-		return result;
-	}
 }
 
