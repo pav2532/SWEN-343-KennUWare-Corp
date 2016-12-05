@@ -95,125 +95,33 @@ public class APIs {
         });
         
         get("/getMostReturnedModel/wDenied", (req, res) -> {
-        	List list = session.getNamedQuery("findReturnedGroupByItemIDwDenied").list();
-        	String model = "";
-        	int count = -1;
-        	for(Object arr: list){
-        		Object[] values = (Object[])arr;
-        		
-        		String tempCountStr = values[1].toString();
-        		int tempCount = (int) Integer.parseInt(tempCountStr);
-        		
-        		if( arr.equals(list.get(0)) ){
-        			model =  values[0].toString();
-        			count = tempCount;
-        		}else if(tempCount > count){
-        			count = tempCount;
-        			model =  values[0].toString();
-        		}
-        	}
-        	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
+        	return ReturnTicketService.getMostReturnedModel(session, true);
         });
         
         get("/getMostReturnedModel", (req, res) -> {
-        	List list = session.getNamedQuery("findReturnedGroupByItemID").list();
-        	String model = "";
-        	int count = -1;
-        	for(Object arr: list){
-        		Object[] values = (Object[])arr;
-        		
-        		String tempCountStr = values[1].toString();
-        		int tempCount = (int) Integer.parseInt(tempCountStr);
-        		
-        		if( arr.equals(list.get(0)) ){
-        			model =  values[0].toString();
-        			count = tempCount;
-        		}else if(tempCount > count){
-        			count = tempCount;
-        			model =  values[0].toString();
-        		}
-        	}
-        	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
+        	return ReturnTicketService.getMostReturnedModel(session, false);
         });
         
         get("/getLeastReturnedModel/wDenied", (req, res) -> {
-        	List list = session.getNamedQuery("findReturnedGroupByItemIDwDenied").list();
-        	String model = "";
-        	int count = -1;
-        	for(Object arr: list){
-        		Object[] values = (Object[])arr;
-        		
-        		String tempCountStr = values[1].toString();
-        		int tempCount = (int) Integer.parseInt(tempCountStr);
-        		
-        		if( arr.equals(list.get(0)) ){
-        			model =  values[0].toString();
-        			count = tempCount;
-        		}else if(tempCount < count){
-        			count = tempCount;
-        			model =  values[0].toString();
-        		}
-        	}
-        	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
+        	return ReturnTicketService.getLeastReturnedModel(session, true);
         });
 
         get("/getLeastReturnedModel", (req, res) -> {
-        	List list = session.getNamedQuery("findReturnedGroupByItemID").list();
-        	String model = "";
-        	int count = -1;
-        	for(Object arr: list){
-        		Object[] values = (Object[])arr;
-        		
-        		String tempCountStr = values[1].toString();
-        		int tempCount = (int) Integer.parseInt(tempCountStr);
-        		
-        		if( arr.equals(list.get(0)) ){
-        			model =  values[0].toString();
-        			count = tempCount;
-        		}else if(tempCount < count){
-        			count = tempCount;
-        			model =  values[0].toString();
-        		}
-        	}
-        	
         	res.type("text/json");
-        	return "{\"model\":\"" + model + "\", \"count\": " + count + "}";
+        	return ReturnTicketService.getLeastReturnedModel(session, false);
         });
         
         get("/getHighestReturnsReason", (req, res) -> {
-        	List list = session.getNamedQuery("findReturnedGroupByReason").list();
-        	String reason = "";
-        	int count = -1;
-        	for(Object arr: list){
-        		Object[] values = (Object[])arr;
-        		
-        		String tempCountStr = values[1].toString();
-        		int tempCount = (int) Integer.parseInt(tempCountStr);
-        		
-        		if( arr.equals(list.get(0)) ){
-        			reason =  values[0].toString();
-        			count = tempCount;
-        		}else if(tempCount > count){
-        			count = tempCount;
-        			reason =  values[0].toString();
-        		}
-        	}
-        	
         	res.type("text/json");
-        	return "{\"model\":\"" + reason + "\", \"count\": " + count + "}";
+        	return ReturnTicketService.getHighestReturnsReason(session);
         });
         
         get("/getReturnsWith/:type", (req, res) -> {
         	int type = Integer.parseInt(req.params(":type"));
-        	List list = session.getNamedQuery("findReturnedByType")
-        			.setInteger("type", type).list();
-        	return "{\"count\": " + list.size() + "}";
+        	return ReturnTicketService.getReturnsWith(session, type);
         });
 
         post("/markReceived", (req, res) -> {
