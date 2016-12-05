@@ -37,8 +37,6 @@ public class APIs {
 		// Set the port
 		// This must be done before any routes are defined
 		port(8000);
-		System.out.println(OrderServices.getHighestOrder(session));
-		System.out.println(OrderServices.getLowestOrder(session));
 		Gson gson = new Gson();
 
 		before((req, res) -> {
@@ -192,12 +190,14 @@ public class APIs {
 		get("/getAllItems", (req, res) -> {
 			return session.createCriteria(Item.class).list();
 		}, gson::toJson);
-
-		get("/highestseller",(req, res) -> {
+		get("/highestSeller",(req, res) -> {
 			return OrderServices.getHighestOrder(session);
 		}, gson::toJson);
-		get("/lowestseller",(req, res) -> {
+		get("/lowestSeller",(req, res) -> {
 			return OrderServices.getLowestOrder(session);
+		}, gson::toJson);
+		get("/revenuByModel",(req, res) -> {
+			return OrderServices.getRevenueByModel(session);
 		}, gson::toJson);
 
 		exception(Exception.class, (exception, request, response) -> {

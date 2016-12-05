@@ -11,32 +11,32 @@ import org.hibernate.Session;
 import com.kennuware.sales.domain.SalesOrder;
 import com.kennuware.sales.domain.Item;
 import java.util.ArrayList;
+import com.kennuware.sales.domain.ItemMetrics;
 
 
 public class OrderServices {
     public static int completeSaleOrder(String customerName, int employeeID, String creditCardNumber,
-                                            String expirationDate, Double bulkDiscount, String address,
-                                            String date, Session session){
-        if(creditCardNumber.length() != 16 ){
+                                        String expirationDate, Double bulkDiscount, String address,
+                                        String date, Session session) {
+        if (creditCardNumber.length() != 16) {
             return -1;
         }
 
         int sum = 0;
         boolean alternate = false;
 
-        for (int i = creditCardNumber.length() - 1; i >= 0; i--){
+        for (int i = creditCardNumber.length() - 1; i >= 0; i--) {
             int n = Integer.parseInt(creditCardNumber.substring(i, i + 1));
-            if (alternate){
-                n = n*2;
-                if (n > 9)
-                {
+            if (alternate) {
+                n = n * 2;
+                if (n > 9) {
                     n = (n % 10) + 1;
                 }
             }
             sum += n;
             alternate = !alternate;
         }
-        if(sum % 10 == 0) {
+        if (sum % 10 == 0) {
 
             SalesOrder newSO = new SalesOrder();
 
@@ -54,12 +54,12 @@ public class OrderServices {
             //orderItemsFromInventory(address, newSO, customerName, utils);
 
             return newSO.getOrderid();
-        }else{
+        } else {
             return -1;
         }
     }
 
-    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils){
+    public void orderItemsFromInventory(String address, ItemOrders order, String custName, HttpUtils utils) {
 
         InventoryCustomer customer = new InventoryCustomer();
         customer.setCustomerName(custName);
@@ -77,7 +77,7 @@ public class OrderServices {
 
     }
 
-    public static void addItemOrders(int orderId, int itemId, int quantity, Session session){
+    public static void addItemOrders(int orderId, int itemId, int quantity, Session session) {
 
         ItemOrders newIO = new ItemOrders();
 
@@ -88,7 +88,7 @@ public class OrderServices {
         session.save(newIO);
     }
 
-    public static String sendOrder(SalesOrder order, Session session){
+    public static String sendOrder(SalesOrder order, Session session) {
         Gson gson = new Gson();
 
         /*try {
@@ -115,53 +115,91 @@ public class OrderServices {
 
         return gson.toJson(order);
     }
-    public static String getHighestOrder(Session session){
-        double result = 0;
-        double tempResult = 0;
+
+    public static ItemMetrics getHighestOrder(Session session) {
+        int result = 0;
+        int tempResult = 0;
         String name = "";
         int id = 0;
         int tempId = 0;
         ArrayList<Item> catalog;
         ;
-        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+            //System.out.println(c.getName());
             tempId = c.getId();
-            for (ItemOrders iId : getItems(id, session)) {
+            for (ItemOrders iId : getItems(tempId, session)) {
+                //System.out.println(iId.getQuantity());
                 tempResult += iId.getQuantity();
             }
-            if(result <= tempResult){
+            if (result <= tempResult) {
                 name = c.getName();
                 result = tempResult;
                 id = tempId;
             }
             tempResult = 0;
         }
-        return name;
+        //System.out.println(name);
+        return new ItemMetrics(name, result);
     }
-    public static String getLowestOrder(Session session){
-        double result = 0;
-        double tempResult = 0;
+
+    public static ItemMetrics getLowestOrder(Session session) {
+        int result = 0;
+        int tempResult = 0;
         String name = "";
         int id = 0;
         int tempId = 0;
         ArrayList<Item> catalog;
         ;
-        for(Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
             tempId = c.getId();
-            for (ItemOrders iId : getItems(id, session)) {
+            for (ItemOrders iId : getItems(tempId, session)) {
                 tempResult += iId.getQuantity();
             }
-            if(result >= tempResult){
+            if(result == 0){
                 name = c.getName();
                 result = tempResult;
                 id = tempId;
+            } else {
+                if (result >= tempResult) {
+                    name = c.getName();
+                    result = tempResult;
+                    id = tempId;
+                }
             }
             tempResult = 0;
         }
-        return name;
+        return new ItemMetrics(name,result);
+    }
+
+    public static ArrayList<ItemMetrics> getRevenueByModel(Session session) {
+        double result = 0;
+        String string = "";
+        int id = 0;
+        double price = 0;
+        double total = 0;
+        int quantity = 0;
+        ArrayList<ItemMetrics> revenue = new ArrayList<ItemMetrics>();
+        ArrayList<Item> catalog;
+        for (Item c : (ArrayList<Item>) session.getNamedQuery("findAllItems").list()) {
+            id = c.getId();
+            price = c.getUnitPrice();
+            //System.out.println(id);
+            //System.out.println(getItems(id, session).size());
+            for (ItemOrders iId : getItems(id, session)) {
+                quantity += iId.getQuantity();
+            }
+            total = quantity * price;
+            ItemMetrics temp = new ItemMetrics(c.getName(), quantity, total);
+            revenue.add(temp);
+            quantity = 0;
+        }
+        quantity = 0;
+        return revenue;
     }
     private static ArrayList<ItemOrders> getItems(int id, Session session){
         ArrayList<ItemOrders> list = (ArrayList<ItemOrders>) session.getNamedQuery("findItemById")
                 .setString("itemId", String.valueOf(id)).list();
+        //System.out.println(list.size());
         return list;
 
     }
