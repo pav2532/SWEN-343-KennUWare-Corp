@@ -7,11 +7,15 @@ import cookie from 'react-cookie';
 
 import {
   CHECKOUT,
+  ENTER_PAGE,
+  GET_ITEM_CATALOG,
 } from './constants';
 
 import {
   checkoutSuccess,
   checkoutError,
+  getItemCatalogSuccess,
+  getItemCatalogError,
 } from './actions';
 
 import {
@@ -100,7 +104,64 @@ export function* checkoutData() {
   return;
 }
 
+export function* enterPage() {
+  const userCookie = cookie.select(/user/);
+  const username = userCookie.user;
+  const sessionCookie = cookie.select(/sessionID/);
+  const sessionID = sessionCookie.sessionID;
+  const employee = yield select(selectEmployee());
+
+  if (username === undefined || sessionID === undefined || employee.type === undefined || employee.type === '') {
+    yield put(push('/sales'));
+  }
+}
+
+export function* enterPageWatcher() {
+  while (yield take(ENTER_PAGE)) {
+    yield call(enterPage);
+  }
+}
+
+export function* enteringSaga() {
+  const watcher = yield fork(enterPageWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+  return;
+}
+
+export function* getItemCatalog() {
+  const requestURL = '/api/sales/getAllItems';
+
+  const options = {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  };
+
+  // Call our request helper (see 'utils/request')
+  const catalog = yield call(request, requestURL, options);
+
+  if (!catalog.err) {
+    yield put(getItemCatalogSuccess(catalog.data));
+  } else {
+    yield put(getItemCatalogError(catalog.err));
+  }
+  // Do error flow
+}
+
+export function* getItemCatalogWatcher() {
+  while (yield take(GET_ITEM_CATALOG)) {
+    yield call(getItemCatalog);
+  }
+}
+
 // All sagas to be loaded
 export default [
   checkoutData,
+  enteringSaga,
+  getItemCatalog,
 ];

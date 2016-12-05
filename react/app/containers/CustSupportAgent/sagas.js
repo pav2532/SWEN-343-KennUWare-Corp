@@ -11,6 +11,8 @@ import {
   GET_RETURNS,
   SET_RETURN_STATUS,
   RESOLVE_RETURN,
+  SET_RETURN_STATUS_SUCCESS,
+  RESOLVE_RETURN_SUCCESS,
 } from './constants';
 
 import {
@@ -131,6 +133,18 @@ export function* getReturnsWatcher() {
   }
 }
 
+export function* getReturnsWatcher2() {
+  while (yield take(SET_RETURN_STATUS_SUCCESS)) {
+    yield call(getReturns);
+  }
+}
+
+export function* getReturnsWatcher3() {
+  while (yield take(RESOLVE_RETURN_SUCCESS)) {
+    yield call(getReturns);
+  }
+}
+
 // Individual exports for testing
 export function* returnData() {
   const watcher = yield fork(returnWatcher);
@@ -142,9 +156,13 @@ export function* returnData() {
 
 export function* getReturnData() {
   const watcher = yield fork(getReturnsWatcher);
+  const watcher2 = yield fork(getReturnsWatcher2);
+  const watcher3 = yield fork(getReturnsWatcher3);
 
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
+  yield cancel(watcher2);
+  yield cancel(watcher3);
   return;
 }
 
@@ -167,6 +185,8 @@ export function* setStatus() {
     credentials: 'same-origin',
     body: JSON.stringify({ returnID: managedReturn.id, status: newStatus }),
   };
+
+  console.log("options", options);
 
   // Call our request helper (see 'utils/request')
   const returnRequest = yield call(request, requestURL, options);

@@ -29,3 +29,11 @@ export const GET_REVENUE_REGION_ERROR = 'app/Sales/GET_REVENUE_REGION_ERROR';
 export const GET_REVENUE_TOTAL = 'app/Sales/GET_REVENUE_TOTAL';
 export const GET_REVENUE_TOTAL_SUCCESS = 'app/Sales/GET_REVENUE_TOTAL_SUCCESS';
 export const GET_REVENUE_TOTAL_ERROR = 'app/Sales/GET_REVENUE_TOTAL_ERROR';
+
+export const GET_ITEM_CATALOG = 'app/Sales/GET_ITEM_CATALOG';
+export const GET_ITEM_CATALOG_SUCCESS = 'app/Sales/GET_ITEM_CATALOG_SUCCESS';
+export const GET_ITEM_CATALOG_ERROR = 'app/Sales/GET_ITEM_CATALOG_ERROR';
+
+export const SET_ITEM = 'app/Sales/SET_ITEM';
+
+export const ENTER_PAGE = 'app/Sales/ENTER_PAGE';

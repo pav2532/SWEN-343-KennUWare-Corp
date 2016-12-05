@@ -26,6 +26,11 @@ import {
 
   GET_REVENUE_TOTAL_SUCCESS,
   GET_REVENUE_REGION_SUCCESS,
+
+  SET_ITEM,
+
+  GET_ITEM_CATALOG_SUCCESS,
+  GET_ITEM_CATALOG_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -38,10 +43,16 @@ const initialState = fromJS({
     ccNumber: '',
     expiration: '',
   },
+  orderItem: {
+    name: '',
+    id: '',
+    unitPrice: '',
+  },
   revenue: {
     total: '0.0',
     region: '0.0',
   },
+  itemCatalog: [],
 });
 
 function salesReducer(state = initialState, action) {
@@ -98,6 +109,12 @@ function salesReducer(state = initialState, action) {
     case GET_REVENUE_REGION_SUCCESS:
       return state
         .setIn(['revenue', 'region'], action.data.revenue);
+    case GET_ITEM_CATALOG_SUCCESS:
+      return state
+        .set('itemCatalog', action.data);
+    case SET_ITEM:
+      return state
+        .set('orderItem', action.item);
 
     default:
       return state;
